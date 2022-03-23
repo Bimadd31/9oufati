@@ -20,10 +20,10 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->nullable(false);
             $table->string('password')->nullable(false);
             $table->string('phone')->nullable();
-            $table->string('address_line1');
-            $table->string('address_line2');
-            $table->string('city');
-            $table->string('postal_code');
+            $table->string('address_line1')->nullable();
+            $table->string('address_line2')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postal_code')->nullable();
             $table->string('role')->default("client");
             $table->boolean('status')->default(true);
             $table->timestamp('email_verified_at')->nullable();

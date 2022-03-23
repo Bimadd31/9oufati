@@ -1,22 +1,34 @@
 @extends('layouts.app')
 @extends('layouts.header')
 @section('content')
-<div class="main-login-container">
-    <div class="login-container">
-        <div class="">
-            <div class="">
-                <div class="">Register</div>
 
-                <div class="">
-                    <form method="POST" action="{{ route('register') }}">
+<div class="container-md-custom position-relative mt-4 bg-white login-form-container p-4">
+            
+                <div class="col-12 d-flex justify-content-center align-items-center register-form-container">
+
+                    <div class="col-md-12 col-xxl-9 p-5 d-flex justify-content-center align-items-center ">
+                    <form  method="POST" action="{{ route('register') }}" class="row g-1 ">
                         @csrf
+                        <div class="row mb-5 ">
+                            <div class="col-md-4 ">
+                            <h5 class="fs-5 text-black-50">Créer un compte</h5>
+                            </div>
+                            <div class="col-md-4"></div>
 
-                        <div class="">
-                            <label for="last_name" class="">{{ __('Nom') }}</label>
-
-                            <div class="">
-                                <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="family-name" autofocus>
-
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="first-name" class="form-label">Prénom</label>
+                                <input type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name" name="first_name" required>
+                                 @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <label for="last-name" class="form-label">Nom</label>
+                                <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name" name="last_name"  required>
                                 @error('last_name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -24,67 +36,60 @@
                                 @enderror
                             </div>
                         </div>
-                          <div class="">
-                            <label for="first_name" class="">{{ __('Prenom') }}</label>
-
-                            <div class="">
-                                <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="given-name" autofocus>
-
-                                @error('first_name')
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="phone" class="form-label">Téléphone</label>
+                                <input type="tel" class="form-control  @error('phone') is-invalid @enderror" id="phone" name="phone" pattern="[0-9]*" maxlength="10" required>
+                                  @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-
-                        <div class="">
-                            <label for="email" class="">{{ __('E-Mail Address') }}</label>
-
-                            <div class="">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
+                            <div class="col-md-4">
+                                <label for="email" class="form-label">E-mail</label>
+                                <input type="email" class="form-control @error('phone') is-invalid @enderror" id="email" name="email" required>
+                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
+                           
                         </div>
-
-                        <div class="">
-                            <label for="password" class="">{{ __('Password') }}</label>
-
-                            <div class="">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
+                        <div class="row mb-5">
+                            <div class="col-md-4">
+                                <label for="password" class="form-label">Mot de passe</label>
+                                <input type="password" class="form-control  @error('password') is-invalid @enderror" id="password" name="password" required>
+                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
-                        </div>
-
-                        <div class="">
-                            <label for="password-confirm" class="">{{ __('Confirm Password') }}</label>
-
-                            <div class="">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <div class="col-md-4">
+                                <label for="password" class="form-label">Confirmation du mot de passe</label>
+                                <input type="password" class="form-control" id="password-confirm" name="password_confirmation" required>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-6 mb-4">
+                                <input class="me-1" type="checkbox" id="term" required>
+                                <label  for="term">J'ai lu et j'accepte les <a href="#"> Conditions générales de vente </a></label>
 
-                        <div class="">
-                            <div class="login-btn-container">
-                                <button type="submit" class="login-btn">
-                                    {{ __('Register') }}
-                                </button>
+                            </div>
+                        <div class="col-md-4"></div>
+                        </div>
+                        <div class="row mt-4 text-center">
+                            <div class="col-md-4 ">
+                                <button type="submit" class="btn btn-success w-100 p-2">Créer votre compte</button>
                             </div>
                         </div>
                     </form>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+        </div> 
 @endsection

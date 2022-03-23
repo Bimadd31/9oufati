@@ -11678,7 +11678,6 @@ body {
   position: absolute;
   font-family: "Ubuntu", sans-serif;
   border-radius: 10px;
-  height: 80%;
 }
 
 .cart-empty-msg {
@@ -11753,7 +11752,6 @@ input[type=checkbox]:checked::before {
 }
 
 .login-form {
-  width: 380px;
   background-color: white;
 }
 
@@ -11778,4 +11776,14 @@ input[type=checkbox]:checked::before {
 }
 .login-form-btn-container .gmail-login-btn {
   background-image: url("/img/google-icon.png");
+}
+
+.register-form-container .row {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  font-family: "Roboto", sans-serif;
+}
+.register-form-container .row label:not(:last-child) {
+  font-weight: 500;
 }

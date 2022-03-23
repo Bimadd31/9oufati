@@ -23,4 +23,8 @@ class Basket extends Model
     {
         return $this->belongsToMany(Basket_details::class);
     }
+    public function basket_basket()
+    {
+        return $this->belongsToMany(Basket_Basket::class);
+    }
 }
