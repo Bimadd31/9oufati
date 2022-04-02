@@ -1,11 +1,10 @@
 @extends('layouts.app')
-@extends('layouts.header')
+
 
 @section('content')
-
-
-    
+ 
     <main>
+         
         <section class="position-relative mt-3">
             <div class="swiper">
 
@@ -51,5 +50,8 @@
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script src="/js/swiper.js"></script>
+
+      
+        
 
 @endsection

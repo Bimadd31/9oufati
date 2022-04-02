@@ -1,14 +1,18 @@
-@extends('layouts.app')
-@extends('layouts.header')
-@section('content')
 
- <div class="container-md-custom position-relative mt-4  login-form-container">
-            
-            <div class="col-12 p-5">
-                
+
+
+ <div class="modal fade"  id="loginModal" data-bs-backdrop="static"  tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" role="dialog" @if(session('openLogin')) open @else closed @endif> 
+
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
                 <div class="col-12 text-center d-flex justify-content-center ">
-                    <div class="col-12 col-md-8 col-xl-6 col-xxl-4 p-5 border border-2 bg-white" >
-                        <h5 class="mb-4">Se connecter</h5>
+                    <div class="col-12  p-4 border border-2 bg-white" >
+                        <button type="button" class="btn-close float-end" data-bs-dismiss="modal" aria-label="Close"></button>
+                         <div class="modal-header">
+                            <h5 class="mb-4  mx-auto" id="loginModalLabel">Se connecter</h5>
+                        </div>
+                        
+                        <div class="modal-body">
                         <form method="POST" action="{{ route('login') }}" class="login-form form-control border-0 p-2 mx-auto">
                             @csrf
 
@@ -48,8 +52,45 @@
                                 
                             </div>
                         </form>
+                        </div>
                     </div>
                 </div>
             </div>
+            </div>
+           
  </div>
-@endsection
+ @section('scripts')
+    @parent
+
+    
+    <script>
+         function showLogin() {
+            $('#loginModal').modal('show');
+        };
+    </script>
+
+    @php
+        if(isset($_GET['auth'])){
+            $auth = $_GET['auth'];
+        }else{
+            $auth = 'true';
+        }
+
+    @endphp
+    
+    @if ($auth == 'false'){
+        <script>
+         $(function() {
+            showLogin();
+         });
+        </script>
+    }@endif
+
+    @if($errors->has('email') || $errors->has('password'))
+        <script>
+        $(function() {
+            showLogin();
+        });
+        </script>
+    @endif
+    @endsection

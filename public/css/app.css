@@ -11756,7 +11756,8 @@ input[type=checkbox]:checked::before {
 }
 
 .login-form-btn-container input,
-.login-form-btn-container a {
+.login-form-btn-container a, .register-form-btn-container input,
+.register-form-btn-container a {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -11768,13 +11769,13 @@ input[type=checkbox]:checked::before {
   background-repeat: no-repeat;
   background-position-x: 10px;
 }
-.login-form-btn-container input {
+.login-form-btn-container input, .register-form-btn-container input {
   background-image: url("/img/mail-icon.png");
 }
-.login-form-btn-container .fb-login-btn {
+.login-form-btn-container .fb-login-btn, .register-form-btn-container .fb-login-btn {
   background-image: url("/img/facebook-icon.png");
 }
-.login-form-btn-container .gmail-login-btn {
+.login-form-btn-container .gmail-login-btn, .register-form-btn-container .gmail-login-btn {
   background-image: url("/img/google-icon.png");
 }
 

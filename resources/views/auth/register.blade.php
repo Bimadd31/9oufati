@@ -1,5 +1,4 @@
 @extends('layouts.app')
-@extends('layouts.header')
 @section('content')
 
 <div class="container-md-custom position-relative mt-4 bg-white login-form-container p-4">
@@ -83,8 +82,11 @@
                         <div class="col-md-4"></div>
                         </div>
                         <div class="row mt-4 text-center">
-                            <div class="col-md-4 ">
+                            <div class="col-md-4 register-form-btn-container">
                                 <button type="submit" class="btn btn-success w-100 p-2">Créer votre compte</button>
+                                <div class="my-2">OU</div> 
+                                  <a class="btn btn-primary fb-login-btn mb-2 rounded" href="#" >SE CONNECTER AVEC FACEBOOK</a>
+                                <a class="btn btn-light gmail-login-btn  rounded btn-outline-secondary" href="#">SE CONNECTER AVEC GOOGLE</a>
                             </div>
                         </div>
                     </form>

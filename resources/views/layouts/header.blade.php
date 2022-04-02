@@ -134,7 +134,7 @@
 
                                         <div class="col-12 d-flex ">
                                         <div class="col-4 pt-2 nav-cart-widget-btn ms-3"
-                                                onclick="window.location.href='cart.html'" style="background-color: #5c824a;">
+                                                onclick="window.location.href='{{ route('cart') }}'" style="background-color: #5c824a;">
                                                 <span>Allez au panier</span>
                                         </div>
                                         <div class="col-4 pt-2 nav-cart-widget-btn ms-2" onclick="window.location.href='#'"
@@ -153,9 +153,12 @@
                                 
                                 
                                 <div class="d-flex align-items-center justify-content-end nav-account-container px-2"
-                                        data-bs-toggle="dropdown" aria-expanded="false"
+                                        @auth
+                                                data-bs-toggle="dropdown" aria-expanded="false"
+                                        @endauth
                                         @guest 
-                                        onclick="location.href ='{{ route('login') }}'
+                                                data-bs-toggle="modal" data-bs-target="#loginModal"
+                                        {{-- onclick="location.href ='{{ route('login') }}' --}}
                                         @endguest ">
                                         
                                         <i class="nav-account-icon align-middle me-2"></i>
@@ -200,4 +203,10 @@
                                 </div>
                 </div>
         </div>
+        
 </header>
+
+     
+  
+
+   
