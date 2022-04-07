@@ -5251,6 +5251,50 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./resources/js/ajax.js":
+/*!******************************!*\
+  !*** ./resources/js/ajax.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
+    find = _require.find;
+
+$(function () {
+  //     $.ajaxSetup({
+  //     headers: {
+  //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //     }
+  // });
+  //  $('#form-shop-add-product #submit').on("click",function(e){
+  //     e.preventDefault();
+  //             let thisbutton = $(this);
+  //             form = thisbutton.closest('form');
+  //             $.ajax({
+  //                 url: "/cart",
+  //                 type: "POST",
+  //                 data: form.serialize(),
+  //                 success: function(response) {
+  //                     console.log(response);
+  //                 }            
+  //             });
+  //         });
+  $('#header-product-form #submit').on("click", function (e) {
+    e.preventDefault();
+    var thisbutton = $(this);
+    var product_id = thisbutton.closest('form').find("#product_id").val();
+    $.ajax({
+      url: "/cart/" + product_id,
+      type: "DELETE",
+      success: function success(response) {
+        console.log(response);
+      }
+    });
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -5264,7 +5308,9 @@ module.exports = {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+__webpack_require__(/*! ./ajax */ "./resources/js/ajax.js");
+
+window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js")["default"]);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -5274,7 +5320,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js"
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('add-product', require('./components/addProduct.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Basket extends Model
 {
+    protected $guarded = [];
+
     public function user()
     {
         $this->belongsToMany(User::class);

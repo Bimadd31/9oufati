@@ -15,12 +15,12 @@ class CreateBasketsTable extends Migration
     {
         Schema::create('baskets', function (Blueprint $table) {
             $table->id()->unsigned();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('desc')->nullable(true);
             $table->string('image')->nullable(true);
             $table->string('type');
-            $table->double('price');
-            $table->boolean('active');
+            $table->double('price')->nullable();
+            $table->boolean('active')->default(true);
             $table->foreignId('order_id')->nullable(true)->constrained('orders', 'id');
             $table->foreignId('user_id')->nullable(true)->constrained('users', 'id');
             $table->timestamps();

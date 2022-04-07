@@ -20,7 +20,12 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name('cart')->middleware('auth');
+Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
 
+Route::post('/cart', [App\Http\Controllers\CartController::class, 'store'])->name('cart.store')->middleware('auth');
+
+
+Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');
 
 // Route::get('/account/{id}', [App\Http\Controllers\AccountController::class, 'index'])->name('account.index')->middleware('auth');
 

@@ -47,6 +47,21 @@ class User extends Authenticatable
     ];
 
 
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+
+            $basket_name = $user->last_name . " " . "'s basket";
+
+            $user->baskets()->create([
+                'name' => $basket_name,
+                'type' => 'custom'
+            ]);
+            // Mail::to($user->email)->send(new welcomeMail());
+        });
+    }
+
     public function user_payements()
     {
         return $this->hasMany(User_payement::class);

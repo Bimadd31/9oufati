@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Basket_details;
 use App\Models\Product_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 
 class HomeController extends Controller
 {
@@ -28,6 +28,7 @@ class HomeController extends Controller
     {
 
         $product_category = DB::table('product_category')->get();
+
 
         return view('home', compact('user', 'product_category'));
     }

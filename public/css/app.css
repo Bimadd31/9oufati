@@ -11663,7 +11663,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  -webkit-filter: blur(1.2px);
+  --webkit-filter: blur(1.2px);
   transition: all 0.2s ease-in-out;
 }
 .category-btn-container:hover {
@@ -11671,7 +11671,7 @@ body {
 }
 .category-btn-container:hover .category-btn-img {
   transform: scale(1.1);
-  -webkit-filter: blur(0.5px);
+  --webkit-filter: blur(0.5px);
 }
 
 .cart-container {
@@ -11787,4 +11787,77 @@ input[type=checkbox]:checked::before {
 }
 .register-form-container .row label:not(:last-child) {
   font-weight: 500;
+}
+
+.shop-filter-container {
+  font-family: "Roboto", sans-serif;
+}
+
+#sort {
+  font-family: "Ubuntu", sans-serif;
+  font-size: 14px;
+  height: 2rem;
+  border: 1px solid rgba(128, 128, 128, 0.418);
+  border-radius: 5px;
+  padding-left: 0.5rem !important;
+  background: url("data:image/svg+xml,<svg height='10px' width='10px' viewBox='0 0 16 16' fill='%23000000' xmlns='http://www.w3.org/2000/svg'><path d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/></svg>") no-repeat;
+  background-position: calc(100% - 0.75rem) center !important;
+  -moz-appearance: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  padding-right: 2rem !important;
+}
+#sort:active, #sort:focus {
+  outline: none;
+  border: 1px solid rgba(128, 128, 128, 0.76);
+}
+
+.product-qte-select {
+  transform: scale(1.1);
+}
+.product-qte-select input[type=button] {
+  width: 1.5rem;
+  text-align: center;
+  padding: 0;
+  border: none;
+  background-color: #dfdbdbd7;
+}
+.product-qte-select #plus {
+  border-radius: 0 5px 5px 0;
+}
+.product-qte-select #minus {
+  border-radius: 5px 0 0 5px;
+}
+.product-qte-select input[type=text] {
+  width: 1.8rem;
+}
+
+.shop-product-container .card-text {
+  font-family: "Lato", sans-serif;
+  color: #821616;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  font-size: 18px;
+}
+.shop-product-container #shop-product-qte-value {
+  pointer-events: none;
+  border: 0.1px solid #dfdbdbd7;
+}
+.shop-product-container #submit {
+  background: #81ab33;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  color: white;
+  font-family: "Corbel";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 15px;
+  border: none;
+  width: 70%;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.shop-product-container #submit:hover, .shop-product-container #submit:focus {
+  background-color: #81ab33a8;
 }

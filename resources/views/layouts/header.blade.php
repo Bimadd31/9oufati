@@ -78,71 +78,85 @@
                                 
                         
 
-                                <a href="#" class="text-decoration-none d-flex align-items-center justify-content-end"
-                                        data-bs-toggle="dropdown">
+                        <a href="#" class="text-decoration-none d-flex align-items-center justify-content-end"
+                                data-bs-toggle="dropdown">
 
-                                        <i class="nav-cart-icon position-relative align-middle me-2">
-                                        <span id="nav-account-count-container"
-                                                class="position-absolute nav-account-count-container rounded-circle start-50 text-center">
-                                                <span id="nav-cart-count" class="nav-cart-count">9</span>
-                                        </span>
-                                        </i>
-                                        <span class="nav-cart-text ">Panier</span>
+                                <i class="nav-cart-icon position-relative align-middle me-2">
+                                <span id="nav-account-count-container"
+                                        class="position-absolute nav-account-count-container rounded-circle start-50 text-center">
+                                        <span id="nav-cart-count" class="nav-cart-count">@auth {{$basket_products->count()}}@endauth</span>
+                                </span>
+                                </i>
+                                <span class="nav-cart-text ">Panier</span>
 
-                                </a>
+                        </a>
 
-                                <!-- CART WIDGET DROPDOWN -->
+                        <!-- CART WIDGET DROPDOWN -->
+                        
+                        <div class="position-absolute nav-cart-widget-container col-12 pb-3  mt-3 dropdown-menu dropdown-menu-end " 
+                                style="width: 320px;max-height: 600px;" >
+                                <div class="d-flex col-12 justify-content-start align-items-center">
+                                <div class="ms-4 px-2 py-3 cart-widget-subtotal-text">Sous-total : <span
+                                        class="cart-widget-subtotal ms-2"></span></div>
 
-                                <div class="position-absolute nav-cart-widget-container col-12 pb-3 dropdown-menu dropdown-menu-end mt-3 "
-                                        style="width: 320px;max-height: 600px;">
-                                        <div class="d-flex col-12 justify-content-start align-items-center">
-                                        <div class="ms-4 px-2 py-3 cart-widget-subtotal-text">Sous-total : <span
-                                                class="cart-widget-subtotal ms-2">38,30
-                                                DH</span></div>
+                                </div>
+                                <div class="col-12 mx-auto mb-3"
+                                style="height: 0.5px; width: 60%;background-color: #D0CDCD;opacity: 0.5;"></div>
 
-                                        </div>
-                                        <div class="col-12 mx-auto mb-3"
-                                        style="height: 0.5px; width: 60%;background-color: #D0CDCD;opacity: 0.5;"></div>
+                                <div class="col-12 d-flex flex-column align-items-center justify-content-center">
 
-                                        <div class="col-12 d-flex flex-column align-items-center justify-content-center">
-                                        <div class="card nav-cart-item mb-1 d-flex justify-content-center"
-                                                style="width: 300px;height: 80px;">
-                                                <div class="row g-0">
-                                                <div class="col-4 d-flex justify-content-center align-items-center">
-                                                        <img src="../img/banane.png" class="nav-cart-item-img">
-                                                </div>
+                                      @auth
+                                                @foreach ($basket_products as $product)
+                                                
+                                                <div class="card nav-cart-item mb-1 d-flex justify-content-center"
+                                                        style="width: 300px;height: 80px;">
+                                                        <div class="row g-0">
+                                                        <div class="col-4 d-flex justify-content-center align-items-center">
+                                                                <img src="..{{ $product->image }}" class="nav-cart-item-img">
+                                                        </div>
 
-                                                <div class="col-8">
-                                                        <div class="card-body">
-                                                        <div class="rounded-circle nav-cart-item-del-btn position-absolute d-block"
-                                                                style="width: 18px;height: 18px;"></div>
-                                                        <p class="card-title">Banane - mawz</p>
-                                                        <p class="card-text text-end">
-                                                                <span class="nav-cart-item-quantity pe-1">1 kg</span>x<span
-                                                                class="nav-cart-item-price ps-1">17.00
-                                                                DH</span>
-                                                        </p>
+                                                        <div class="col-8">
+                                                                <form id="header-product-form" method="POST" novalidate >
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        
+                                                                <input id="product_id" name="product_id" type="hidden" value="{{ $product->product_id }}">
+                                                                <div class="card-body">
+
+                                                                <input type="submit" id="submit" class="rounded-circle nav-cart-item-del-btn position-absolute d-block"
+                                                                        style="width: 18px;height: 18px;" value="">
+                                                                <p class="card-title">{{ $product->name }}</p>
+                                                                <p class="card-text text-end">
+                                                                        <span class="nav-cart-item-quantity pe-1">
+                                                                                {{$product->quantity}} 
+                                                                                {{$product->mesure_unit }}
+                                                                        </span>x<span
+                                                                        class="nav-cart-item-price ps-1">{{ number_format($product->sell_price,2)}} DH</span>
+                                                                </p>
+                                                                </div>
+                                                                </form>
+                                                        </div>
                                                         </div>
                                                 </div>
-                                                </div>
-                                        </div>
-                                        </div>
-
-                                        
-
-                                        <div class="col-12 mx-auto my-3 nav-cart-widget-btn-container"></div>
-
-                                        <div class="col-12 d-flex ">
-                                        <div class="col-4 pt-2 nav-cart-widget-btn ms-3"
-                                                onclick="window.location.href='{{ route('cart') }}'" style="background-color: #5c824a;">
-                                                <span>Allez au panier</span>
-                                        </div>
-                                        <div class="col-4 pt-2 nav-cart-widget-btn ms-2" onclick="window.location.href='#'"
-                                                style="background-color: #cd4848;">
-                                                <span>Commander</span>
-                                        </div>
-                                        </div>
+                                                @endforeach
+                                        @endauth
                                 </div>
+
+                                
+
+                                <div class="col-12 mx-auto my-3 nav-cart-widget-btn-container"></div>
+
+                                <div class="col-12 d-flex ">
+                                <div class="col-4 pt-2 nav-cart-widget-btn ms-3"
+                                        onclick="window.location.href='{{ route('cart') }}'" style="background-color: #5c824a;">
+                                        <span>Allez au panier</span>
+                                </div>
+                                <div class="col-4 pt-2 nav-cart-widget-btn ms-2" onclick="window.location.href='#'"
+                                        style="background-color: #cd4848;">
+                                        <span>Commander</span>
+                                </div>
+                                </div>
+                        </div>
 
                         </div>
                                 <!-- NAVIGATION ACCOUNT CONTAINER -->
