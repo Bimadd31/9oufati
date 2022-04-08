@@ -10,7 +10,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    
   
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -36,14 +35,22 @@
 <body>
         
         <div id="app">
+                
+                  <div class="w-100 alert-banner position-fixed " style="z-index: 50">
+                        <div class='success-alert text-center alert alert-success' role='alert'></div>
+                        <div class='exist-alert text-center alert alert-danger' role='alert'></div>
+
+                  </div>
+               
                 @include('layouts.header')
                 @yield('content')
         </div>
+        
+                <script src="{{ mix('js/app.js') }}" ></script>
 
-        <script src="{{ mix('js/app.js') }}" ></script>
+       
         
         @include('auth.login')
-          
         @yield('scripts')
 </body>
 </html>

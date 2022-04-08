@@ -4,28 +4,27 @@
 
         <div class="position-relative col-12 bg-green d-block" style="height: 40px;">
 
-        <div class="lang-bar d-flex flex-row float-end p-2">
+                <div class="lang-bar d-flex flex-row float-end p-2">
 
-                <div class="fr-link pe-3 ">
-                <a href="#">
-                        
-                        <div class="flag fr-flag d-inline-flex  h-100 align-middle me-2"></div>
-                        <span class="">Français</span>
-                </a>
+                        <div class="fr-link pe-3 ">
+                        <a href="#">
+                                <div class="flag fr-flag d-inline-flex  h-100 align-middle me-2"></div>
+                                <span class="">Français</span>
+                        </a>
+
+                        </div>
+
+                        <div class="vr h-50 align-self-center "></div>
+
+                        <div class="ar-link px-3 pe-2 pe-md-5">
+                        <a href="#">
+                                <div class="flag ar-flag d-inline-flex h-100 align-middle me-2"></div>
+                                <span>العربية</span>
+                        </a>
+
+                        </div>
 
                 </div>
-
-                <div class="vr h-50 align-self-center "></div>
-
-                <div class="ar-link px-3 pe-2 pe-md-5">
-                <a href="#">
-                        <div class="flag ar-flag d-inline-flex h-100 align-middle me-2"></div>
-                        <span>العربية</span>
-                </a>
-
-                </div>
-
-        </div>
         </div>
         <!-- END -->
 
@@ -60,10 +59,8 @@
                         </ul>
                 </div>
 
-        <div class="col-4 d-flex flex-column">
-
-                                
-
+                <div class="col-4 d-flex flex-column">
+       
                 <div class="col-12 d-inline-flex align-items-center justify-content-center   justify-content-xxl-end">
 
                         {{-- <div class="d-inline-flex ">

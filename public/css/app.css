@@ -11861,3 +11861,16 @@ input[type=checkbox]:checked::before {
 .shop-product-container #submit:hover, .shop-product-container #submit:focus {
   background-color: #81ab33a8;
 }
+
+.alert-banner .exist-alert {
+  display: none;
+}
+.alert-banner .exist-alert::after {
+  content: "Ce produit est déja ajouté !";
+}
+.alert-banner .success-alert {
+  display: none;
+}
+.alert-banner .success-alert::after {
+  content: "Le produit a été ajouté a votre panier !";
+}

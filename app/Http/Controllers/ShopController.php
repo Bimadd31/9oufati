@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Basket;
+use App\Models\Basket_details;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class ShopController extends Controller
 {
@@ -14,7 +18,27 @@ class ShopController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products')->get();
+
+        if (!Auth::user()) {
+            $products = DB::table('products')
+                ->join('product_category', 'products.category_id', '=', 'product_category.id')
+                ->selectRaw('product_category.name as category_name,products.*')
+                ->get();
+        } else {
+
+            $user_basket = DB::table('baskets')
+                ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
+                ->where('user_id', '=', auth()->user()->id)
+                ->get();
+
+            $basket_id = $user_basket[0]->id;
+
+            $products = DB::table('products')
+                ->join('product_category', 'products.category_id', '=', 'product_category.id')
+                ->selectRaw('product_category.name as category_name,products.*')
+                // ->leftJoin('basket_details', 'products.id', '=', 'basket_details.product_id')
+                ->get();
+        }
         return view('shop.index', compact('products'));
     }
 
