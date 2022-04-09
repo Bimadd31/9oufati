@@ -566,11 +566,11 @@ input[type="checkbox"] {
         background-color: #dfdbdbd7;
     }
 
-    #plus {
+    .plus {
         border-radius: 0 5px 5px 0;
     }
 
-    #minus {
+    .minus {
         border-radius: 5px 0 0 5px;
     }
 
@@ -588,12 +588,12 @@ input[type="checkbox"] {
         letter-spacing: 0.01em;
         font-size: 18px;
     }
-    #shop-product-qte-value{
+    .shop-product-qte-value{
         pointer-events: none;
         border: 0.1px solid #dfdbdbd7;
     }
 
-    #submit {
+    .submit {
         background: #81ab33;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
         border-radius: 10px;

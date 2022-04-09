@@ -113,14 +113,14 @@
                                                         </div>
 
                                                         <div class="col-8">
-                                                                <form id="header-product-form" method="POST" novalidate >
+                                                                <form class="header-product-form" method="POST" novalidate >
                                                                         @csrf
                                                                         @method('DELETE')
                                                                         
-                                                                <input id="product_id" name="product_id" type="hidden" value="{{ $product->product_id }}">
+                                                                <input class="product_id" name="product_id" type="hidden" value="{{ $product->product_id }}">
                                                                 <div class="card-body">
 
-                                                                <input type="submit" id="submit" class="rounded-circle nav-cart-item-del-btn position-absolute d-block"
+                                                                <input type="submit" class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block"
                                                                         style="width: 18px;height: 18px;" value="">
                                                                 <p class="card-title">{{ $product->name }}</p>
                                                                 <p class="card-text text-end">

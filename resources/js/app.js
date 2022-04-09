@@ -9,9 +9,9 @@ require('./ajax');
 
 import { createApp } from 'vue'
 
-import addProduct from './components/addProduct.vue'
+import Shop_page from './Shop.vue';
 
-const AddProduct = createApp({}).component('add-product',addProduct).mount('#shop-products-container')
+const shop = createApp({}).component('shop-content',Shop_page).mount('#shop-page')
 
 
 /**

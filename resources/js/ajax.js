@@ -29,11 +29,11 @@ $(function(){
 
 
 
-  $('#header-product-form #submit').on("click",function(e){
+  $('.header-product-form .submit').on("click",function(e){
             e.preventDefault();
                 let thisbutton = $(this);
                 
-                let product_id = thisbutton.closest('form').find("#product_id").val();
+                let product_id = thisbutton.closest('form').find(".product_id").val();
                 
                 $.ajax({
                     url: "/cart/"+product_id,
