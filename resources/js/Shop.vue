@@ -10,7 +10,8 @@
                 <div class="row pt-5">
                     <div class="col-md-10 mt-2 mx-auto">
                         <label for="input-filter" class="ms-2 mb-2 ">Rechercher</label>
-                        <input class="form-control bg-light" type="text" id="input-filter" placeholder="Trouve ton produit">
+                            
+                        <input v-model="searchInput" class="form-control bg-light" type="text" id="input-filter" placeholder="Trouve ton produit">
                     </div>
                 </div>
                 <div class="row mt-5">
@@ -23,7 +24,7 @@
                                 </div>
 
                                 <div :key="category.id" v-for="category in categories">
-                                    <input type="checkbox" :class="{selected: isActive(category.name)}" @click="setActive(category.name)">
+                                    <input type="checkbox" :id="category.name" :class="{selected: isActive(category.name)}" @click="setActive(category.name)">
                                     
                                     <label class="ms-2" for="check-basket">
                                     {{category.name.toLowerCase().replace(/^\w/, (c) => c.toUpperCase())}}
@@ -87,6 +88,7 @@ export default {
             return {
                 // categories : ['fruits','legumes','epices','herbe','panier'],
                 filtersAppied: [],
+                searchInput : ''
 
 
             }
@@ -108,37 +110,62 @@ export default {
                 },
                 removeTags : function (item) {
                     this.filtersAppied.pop(item)
+                    $("#"+item+"").prop('checked', false); 
                 },
         },
         computed:{
               filteredItems: function() {
 
                 return this.products.filter( product => {
- 
-                return this.filtersAppied.every( filterAppied => {
+                    if (this.filtersAppied.length > 0 && this.searchInput.length > 0 ){
+                        if (this.filtersAppied.includes(product.category_name)){
+                            
+                            let ProductName = product.name.split('-');
+                            let FrenchName = ProductName[0].toLowerCase();
+                            let ArabicName = ProductName[1];
+                            return FrenchName.includes(this.searchInput.toLowerCase());
+                        }
 
-             
-                    if (product.category_name.includes(filterAppied)) {
-                        
-                        return product.category_name.includes(filterAppied);
                     }
-                    // if (product.size.includes(filterAppied)) {
-                    //     return product.size.includes(filterAppied);
-                    // }
-                    });
-                });
+                    if(this.filtersAppied.length > 0){
+                        return this.filtersAppied.includes(product.category_name)
+                    }
+                    if(this.searchInput.length > 0 ){
+        
+                        let ProductName = product.name.split('-');
+                        let FrenchName = ProductName[0].toLowerCase();
+                        let ArabicName = ProductName[1];
+                        return FrenchName.includes(this.searchInput.toLowerCase());
+                    }
+
+                    
+                    
+                    return this.products
+
+                    // return this.filtersAppied.length > 0 ? this.filtersAppied.includes(product.category_name) : this.products;
+                    // return this.searchInput.length > 0 ?  this.product.name.includes(this.searchInput) : this.products;
+                    
+                                    
+                })
                 
                 },
-            // productFilter(){
-            //     let cat = this.selectedCategory;
+                // filterSearch(){
+                //     return this.products.filter( product => {
 
-                
-            //     if(cat != null){
-            //          return this.products.filter(item => item.category_id == cat);
-                     
-            //     }
-            //     //  return this.products; 
-            // },
+                //         if (this.searchInput.length > 0){
+                //             // return this.product.name.some(prodName => prodName.includes(this.searchInput))
+
+                //             return this.searchInput.toLowerCase().split(" ").every(v => product.name.toLowerCase().includes(v));
+                //         }
+                //     })
+
+          
+                // }
+              
+                // lookup(e){
+                //     // let value = e.curretTarget.val();
+                //     console.log(e.currentTarget.innerText)
+                // }
         },
 }
 </script>

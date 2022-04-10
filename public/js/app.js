@@ -22493,7 +22493,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       // categories : ['fruits','legumes','epices','herbe','panier'],
-      filtersAppied: []
+      filtersAppied: [],
+      searchInput: ''
     };
   },
   components: {
@@ -22512,6 +22513,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     removeTags: function removeTags(item) {
       this.filtersAppied.pop(item);
+      $("#" + item + "").prop('checked', false);
     }
   },
   computed: {
@@ -22519,22 +22521,43 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       return this.products.filter(function (product) {
-        return _this.filtersAppied.every(function (filterAppied) {
-          if (product.category_name.includes(filterAppied)) {
-            return product.category_name.includes(filterAppied);
-          } // if (product.size.includes(filterAppied)) {
-          //     return product.size.includes(filterAppied);
-          // }
+        if (_this.filtersAppied.length > 0 && _this.searchInput.length > 0) {
+          if (_this.filtersAppied.includes(product.category_name)) {
+            var ProductName = product.name.split('-');
+            var FrenchName = ProductName[0].toLowerCase();
+            var ArabicName = ProductName[1];
+            return FrenchName.includes(_this.searchInput.toLowerCase());
+          }
+        }
 
-        });
+        if (_this.filtersAppied.length > 0) {
+          return _this.filtersAppied.includes(product.category_name);
+        }
+
+        if (_this.searchInput.length > 0) {
+          var _ProductName = product.name.split('-');
+
+          var _FrenchName = _ProductName[0].toLowerCase();
+
+          var _ArabicName = _ProductName[1];
+          return _FrenchName.includes(_this.searchInput.toLowerCase());
+        }
+
+        return _this.products; // return this.filtersAppied.length > 0 ? this.filtersAppied.includes(product.category_name) : this.products;
+        // return this.searchInput.length > 0 ?  this.product.name.includes(this.searchInput) : this.products;
       });
-    } // productFilter(){
-    //     let cat = this.selectedCategory;
-    //     if(cat != null){
-    //          return this.products.filter(item => item.category_id == cat);
-    //     }
-    //     //  return this.products; 
-    // },
+    } // filterSearch(){
+    //     return this.products.filter( product => {
+    //         if (this.searchInput.length > 0){
+    //             // return this.product.name.some(prodName => prodName.includes(this.searchInput))
+    //             return this.searchInput.toLowerCase().split(" ").every(v => product.name.toLowerCase().includes(v));
+    //         }
+    //     })
+    // }
+    // lookup(e){
+    //     // let value = e.curretTarget.val();
+    //     console.log(e.currentTarget.innerText)
+    // }
 
   }
 });
@@ -22710,16 +22733,38 @@ var _hoisted_2 = {
   "class": "col-md-3 shop-filter-container mt-5"
 };
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row text-center\" data-v-24dd1cd8><h4 data-v-24dd1cd8>Filtres</h4></div><div class=\"row pt-5\" data-v-24dd1cd8><div class=\"col-md-10 mt-2 mx-auto\" data-v-24dd1cd8><label for=\"input-filter\" class=\"ms-2 mb-2\" data-v-24dd1cd8>Rechercher</label><input class=\"form-control bg-light\" type=\"text\" id=\"input-filter\" placeholder=\"Trouve ton produit\" data-v-24dd1cd8></div></div>", 2);
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "row text-center"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h4", null, "Filtres")], -1
+  /* HOISTED */
+  );
+});
 
-var _hoisted_5 = {
-  "class": "row mt-5"
+var _hoisted_4 = {
+  "class": "row pt-5"
 };
-var _hoisted_6 = {
+var _hoisted_5 = {
   "class": "col-md-10 mt-2 mx-auto"
 };
 
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "input-filter",
+    "class": "ms-2 mb-2"
+  }, "Rechercher", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_7 = {
+  "class": "row mt-5"
+};
+var _hoisted_8 = {
+  "class": "col-md-10 mt-2 mx-auto"
+};
+
+var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "mb-3"
   }, "Categorie", -1
@@ -22727,11 +22772,11 @@ var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_8 = {
+var _hoisted_10 = {
   "class": "ms-4 d-grid gap-1"
 };
 
-var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "checkbox",
     name: "",
@@ -22744,23 +22789,23 @@ var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_10 = ["onClick"];
-var _hoisted_11 = {
+var _hoisted_12 = ["id", "onClick"];
+var _hoisted_13 = {
   "class": "ms-2",
   "for": "check-basket"
 };
-var _hoisted_12 = {
+var _hoisted_14 = {
   "class": "col-md-9 shop-product-container p-0"
 };
-var _hoisted_13 = {
+var _hoisted_15 = {
   "class": "row mt-4"
 };
-var _hoisted_14 = {
+var _hoisted_16 = {
   "class": "col-md-9"
 };
-var _hoisted_15 = ["onClick"];
+var _hoisted_17 = ["onClick"];
 
-var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_18 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col-md-3 justify-content-end"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
@@ -22776,18 +22821,29 @@ var _hoisted_16 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
-var _hoisted_17 = {
+var _hoisted_19 = {
   id: "shop-products-container",
   "class": "row bg-light mt-3 p-4 w-100 row-cols-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_productCard = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("productCard");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" LEFT SIDE  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.categories, function (category) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" LEFT SIDE  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.searchInput = $event;
+    }),
+    "class": "form-control bg-light",
+    type: "text",
+    id: "input-filter",
+    placeholder: "Trouve ton produit"
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.searchInput]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.categories, function (category) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: category.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       type: "checkbox",
+      id: category.name,
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)({
         selected: $options.isActive(category.name)
       }),
@@ -22796,14 +22852,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, null, 10
     /* CLASS, PROPS */
-    , _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(category.name.toLowerCase().replace(/^\w/, function (c) {
+    , _hoisted_12), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(category.name.toLowerCase().replace(/^\w/, function (c) {
       return c.toUpperCase();
     })), 1
     /* TEXT */
     )]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" RIGHT SIDE  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.filtersAppied, function (filterAppied) {
+  ))])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" RIGHT SIDE  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.filtersAppied, function (filterAppied) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
       key: filterAppied
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
@@ -22813,10 +22869,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }
     }, "X " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(filterAppied), 9
     /* TEXT, PROPS */
-    , _hoisted_15)]);
+    , _hoisted_17)]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), _hoisted_16]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredItems, function (product) {
+  ))]), _hoisted_18]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredItems, function (product) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_productCard, {
       key: product.id,
       image: product.image,
