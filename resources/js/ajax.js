@@ -29,19 +29,19 @@ $(function(){
 
 
 
-  $('.header-product-form .submit').on("click",function(e){
-            e.preventDefault();
-                let thisbutton = $(this);
+//   $('.header-product-form .submit').on("click",function(e){
+//             e.preventDefault();
+//                 let thisbutton = $(this);
                 
-                let product_id = thisbutton.closest('form').find(".product_id").val();
+//                 let product_id = thisbutton.closest('form').find(".product_id").val();
                 
-                $.ajax({
-                    url: "/cart/"+product_id,
-                    type: "DELETE",
+//                 $.ajax({
+//                     url: "/cart/"+product_id,
+//                     type: "DELETE",
 
-                    success: function(response) {
-                        console.log(response);
-                    }            
-                });
-            });
+//                     success: function(response) {
+//                         console.log(response);
+//                     }            
+//                 });
+//             });
 });

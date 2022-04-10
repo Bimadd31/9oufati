@@ -22,30 +22,14 @@
                                     <label class="ms-2" for="check-all">Tout</label>
                                 </div>
 
-                                <div>
-                                    <input type="checkbox" name="" id="check-basket">
-                                    <label class="ms-2" for="check-basket">Panier</label>
+                                <div :key="category.id" v-for="category in categories">
+                                    <input type="checkbox" :class="{selected: isActive(category.name)}" @click="setActive(category.name)">
+                                    
+                                    <label class="ms-2" for="check-basket">
+                                    {{category.name.toLowerCase().replace(/^\w/, (c) => c.toUpperCase())}}
+                                    </label>
                                 </div>
 
-                                <div>
-                                    <input type="checkbox" name="" id="check-fruits" @click="selectCategory(1)">
-                                    <label class="ms-2" for="check-fruit">Fruits</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" id="check-vegetable" @click="selectCategory(2)" >
-                                    <label class="ms-2" for="check-vegetable">Légumes</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" name="" id="check-spice">
-                                    <label class="ms-2" for="check-spice">Épices</label>
-                                </div>
-
-                                <div>
-                                    <input type="checkbox" name="" id="check-herb">
-                                    <label class="ms-2" for="check-herb">Herbes</label>
-                                </div>
                             </div>
                     </div>
                 </div>
@@ -55,8 +39,13 @@
 
             <div class="col-md-9 shop-product-container p-0">
 
-                <div class="row justify-content-end mt-4">
-                    <div class="col-md-3">
+                <div class="row  mt-4">
+                    <div class="col-md-9">
+                        <span :key="filterAppied"  v-for ="filterAppied in filtersAppied">
+                            <span class="badge bg-danger" @click='removeTags(filterAppied)'>X {{filterAppied}}</span>
+                        </span>
+                    </div>
+                    <div class="col-md-3 justify-content-end">
                         <select name="" id="sort" class="w-75  ">
                             <option value="">Tri par récent au plus ancien</option>
                             <option value=""></option>
@@ -64,19 +53,11 @@
                     </div>
                 </div>
 
-                <div id="shop-products-container" class="row bg-light mt-3 p-4 w-100 row-cols-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5" >
-
-
-                            <!-- <productCard :key="product.id" v-for="product in this.products"
-                            :image="product.image" 
-                            :name="product.name"
-                            :id="product.id"
-                            :price="product.sell_price"
-                            :category="product.category_name"></productCard> -->
-
+                <div id="shop-products-container" 
+                class="row bg-light mt-3 p-4 w-100 row-cols-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5" >
 
                             
-                            <productCard :key="product.id" v-for="product in productFilter"
+                            <productCard :key="product.id" v-for="product in filteredItems"
                             :image="product.image" 
                             :name="product.name"
                             :id="product.id"
@@ -95,39 +76,75 @@ import productCard from './components/productCard.vue'
 
 export default {
         name: 'Shop',
+        mounted(){
+            console.log(this.categories)
+        },
         props:{
             products: Object,
+            categories: Object,
         },
         data(){
             return {
-                selectedCategory : '',
+                // categories : ['fruits','legumes','epices','herbe','panier'],
+                filtersAppied: [],
+
+
             }
         },
         components:{
             productCard,
         },
          methods:{
-                selectCategory(id){
-                    this.selectedCategory = id;
-                }
+               
+                setActive: function(element){
+                        if(this.filtersAppied.indexOf(element) > -1){
+                            this.filtersAppied.pop(element)
+                        }else{
+                            this.filtersAppied.push(element)
+                        }
+                    },
+                isActive: function (menuItem) {
+                    return this.filtersAppied.indexOf(menuItem) > -1
+                },
+                removeTags : function (item) {
+                    this.filtersAppied.pop(item)
+                },
         },
         computed:{
-            productFilter(){
-                let cat = this.selectedCategory;
+              filteredItems: function() {
+
+                return this.products.filter( product => {
+ 
+                return this.filtersAppied.every( filterAppied => {
+
+             
+                    if (product.category_name.includes(filterAppied)) {
+                        
+                        return product.category_name.includes(filterAppied);
+                    }
+                    // if (product.size.includes(filterAppied)) {
+                    //     return product.size.includes(filterAppied);
+                    // }
+                    });
+                });
+                
+                },
+            // productFilter(){
+            //     let cat = this.selectedCategory;
 
                 
-                if(cat != null){
-                     return this.products.filter(item => item.category_id == cat);
+            //     if(cat != null){
+            //          return this.products.filter(item => item.category_id == cat);
                      
-                }
-                 return this.products;
-
-                
-            },
+            //     }
+            //     //  return this.products; 
+            // },
         },
 }
 </script>
 
-<style>
-
+<style scoped>
+    .badge{
+        cursor: pointer;
+    }
 </style>

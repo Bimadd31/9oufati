@@ -100,42 +100,10 @@
                                 <div class="col-12 mx-auto mb-3"
                                 style="height: 0.5px; width: 60%;background-color: #D0CDCD;opacity: 0.5;"></div>
 
-                                <div class="col-12 d-flex flex-column align-items-center justify-content-center">
+                                <div class="nav-cart-items-container col-12 d-flex flex-column align-items-center justify-content-center">
 
-                                      @auth
-                                                @foreach ($basket_products as $product)
-                                                
-                                                <div class="card nav-cart-item mb-1 d-flex justify-content-center"
-                                                        style="width: 300px;height: 80px;">
-                                                        <div class="row g-0">
-                                                        <div class="col-4 d-flex justify-content-center align-items-center">
-                                                                <img src="..{{ $product->image }}" class="nav-cart-item-img">
-                                                        </div>
-
-                                                        <div class="col-8">
-                                                                <form class="header-product-form" method="POST" novalidate >
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        
-                                                                <input class="product_id" name="product_id" type="hidden" value="{{ $product->product_id }}">
-                                                                <div class="card-body">
-
-                                                                <input type="submit" class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block"
-                                                                        style="width: 18px;height: 18px;" value="">
-                                                                <p class="card-title">{{ $product->name }}</p>
-                                                                <p class="card-text text-end">
-                                                                        <span class="nav-cart-item-quantity pe-1">
-                                                                                {{$product->quantity}} 
-                                                                                {{$product->mesure_unit }}
-                                                                        </span>x<span
-                                                                        class="nav-cart-item-price ps-1">{{ number_format($product->sell_price,2)}} DH</span>
-                                                                </p>
-                                                                </div>
-                                                                </form>
-                                                        </div>
-                                                        </div>
-                                                </div>
-                                                @endforeach
+                                        @auth
+                                               <header-cart-items :basket_products="{{ $basket_products }}"></header-cart-items>
                                         @endauth
                                 </div>
 

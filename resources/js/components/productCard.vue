@@ -6,6 +6,9 @@
                     <img :src="this.image" class="card-img-top" :alt="this.name">
                     <div class="card-body">
                         <h5 class="card-title">{{ name }}</h5>
+                       
+                            
+                        <p class="card-text" >{{ (Math.round(price * 100) / 100).toFixed(2) }} DH</p>
                     </div>
 
                 <form  class="form-shop-add-product" method="POST" novalidate>
@@ -19,7 +22,7 @@
                         <input type="hidden" name="product_id" :value="this.id">
                         
                         <input @click="onSubmit" type="submit" class="submit" :value="basketStatus">
-                        {{category}}
+                      
                     </div>
                 </form>
             </div>
@@ -33,7 +36,7 @@
 
 export default {
       mounted() {
-            
+
         },
         data(){
             return{

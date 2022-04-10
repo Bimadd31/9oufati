@@ -10,8 +10,10 @@ require('./ajax');
 import { createApp } from 'vue'
 
 import Shop_page from './Shop.vue';
+import Header_Cart_items from './components/cartHeader.vue'
 
-const shop = createApp({}).component('shop-content',Shop_page).mount('#shop-page')
+const shop = createApp({}).component('shop-content',Shop_page).mount('#shop-page');
+const cartHeader = createApp({}).component('header-cart-items',Header_Cart_items).mount('.nav-cart-items-container');
 
 
 /**

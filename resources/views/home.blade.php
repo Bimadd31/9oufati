@@ -28,15 +28,17 @@
             <div class="col-11">
                 <div class="row">
                     @foreach ($product_category as $category)
-                        
-                    <div class="col-6 col-lg-3 d-flex justify-content-center align-items-center p-0">
-                        <div class="category-btn-container" onclick="location.href = '#'">
+                    
+                        @if ($category->id != 5)
+                            <div class="col-6 col-lg-3 d-flex justify-content-center align-items-center p-0">
+                                <div class="category-btn-container" onclick="location.href = '#'">
 
-                            <div class="category-btn-img"
-                                style="background-image: url('{{$category->image }}');"></div>
-                            <div class="position-relative">{{$category->name }}</div>
+                                    <div class="category-btn-img"
+                                        style="background-image: url('{{$category->image }}');"></div>
+                                    <div class="position-relative">{{$category->name }}</div>
 
-                        </div>
+                                </div>
+                        @endif
                     </div>
                     
                     @endforeach

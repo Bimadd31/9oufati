@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Basket;
 use App\Models\Basket_details;
+use App\Models\Product_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,9 @@ class ShopController extends Controller
                 // ->leftJoin('basket_details', 'products.id', '=', 'basket_details.product_id')
                 ->get();
         }
-        return view('shop.index', compact('products'));
+        $categories = DB::table('product_category')->get();
+
+        return view('shop.index', compact('products', 'categories'));
     }
 
     /**
