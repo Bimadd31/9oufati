@@ -1,5 +1,5 @@
 <template>
-    <div :key="product.id" v-for="product in products" class="card nav-cart-item mb-1 d-flex justify-content-center" style="width: 300px;height: 80px;">
+    <div :key="product.id" v-for="product in filteredProducts" class="card nav-cart-item mb-1 d-flex justify-content-center" style="width: 300px;height: 80px;">
 
                     <div class="row g-0">
                     <div class="col-4 d-flex justify-content-center align-items-center">
@@ -38,7 +38,7 @@ export default {
         },
         data(){
             return {
-                products : this.basket_products
+                deleted : [],
             }
         },
       
@@ -52,18 +52,24 @@ export default {
                 let product_id = data.get('product_id');
 
                     axios.delete('/cart/'+product_id) .then(response =>{
-                        this.products = this.products.filter((product)=> product.id !== product_id);
+                        // this.products = this.products.filter((product)=> product.id !== product_id);
+                            this.deleted.push(product_id);
+                       
                     });
                    
             },
+            deleteStatus(){
+
+            }
         },
         computed:{
-            // hideProduct(id){
-            //     this.filtered_products = this.filtered_products.filter((product)=> product.id !== id);
-            // },
-            // filtered_products(){
-            //     this.products =  ;
-            // },
+            filteredProducts(){
+                return this.basket_products.filter(product => {
+
+                    return this.deleted.length > 0 ? this.deleted.some(del => del != product.id) : this.basket_products
+                    // return product;
+                })
+            }
         },
 }
 </script>

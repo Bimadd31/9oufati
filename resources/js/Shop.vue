@@ -18,15 +18,12 @@
                     <div class="col-md-10 mt-2 mx-auto">
                             <div class="mb-3">Categorie</div>
                             <div class="ms-4 d-grid gap-1">
-                                <div>
-                                    <input type="checkbox" name="" id="check-all">
-                                    <label class="ms-2" for="check-all">Tout</label>
-                                </div>
+                               
 
                                 <div :key="category.id" v-for="category in categories">
                                     <input type="checkbox" :id="category.name" :class="{selected: isActive(category.name)}" @click="setActive(category.name)">
                                     
-                                    <label class="ms-2" for="check-basket">
+                                    <label class="ms-2" :for="category.name">
                                     {{category.name.toLowerCase().replace(/^\w/, (c) => c.toUpperCase())}}
                                     </label>
                                 </div>
@@ -97,6 +94,7 @@ export default {
             productCard,
         },
          methods:{
+
                
                 setActive: function(element){
                         if(this.filtersAppied.indexOf(element) > -1){
@@ -149,23 +147,6 @@ export default {
                 })
                 
                 },
-                // filterSearch(){
-                //     return this.products.filter( product => {
-
-                //         if (this.searchInput.length > 0){
-                //             // return this.product.name.some(prodName => prodName.includes(this.searchInput))
-
-                //             return this.searchInput.toLowerCase().split(" ").every(v => product.name.toLowerCase().includes(v));
-                //         }
-                //     })
-
-          
-                // }
-              
-                // lookup(e){
-                //     // let value = e.curretTarget.val();
-                //     console.log(e.currentTarget.innerText)
-                // }
         },
 }
 </script>
@@ -173,5 +154,10 @@ export default {
 <style scoped>
     .badge{
         cursor: pointer;
+        
     }
+    label{
+        cursor: pointer;
+    }
+
 </style>

@@ -50,12 +50,12 @@
                         </form>
 
                         <ul class="nav mx-auto my-3 my-xl-0">
-                                <li><a href="#" class="nav-link nav-link-active">Accueil</a></li>
-                                <li><a href="#" class="nav-link ">Panier</a></li>
-                                <li><a href="#" class="nav-link ">Fruits</a></li>
-                                <li><a href="#" class="nav-link ">Légumes</a></li>
-                                <li><a href="#" class="nav-link ">Herbe</a></li>
-                                <li><a href="#" class="nav-link ">Epices</a></li>
+                                <li><a href="{{ route('home') }}" class="nav-link nav-link-active">Accueil</a></li>
+                                <li><a href="{{ route('shop',['cat'=>'panier']) }}" class="nav-link ">Panier</a></li>
+                                <li><a href="{{ route('shop',['cat'=>'fruits']) }}" class="nav-link ">Fruits</a></li>
+                                <li><a href="{{ route('shop',['cat'=>'legumes']) }}" class="nav-link ">Légumes</a></li>
+                                <li><a href="{{ route('shop',['cat'=>'herbe']) }}" class="nav-link ">Herbe</a></li>
+                                <li><a href="{{ route('shop',['cat'=>'epices']) }}" class="nav-link ">Epices</a></li>
                         </ul>
                 </div>
 
