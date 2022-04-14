@@ -19,30 +19,41 @@ class ShopController extends Controller
      */
     public function index()
     {
+        try {
 
-        if (!Auth::user()) {
-            $products = DB::table('products')
-                ->join('product_category', 'products.category_id', '=', 'product_category.id')
-                ->selectRaw('product_category.name as category_name,products.*')
-                ->get();
-        } else {
+            if (Auth::user()) {
 
-            $user_basket = DB::table('baskets')
-                ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
-                ->where('user_id', '=', auth()->user()->id)
-                ->get();
+                $user_basket = DB::table('baskets')
+                    ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
+                    ->where('user_id', '=', auth()->user()->id)
+                    ->get();
 
-            $basket_id = $user_basket[0]->id;
+                $basket_id = $user_basket[0]->id;
 
-            $products = DB::table('products')
-                ->join('product_category', 'products.category_id', '=', 'product_category.id')
-                ->selectRaw('product_category.name as category_name,products.*')
-                // ->leftJoin('basket_details', 'products.id', '=', 'basket_details.product_id')
-                ->get();
+                $products = DB::table('products')
+                    ->join('product_category', 'products.category_id', '=', 'product_category.id')
+                    ->selectRaw('product_category.name as category_name,products.*')
+                    // ->leftJoin('basket_details', 'products.id', '=', 'basket_details.product_id')
+                    ->get();
+            } else {
+                $products = DB::table('products')
+                    ->join('product_category', 'products.category_id', '=', 'product_category.id')
+                    ->selectRaw('product_category.name as category_name,products.*')
+                    ->get();
+            }
+
+
+            $categories = DB::table('product_category')->get();
+
+            $catProp = '';
+            if ($_GET['cat']) {
+                $catProp = $_GET['cat'];
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
         }
-        $categories = DB::table('product_category')->get();
 
-        return view('shop.index', compact('products', 'categories'));
+        return view('shop.index', compact('products', 'categories', 'catProp'));
     }
 
     /**

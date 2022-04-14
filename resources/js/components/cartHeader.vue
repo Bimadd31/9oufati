@@ -51,11 +51,15 @@ export default {
                 var data = new FormData(form);
                 let product_id = data.get('product_id');
 
+                if(!this.deleted.includes(product_id)){
+
                     axios.delete('/cart/'+product_id) .then(response =>{
-                        // this.products = this.products.filter((product)=> product.id !== product_id);
+
                             this.deleted.push(product_id);
+                            console.log(this.deleted)
                        
                     });
+                }
                    
             },
             deleteStatus(){
@@ -64,12 +68,16 @@ export default {
         },
         computed:{
             filteredProducts(){
-                return this.basket_products.filter(product => {
-
-                    return this.deleted.length > 0 ? this.deleted.some(del => del != product.id) : this.basket_products
-                    // return product;
+                return this.basket_products.filter(product =>{
+                     
+                        if (this.deleted.length > 0) {
+                            return this.deleted.some(e => !e.includes(product.id)) 
+                        } else {
+                            return this.basket_products
+                        }
+                   
                 })
-            }
+            },
         },
 }
 </script>

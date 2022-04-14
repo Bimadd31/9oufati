@@ -75,9 +75,12 @@ import productCard from './components/productCard.vue'
 export default {
         name: 'Shop',
         mounted(){
-            console.log(this.categories)
+
+             this.onLoad();
+
         },
         props:{
+            cat : String,
             products: Object,
             categories: Object,
         },
@@ -86,7 +89,7 @@ export default {
                 // categories : ['fruits','legumes','epices','herbe','panier'],
                 filtersAppied: [],
                 searchInput : ''
-
+                
 
             }
         },
@@ -95,7 +98,6 @@ export default {
         },
          methods:{
 
-               
                 setActive: function(element){
                         if(this.filtersAppied.indexOf(element) > -1){
                             this.filtersAppied.pop(element)
@@ -110,11 +112,21 @@ export default {
                     this.filtersAppied.pop(item)
                     $("#"+item+"").prop('checked', false); 
                 },
+                onLoad(){
+
+                    if(this.categories.some(cat => cat.name == this.cat.toUpperCase())){
+                        let categorie_name = this.cat.toUpperCase();
+                        this.setActive(categorie_name);
+                        document.getElementById(""+categorie_name+"").checked = true;
+                    }
+                },
         },
         computed:{
+                
               filteredItems: function() {
-
+        
                 return this.products.filter( product => {
+
                     if (this.filtersAppied.length > 0 && this.searchInput.length > 0 ){
                         if (this.filtersAppied.includes(product.category_name)){
                             
@@ -139,10 +151,6 @@ export default {
                     
                     
                     return this.products
-
-                    // return this.filtersAppied.length > 0 ? this.filtersAppied.includes(product.category_name) : this.products;
-                    // return this.searchInput.length > 0 ?  this.product.name.includes(this.searchInput) : this.products;
-                    
                                     
                 })
                 
