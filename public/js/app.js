@@ -22596,8 +22596,6 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.deleted.includes(product_id)) {
         axios["delete"]('/cart/' + product_id).then(function (response) {
           _this.deleted.push(product_id);
-
-          console.log(_this.deleted);
         });
       }
     },
@@ -22607,14 +22605,13 @@ __webpack_require__.r(__webpack_exports__);
     filteredProducts: function filteredProducts() {
       var _this2 = this;
 
+      console.log("deleted : ", this.deleted);
+      console.log("basket : ", this.basket_products);
+      console.info("values : ", Object.values(this.deleted));
       return this.basket_products.filter(function (product) {
-        if (_this2.deleted.length > 0) {
-          return _this2.deleted.some(function (e) {
-            return !e.includes(product.id);
-          });
-        } else {
-          return _this2.basket_products;
-        }
+        return Object.values(_this2.deleted) && Object.values(_this2.deleted).length > 0 ? !Object.values(_this2.deleted).some(function (d) {
+          return d.includes(product.id);
+        }) : _this2.basket_products;
       });
     }
   }

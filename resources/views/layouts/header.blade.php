@@ -50,12 +50,23 @@
                         </form>
 
                         <ul class="nav mx-auto my-3 my-xl-0">
-                                <li><a href="{{ route('home') }}" class="nav-link nav-link-active">Accueil</a></li>
-                                <li><a href="{{ route('shop',['cat'=>'panier']) }}" class="nav-link ">Panier</a></li>
-                                <li><a href="{{ route('shop',['cat'=>'fruits']) }}" class="nav-link ">Fruits</a></li>
-                                <li><a href="{{ route('shop',['cat'=>'legumes']) }}" class="nav-link ">Légumes</a></li>
-                                <li><a href="{{ route('shop',['cat'=>'herbe']) }}" class="nav-link ">Herbe</a></li>
-                                <li><a href="{{ route('shop',['cat'=>'epices']) }}" class="nav-link ">Epices</a></li>
+                                <li><a href="{{ route('home') }}" class="nav-link 
+                                        @if(url()->full() == route('home')) nav-link-active @endif">Accueil</a></li>
+
+                                <li><a href="{{ route('shop',['cat'=>'panier']) }}" class="nav-link
+                                        @if(url()->full() == route('shop',['cat'=>'panier'])) nav-link-active @endif">Panier</a></li>
+
+                                <li><a href="{{ route('shop',['cat'=>'fruits']) }}" class="nav-link
+                                        @if(url()->full() == route('shop',['cat'=>'fruits'])) nav-link-active @endif">Fruits</a></li>
+
+                                <li><a href="{{ route('shop',['cat'=>'legumes']) }}" class="nav-link 
+                                         @if(url()->full() == route('shop',['cat'=>'legumes'])) nav-link-active @endif">Légumes</a></li>
+
+                                <li><a href="{{ route('shop',['cat'=>'herbe']) }}" class="nav-link 
+                                         @if(url()->full() == route('shop',['cat'=>'herbe'])) nav-link-active @endif">Herbe</a></li>
+
+                                <li><a href="{{ route('shop',['cat'=>'epices']) }}" class="nav-link 
+                                         @if(url()->full() == route('shop',['cat'=>'epices'])) nav-link-active @endif">Epices</a></li>
                         </ul>
                 </div>
 

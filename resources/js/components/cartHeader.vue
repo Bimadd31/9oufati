@@ -56,7 +56,6 @@ export default {
                     axios.delete('/cart/'+product_id) .then(response =>{
 
                             this.deleted.push(product_id);
-                            console.log(this.deleted)
                        
                     });
                 }
@@ -68,17 +67,20 @@ export default {
         },
         computed:{
             filteredProducts(){
-                return this.basket_products.filter(product =>{
-                     
-                        if (this.deleted.length > 0) {
-                            return this.deleted.some(e => !e.includes(product.id)) 
-                        } else {
-                            return this.basket_products
-                        }
-                   
-                })
+               console.log("deleted : ",this.deleted)
+                console.log("basket : ",this.basket_products)
+                console.info("values : ",Object.values(this.deleted))
+
+                return this.basket_products.filter(product => {
+                    return (Object.values(this.deleted) && Object.values(this.deleted).length > 0) ? 
+                    !Object.values(this.deleted).some(d => d.includes(product.id))  : this.basket_products
+                    
+                }) 
+
+            }
+                
             },
-        },
+       
 }
 </script>
 
