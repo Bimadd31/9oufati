@@ -1,7 +1,8 @@
 <template>
+               
 
             <div v-if="filteredProducts.length > 0">
-
+                
                 <div :key="product.id" v-for="product in filteredProducts" 
                     class="card nav-cart-item mb-1 d-flex justify-content-center" style="width: 300px;height: 80px;">
                  
@@ -42,16 +43,21 @@
 <script>
 export default {
         name: 'CartHeaderContent',
-        
+
         props:{
             basket_products: Object,
         },
         data(){
             return {
                 deleted : [],
+                
             }
         },
-      
+        watch:{
+                // filteredProducts :function(val){
+                //     this.EmitToParent();
+                // }
+        },
         methods:{
             deleteProduct(e){
 
@@ -66,24 +72,20 @@ export default {
                     axios.delete('/cart/'+product_id) .then(response =>{
 
                             this.deleted.push(product_id);
-                       
                     });
                 }
                    
             },
-            deleteStatus(){
 
-            }
+    
         },
         computed:{
-            filteredProducts(){
-               console.log("deleted : ",this.deleted)
-                console.log("basket : ",this.basket_products)
-                console.info("values : ",Object.values(this.deleted))
-
+             filteredProducts(){
+                 
                 return this.basket_products.filter(product => {
                     return (Object.values(this.deleted) && Object.values(this.deleted).length > 0) ? 
-                    !Object.values(this.deleted).some(d => d.includes(product.id))  : this.basket_products
+                    !Object.values(this.deleted).some(d => d.includes(product.id)) : this.basket_products 
+                    
                     
                 }) 
 

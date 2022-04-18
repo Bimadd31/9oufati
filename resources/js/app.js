@@ -8,12 +8,13 @@ require('./bootstrap');
 require('./ajax');
 
 import { createApp } from 'vue'
+import store from './store/index'
 
 import Shop_page from './Shop.vue';
 import CartHeader from './CartHeader.vue'
 
-const shop = createApp({}).component('shop-content',Shop_page).mount('#shop-page');
-const cartHeader = createApp({}).component('header-cart',CartHeader).mount('.nav-cart-btn');
+const shop = createApp({}).component('shop-content',Shop_page).use(store).mount('#shop-page');
+const cartHeader = createApp({}).component('header-cart',CartHeader).use(store).mount('.nav-cart-btn');
 
 
 /**

@@ -33,7 +33,7 @@
 
                 <div class="nav-cart-items-container col-12 d-flex flex-column align-items-center justify-content-center">
 
-                        <CartHeaderContent :basket_products="data"></CartHeaderContent>  
+                        <CartHeaderContent @filteredData="getfilteredProducts" :basket_products="data" ></CartHeaderContent>  
                         
                 </div>
 
@@ -57,12 +57,18 @@
 <script>
 import CartHeaderContent from './components/CartHeaderContent.vue'
 export default {
+ 
     props:{
         data : Object,
     },
     components:{
         CartHeaderContent,
     },
+    methods:{
+        getfilteredProducts(value){
+            console.log(value);
+        }
+    }
    
 }
 </script>
