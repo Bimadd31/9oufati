@@ -4,22 +4,33 @@ import { createStore } from 'vuex'
 export default createStore({
   state () {
     return {
-      incart_products : {},
+      incart_products : [],
       deleted_products : [],
     }
   },
   mutations: {
-    set_incartProducts(state,data){
-      state.incart_products = data;
+    set_incart_products(state,data){
+      state.incart_products = data
     },
     set_deleted_product(state,id){
       state.deleted_products.push(id)
+    },
+    add_incart_products(state,data){
+      state.incart_products.push(data)
+      console.log(state.incart_products)
     }
   },
   actions:{
     set_deleted_product({commit},id){
       commit('set_deleted_product',id)
+    },
+    add_incart_products({commit},data){
+        commit('add_incart_products',data);
+    },
+    set_incart_products({commit},data){
+      commit('set_incart_products',data)
     }
+    
 
   },
   getters:{

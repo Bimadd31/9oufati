@@ -15,11 +15,10 @@
             </a>
 
                         <!-- CART WIDGET DROPDOWN -->
-                        
-        <div v-if="(this.get_product_count > 0)" 
-            class="position-absolute nav-cart-widget-container col-12 pb-3  mt-3 dropdown-menu dropdown-menu-end" 
-            style="width: 320px;min-height:150px;max-height: 600px;">
+        <div class="position-absolute nav-cart-widget-container col-12 pb-3  mt-3 dropdown-menu dropdown-menu-end" 
+            style="width: 320px;min-height:150px;max-height: 600px;"> 
 
+            <div v-if="(this.get_product_count > 0)" >
 
                 <div  class="d-flex col-12 justify-content-start align-items-center">
                 
@@ -38,7 +37,7 @@
 
                 <div class="nav-cart-items-container col-12 d-flex flex-column align-items-center justify-content-center">
 
-                        <CartHeaderContent :incart_products="data" ></CartHeaderContent>  
+                        <CartHeaderContent></CartHeaderContent>  
                         
                 </div>
 
@@ -58,16 +57,14 @@
             
                 </div>
                    
-        </div> 
+            </div> 
            
         
-        <div v-else 
-            class="position-absolute  nav-cart-widget-container row pb-3  mt-3 dropdown-menu dropdown-menu-end" 
-            style="width: 320px;min-height:150px;max-height: 600px;">
-            
-                <div class="d-grid col-12 justify-content-center align-items-center text-center" style="height:150px;">
-                    <span>votre panier est vide !</span>
-                </div>
+            <div v-else class="d-grid col-12 justify-content-center align-items-center text-center" style="height:150px;">
+                
+                <span style="font-family:Ubuntu">Votre panier est vide !</span>
+    
+            </div>
                 
         </div>
 </template>
@@ -79,18 +76,8 @@ export default {
     props:{
         data : Object,
     },
-    data(){
-        return{
-
-        }
-
-    },
-    methods:{
-
-    },
     mounted(){
-        
-        this.$store.commit('set_incartProducts', this.data)
+        this.$store.dispatch('set_incart_products', this.data);
     },
     components:{
         CartHeaderContent,
@@ -101,7 +88,8 @@ export default {
     computed:{
         get_product_count(){
             return this.$store.getters.get_cart_count
-        }
+        },
+        
     }
    
 }

@@ -17,7 +17,9 @@
                         <input type="button" value="-" class="minus" @click="product_qte">
                         <input type="text" name="quantity" class="shop-product-qte-value w-25 text-center" value="1">
                         <input type="button" value="+" class="plus" @click="product_qte">
+                        <input type="text" class="disabled border-0" name="mesure_unit" :value="mesure_unit">
                     </div>
+                    
                     <div class="mb-3">
                         <input type="hidden" name="product_id" :value="this.id">
                         
@@ -35,9 +37,6 @@
 <script>
 
 export default {
-      mounted() {
-
-        },
         data(){
             return{
                 status : true,
@@ -50,6 +49,7 @@ export default {
             price:  Number,
             id:  Number,
             category: String,
+            mesure_unit : String
         },
          computed : {
             basketStatus (){
@@ -61,13 +61,21 @@ export default {
                     e.preventDefault()
                 let form = e.currentTarget.closest("form")
                 var data = new FormData(form);
-            
-                
                  await axios.post('/cart',data) .then(response =>{
                             if(response.data == 23000){
                                $(".exist-alert").click();
                             }else{
                                 this.status = !this.status
+                                let product = {
+                                    id : this.id,
+                                    name : this.name,
+                                    image : this.image,
+                                    sell_price : this.price,
+                                    quantity : data.get('quantity'),
+                                    mesure_unit : data.get('mesure_unit')
+                                }
+                                this.$store.dispatch("add_incart_products",product);
+                                
                                 $(".success-alert").click();
                             }
                         });

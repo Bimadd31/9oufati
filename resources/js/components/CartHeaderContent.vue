@@ -1,8 +1,6 @@
 <template>
                
 
-            <div v-if="filteredProducts.length > 0">
-                
                 <div :key="product.id" v-for="product in filteredProducts" 
                     class="card nav-cart-item mb-1 d-flex justify-content-center" style="width: 300px;height: 80px;">
                  
@@ -32,24 +30,17 @@
                         </div>
                     </div>   
                 </div>
-            </div>
-            <div v-else>
-                <div class="row text-center d-flex justify-content-center">
-                    <span style="font-family:Ubuntu">Votre panier est vide !</span>
-                </div>
-            </div>
 </template>
 
 <script>
 export default {
         name: 'CartHeaderContent',
-        props:{
-            incart_products: Object,
-        },
+     
+      
         methods:{
 
             set_deleted_product(id){
-                this.$store.dispatch('set_deleted_product',id)
+                this.$store.dispatch("set_deleted_product",id)
             },
             get_deleted_products(){
                 return this.$store.getters.get_deleted_products
@@ -76,11 +67,13 @@ export default {
     
         },
         computed:{
+            
+           
              filteredProducts(){
-                 
-                return  this.incart_products.filter(product => {
+                var  incart_products = this.$store.getters.get_incart_products;
+                return  incart_products.filter(product => {
                     return (this.get_deleted_products() && this.get_deleted_products().length > 0) ? 
-                    !this.get_deleted_products().some(d => d.includes(product.id)) : this.incart_products
+                    !this.get_deleted_products().some(d => d.includes(product.id)) : incart_products
                     
                 }) 
 

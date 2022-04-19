@@ -60,7 +60,8 @@
                             :name="product.name"
                             :id="product.id"
                             :price="product.sell_price"
-                            :category="product.category_name"></productCard>
+                            :category="product.category_name"
+                            :mesure_unit="product.mesure_unit"></productCard>
                     
                 </div>
                 

@@ -50,6 +50,7 @@ class CartController extends Controller
                 'basket_id' => $user_basket[0]->id,
                 'quantity' => $data['quantity'],
                 'created_at' => $currentTime->toDateTimeString()
+
             ]);
         } catch (\Throwable $th) {
             return $th->getCode();
