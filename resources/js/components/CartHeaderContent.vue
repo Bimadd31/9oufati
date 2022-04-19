@@ -43,22 +43,17 @@
 <script>
 export default {
         name: 'CartHeaderContent',
-
         props:{
-            basket_products: Object,
-        },
-        data(){
-            return {
-                deleted : [],
-                
-            }
-        },
-        watch:{
-                // filteredProducts :function(val){
-                //     this.EmitToParent();
-                // }
+            incart_products: Object,
         },
         methods:{
+
+            set_deleted_product(id){
+                this.$store.dispatch('set_deleted_product',id)
+            },
+            get_deleted_products(){
+                return this.$store.getters.get_deleted_products
+            },
             deleteProduct(e){
 
                 e.preventDefault()
@@ -66,12 +61,13 @@ export default {
                 let form = e.currentTarget.closest("form");
                 var data = new FormData(form);
                 let product_id = data.get('product_id');
-
-                if(!this.deleted.includes(product_id)){
+                
+                let deleted = this.get_deleted_products();
+                if(!deleted.includes(product_id)){
 
                     axios.delete('/cart/'+product_id) .then(response =>{
 
-                            this.deleted.push(product_id);
+                            this.set_deleted_product(product_id);
                     });
                 }
                    
@@ -82,10 +78,9 @@ export default {
         computed:{
              filteredProducts(){
                  
-                return this.basket_products.filter(product => {
-                    return (Object.values(this.deleted) && Object.values(this.deleted).length > 0) ? 
-                    !Object.values(this.deleted).some(d => d.includes(product.id)) : this.basket_products 
-                    
+                return  this.incart_products.filter(product => {
+                    return (this.get_deleted_products() && this.get_deleted_products().length > 0) ? 
+                    !this.get_deleted_products().some(d => d.includes(product.id)) : this.incart_products
                     
                 }) 
 
