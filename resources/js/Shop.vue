@@ -43,12 +43,12 @@
                             <span class="badge bg-danger" @click='removeTags(filterAppied)'>X {{filterAppied}}</span>
                         </span>
                     </div>
-                    <div class="col-md-3 justify-content-end">
+                    <!-- <div class="col-md-3 justify-content-end">
                         <select name="" id="sort" class="w-75  ">
                             <option value="">Tri par récent au plus ancien</option>
                             <option value=""></option>
                         </select>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div id="shop-products-container" 
@@ -59,9 +59,9 @@
                             :image="product.image" 
                             :name="product.name"
                             :id="product.id"
-                            :price="product.sell_price"
+                            :price="product.sell_price || product.price"
                             :category="product.category_name"
-                            :mesure_unit="product.mesure_unit"></productCard>
+                            :mesure_unit="product.mesure_unit || 'Piece'"></productCard>
                     
                 </div>
                 
@@ -84,14 +84,15 @@ export default {
             cat : String,
             products: Object,
             categories: Object,
+            baskets: Object
         },
         data(){
             return {
                 // categories : ['fruits','legumes','epices','herbe','panier'],
                 filtersAppied: [],
-                searchInput : ''
-                
-
+                searchInput : '',
+                // allProducts : Object.assign(this.products,this.baskets)
+                allProducts : this.products.concat(this.baskets)
             }
         },
         components:{
@@ -99,6 +100,15 @@ export default {
         },
          methods:{
 
+                // getAll_Products(){
+                //     this.allProducts.forEach(array => {
+
+                //         array[0].forEach(p => {
+                //             return p
+                //         })
+                        
+                //     }) 
+                // },
                 setActive: function(element){
                         if(this.filtersAppied.indexOf(element) > -1){
                             this.filtersAppied.pop(element)
@@ -125,8 +135,10 @@ export default {
         computed:{
                 
               filteredItems: function() {
-        
-                return this.products.filter( product => {
+                  
+    
+                  console.log(this.allProducts)
+                return this.allProducts.filter( product => {
 
                     if (this.filtersAppied.length > 0 && this.searchInput.length > 0 ){
                         if (this.filtersAppied.includes(product.category_name)){
@@ -151,7 +163,7 @@ export default {
 
                     
                     
-                    return this.products
+                    return this.allProducts
                                     
                 })
                 

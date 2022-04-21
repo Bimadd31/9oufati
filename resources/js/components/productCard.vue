@@ -24,7 +24,6 @@
                         <input type="hidden" name="product_id" :value="this.id">
                         
                         <input @click="onSubmit" type="submit" class="submit" :value="basketStatus">
-                      
                     </div>
                 </form>
             </div>
@@ -74,7 +73,17 @@ export default {
                                     quantity : data.get('quantity'),
                                     mesure_unit : data.get('mesure_unit')
                                 }
-                                this.$store.dispatch("add_incart_products",product);
+
+                                // let deleted = this.$store.getters.get_deleted_products
+                                // let index = deleted.indexOf(this.id.toString())
+
+                                // if (index > -1){
+                                //     this.$store.commit("remove_deleted_product",index); 
+                                //     console.log(this.$store.getters.get_incart_products)
+                                // }         
+                                
+                                this.$store.dispatch("add_incart_products",product);  
+
                                 
                                 $(".success-alert").click();
                             }

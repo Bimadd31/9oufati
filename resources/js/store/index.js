@@ -16,8 +16,18 @@ export default createStore({
       state.deleted_products.push(id)
     },
     add_incart_products(state,data){
-      state.incart_products.push(data)
-      console.log(state.incart_products)
+      
+        state.incart_products.push(data)
+    },
+    remove_deleted_product(state,index){
+     state.deleted_products.splice(index)
+    },
+    remove_incart_product(state,id){
+      var index = state.incart_products.findIndex(p => p.id == id);
+
+      if(index > -1){
+              state.incart_products.splice(index,1)
+      }
     }
   },
   actions:{
@@ -29,8 +39,11 @@ export default createStore({
     },
     set_incart_products({commit},data){
       commit('set_incart_products',data)
+    },
+    remove_incart_product({commit},id){
+      commit('remove_incart_product',id)
     }
-    
+
 
   },
   getters:{
@@ -41,8 +54,8 @@ export default createStore({
         return state.incart_products
       },
       get_cart_count(state){
-        return (state.incart_products.length - state.deleted_products.length)
+        return state.incart_products.length
       }
   }
- 
+
 })

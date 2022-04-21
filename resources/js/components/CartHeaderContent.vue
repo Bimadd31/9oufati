@@ -12,7 +12,7 @@
                         <div class="col-8">
                                 <form class="header-product-form" method="POST" novalidate >
                                         
-                                <input class="product_id" name="product_id" type="hidden" :value="product.product_id">
+                                <input class="product_id" name="product_id" type="hidden" :value="product.id">
                                 <div class="card-body">
 
                                 <input  @click="deleteProduct" type="submit"  class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block"
@@ -42,6 +42,9 @@ export default {
             set_deleted_product(id){
                 this.$store.dispatch("set_deleted_product",id)
             },
+            remove_incart_product(id){
+                this.$store.dispatch("remove_incart_product",id)
+            },
             get_deleted_products(){
                 return this.$store.getters.get_deleted_products
             },
@@ -58,7 +61,9 @@ export default {
 
                     axios.delete('/cart/'+product_id) .then(response =>{
 
-                            this.set_deleted_product(product_id);
+                            this.remove_incart_product(product_id)
+                            // this.set_deleted_product(product_id);
+
                     });
                 }
                    

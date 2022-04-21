@@ -22779,19 +22779,29 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     cat: String,
     products: Object,
-    categories: Object
+    categories: Object,
+    baskets: Object
   },
   data: function data() {
     return {
       // categories : ['fruits','legumes','epices','herbe','panier'],
       filtersAppied: [],
-      searchInput: ''
+      searchInput: '',
+      // allProducts : Object.assign(this.products,this.baskets)
+      allProducts: this.products.concat(this.baskets)
     };
   },
   components: {
     productCard: _components_productCard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
+    // getAll_Products(){
+    //     this.allProducts.forEach(array => {
+    //         array[0].forEach(p => {
+    //             return p
+    //         })
+    //     }) 
+    // },
     setActive: function setActive(element) {
       if (this.filtersAppied.indexOf(element) > -1) {
         this.filtersAppied.pop(element);
@@ -22822,7 +22832,8 @@ __webpack_require__.r(__webpack_exports__);
     filteredItems: function filteredItems() {
       var _this2 = this;
 
-      return this.products.filter(function (product) {
+      console.log(this.allProducts);
+      return this.allProducts.filter(function (product) {
         if (_this2.filtersAppied.length > 0 && _this2.searchInput.length > 0) {
           if (_this2.filtersAppied.includes(product.category_name)) {
             var ProductName = product.name.split('-');
@@ -22845,7 +22856,7 @@ __webpack_require__.r(__webpack_exports__);
           return _FrenchName.includes(_this2.searchInput.toLowerCase());
         }
 
-        return _this2.products;
+        return _this2.allProducts;
       });
     }
   }
@@ -22870,6 +22881,9 @@ __webpack_require__.r(__webpack_exports__);
     set_deleted_product: function set_deleted_product(id) {
       this.$store.dispatch("set_deleted_product", id);
     },
+    remove_incart_product: function remove_incart_product(id) {
+      this.$store.dispatch("remove_incart_product", id);
+    },
     get_deleted_products: function get_deleted_products() {
       return this.$store.getters.get_deleted_products;
     },
@@ -22884,7 +22898,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!deleted.includes(product_id)) {
         axios["delete"]('/cart/' + product_id).then(function (response) {
-          _this.set_deleted_product(product_id);
+          _this.remove_incart_product(product_id); // this.set_deleted_product(product_id);
+
         });
       }
     }
@@ -22970,8 +22985,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       sell_price: _this.price,
                       quantity: data.get('quantity'),
                       mesure_unit: data.get('mesure_unit')
-                    };
+                    }; // let deleted = this.$store.getters.get_deleted_products
+                    // let index = deleted.indexOf(this.id.toString())
+                    // if (index > -1){
+                    //     this.$store.commit("remove_deleted_product",index); 
+                    //     console.log(this.$store.getters.get_incart_products)
+                    // }         
 
+                    // let deleted = this.$store.getters.get_deleted_products
+                    // let index = deleted.indexOf(this.id.toString())
+                    // if (index > -1){
+                    //     this.$store.commit("remove_deleted_product",index); 
+                    //     console.log(this.$store.getters.get_incart_products)
+                    // }         
                     _this.$store.dispatch("add_incart_products", product);
 
                     $(".success-alert").click();
@@ -23097,7 +23123,7 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   "class": "col-12 d-flex"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-4 pt-2 nav-cart-widget-btn ms-3",
-  onclick: "window.location.href='{{ route('cart') }}'",
+  onclick: "window.location.href='/cart'",
   style: {
     "background-color": "#5c824a"
   }
@@ -23219,24 +23245,7 @@ var _hoisted_15 = {
   "class": "col-md-9"
 };
 var _hoisted_16 = ["onClick"];
-
-var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "col-md-3 justify-content-end"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-    name: "",
-    id: "sort",
-    "class": "w-75"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: ""
-  }, "Tri par récent au plus ancien"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: ""
-  })])], -1
-  /* HOISTED */
-  );
-});
-
-var _hoisted_18 = {
+var _hoisted_17 = {
   id: "shop-products-container",
   "class": "row bg-light mt-3 p-4 w-100 row-cols-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5"
 };
@@ -23290,15 +23299,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , _hoisted_16)]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), _hoisted_17]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredItems, function (product) {
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-md-3 justify-content-end\">\r\n                        <select name=\"\" id=\"sort\" class=\"w-75  \">\r\n                            <option value=\"\">Tri par récent au plus ancien</option>\r\n                            <option value=\"\"></option>\r\n                        </select>\r\n                    </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.filteredItems, function (product) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_productCard, {
       key: product.id,
       image: product.image,
       name: product.name,
       id: product.id,
-      price: product.sell_price,
+      price: product.sell_price || product.price,
       category: product.category_name,
-      mesure_unit: product.mesure_unit
+      mesure_unit: product.mesure_unit || 'Piece'
     }, null, 8
     /* PROPS */
     , ["image", "name", "id", "price", "category", "mesure_unit"]);
@@ -23374,7 +23383,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "product_id",
       name: "product_id",
       type: "hidden",
-      value: product.product_id
+      value: product.id
     }, null, 8
     /* PROPS */
     , _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -23677,7 +23686,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     add_incart_products: function add_incart_products(state, data) {
       state.incart_products.push(data);
-      console.log(state.incart_products);
+    },
+    remove_deleted_product: function remove_deleted_product(state, index) {
+      state.deleted_products.splice(index);
+    },
+    remove_incart_product: function remove_incart_product(state, id) {
+      var index = state.incart_products.findIndex(function (p) {
+        return p.id == id;
+      });
+
+      if (index > -1) {
+        state.incart_products.splice(index, 1);
+      }
     }
   },
   actions: {
@@ -23692,6 +23712,10 @@ __webpack_require__.r(__webpack_exports__);
     set_incart_products: function set_incart_products(_ref3, data) {
       var commit = _ref3.commit;
       commit('set_incart_products', data);
+    },
+    remove_incart_product: function remove_incart_product(_ref4, id) {
+      var commit = _ref4.commit;
+      commit('remove_incart_product', id);
     }
   },
   getters: {
@@ -23702,7 +23726,7 @@ __webpack_require__.r(__webpack_exports__);
       return state.incart_products;
     },
     get_cart_count: function get_cart_count(state) {
-      return state.incart_products.length - state.deleted_products.length;
+      return state.incart_products.length;
     }
   }
 }));

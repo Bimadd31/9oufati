@@ -46,7 +46,7 @@
                 <div class="col-12 d-flex ">
                     
                     <div class="col-4 pt-2 nav-cart-widget-btn ms-3"
-                            onclick="window.location.href='{{ route('cart') }}'" style="background-color: #5c824a;">
+                            onclick="window.location.href='/cart'" style="background-color: #5c824a;">
                             <span>Allez au panier</span>
                     </div>
 
