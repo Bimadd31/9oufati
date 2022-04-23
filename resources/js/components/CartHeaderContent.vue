@@ -72,15 +72,6 @@ export default {
                         console.log(err)
                 })
 
-
-                //     axios.delete(`/cart/${product_id}`,{category_name : category}) .then(response =>{
-                //             console.log(response);
-                //             this.remove_incart_product(product)
-
-                //     }).catch(err =>{
-                //             console.log(err);
-                //     });
-                   
             },
 
     

@@ -11,11 +11,12 @@ import { createApp } from 'vue'
 import store from './store/index'
 
 import Shop_page from './Shop.vue';
-import CartHeader from './CartHeader.vue'
+import CartHeader from './CartHeader.vue';
+import Cart_page from './Cart.vue';
 
 const shop = createApp({}).component('shop-content',Shop_page).use(store).mount('#shop-page');
 const cartHeader = createApp({}).component('header-cart',CartHeader).use(store).mount('.nav-cart-btn');
-
+const cart = createApp({}).component('cart-content',Cart_page).use(store).mount('.cart-container');
 
 /**
  * The following block of code may be used to automatically register your

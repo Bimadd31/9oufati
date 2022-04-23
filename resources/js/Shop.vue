@@ -52,7 +52,7 @@
                 </div>
 
                 <div id="shop-products-container" 
-                class="row bg-light mt-3 p-4 w-100 row-cols-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5" >
+                class="row bg-light mt-3 p-2 w-100 row-cols-1 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5" >
 
                             
                             <productCard :key="product.id" v-for="product in filteredItems"

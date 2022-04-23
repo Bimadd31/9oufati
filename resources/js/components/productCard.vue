@@ -1,6 +1,6 @@
 <template>
         
-        <div class="col p-0  mx-1 shop-product-container" style="border-radius:10px; ">
+        <div class="col p-1 shop-product-container" style="border-radius:10px; ">
             <div class="card text-center border-2 " style="border-radius:10px;overflow: hidden;">
 
                     <img :src="this.image" class="card-img-top" :alt="this.name">
