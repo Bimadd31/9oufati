@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function Product_category()
+    public function category()
     {
-        return $this->hasOne(Product_category::class);
+        return $this->hasOne(Category::class);
     }
     public function discount()
     {

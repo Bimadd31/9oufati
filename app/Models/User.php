@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -53,10 +54,11 @@ class User extends Authenticatable
         static::created(function ($user) {
 
             $basket_name = $user->last_name . " " . "'s basket";
-
+            $category_panier = DB::table('Category')->where('name', 'PANIER')->select('id')->first();
             $user->baskets()->create([
                 'name' => $basket_name,
-                'type' => 'custom'
+                'type' => 'custom',
+                'category_id' => $category_panier->id
             ]);
             // Mail::to($user->email)->send(new welcomeMail());
         });

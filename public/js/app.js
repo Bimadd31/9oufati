@@ -22795,13 +22795,6 @@ __webpack_require__.r(__webpack_exports__);
     productCard: _components_productCard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
-    // getAll_Products(){
-    //     this.allProducts.forEach(array => {
-    //         array[0].forEach(p => {
-    //             return p
-    //         })
-    //     }) 
-    // },
     setActive: function setActive(element) {
       if (this.filtersAppied.indexOf(element) > -1) {
         this.filtersAppied.pop(element);
@@ -22832,7 +22825,6 @@ __webpack_require__.r(__webpack_exports__);
     filteredItems: function filteredItems() {
       var _this2 = this;
 
-      console.log(this.allProducts);
       return this.allProducts.filter(function (product) {
         if (_this2.filtersAppied.length > 0 && _this2.searchInput.length > 0) {
           if (_this2.filtersAppied.includes(product.category_name)) {
@@ -22878,42 +22870,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'CartHeaderContent',
   methods: {
-    set_deleted_product: function set_deleted_product(id) {
-      this.$store.dispatch("set_deleted_product", id);
-    },
-    remove_incart_product: function remove_incart_product(id) {
-      this.$store.dispatch("remove_incart_product", id);
-    },
-    get_deleted_products: function get_deleted_products() {
-      return this.$store.getters.get_deleted_products;
+    remove_incart_product: function remove_incart_product(product) {
+      this.$store.dispatch("remove_incart_product", product);
     },
     deleteProduct: function deleteProduct(e) {
       var _this = this;
 
       e.preventDefault();
       var form = e.currentTarget.closest("form");
-      var data = new FormData(form);
-      var product_id = data.get('product_id');
-      var deleted = this.get_deleted_products();
-
-      if (!deleted.includes(product_id)) {
-        axios["delete"]('/cart/' + product_id).then(function (response) {
-          _this.remove_incart_product(product_id); // this.set_deleted_product(product_id);
-
-        });
-      }
+      var form_data = new FormData(form);
+      var product_id = form_data.get('product_id');
+      var category = form_data.get('category');
+      var product = [product_id, category];
+      axios({
+        url: "/cart/".concat(product_id),
+        method: 'DELETE',
+        data: {
+          category_name: category
+        }
+      }).then(function (response) {
+        if (response.statusText == 'OK') {
+          _this.remove_incart_product(product);
+        }
+      })["catch"](function (err) {
+        console.log(err);
+      }); //     axios.delete(`/cart/${product_id}`,{category_name : category}) .then(response =>{
+      //             console.log(response);
+      //             this.remove_incart_product(product)
+      //     }).catch(err =>{
+      //             console.log(err);
+      //     });
     }
   },
   computed: {
     filteredProducts: function filteredProducts() {
-      var _this2 = this;
-
       var incart_products = this.$store.getters.get_incart_products;
-      return incart_products.filter(function (product) {
-        return _this2.get_deleted_products() && _this2.get_deleted_products().length > 0 ? !_this2.get_deleted_products().some(function (d) {
-          return d.includes(product.id);
-        }) : incart_products;
-      });
+      return incart_products;
     }
   }
 });
@@ -22972,8 +22964,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 e.preventDefault();
                 form = e.currentTarget.closest("form");
                 data = new FormData(form);
-                _context.next = 5;
+                data.append('category_name', _this.category);
+                _context.next = 6;
                 return axios.post('/cart', data).then(function (response) {
+                  console.log(response.data);
+
                   if (response.data == 23000) {
                     $(".exist-alert").click();
                   } else {
@@ -22984,27 +22979,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       image: _this.image,
                       sell_price: _this.price,
                       quantity: data.get('quantity'),
-                      mesure_unit: data.get('mesure_unit')
-                    }; // let deleted = this.$store.getters.get_deleted_products
-                    // let index = deleted.indexOf(this.id.toString())
-                    // if (index > -1){
-                    //     this.$store.commit("remove_deleted_product",index); 
-                    //     console.log(this.$store.getters.get_incart_products)
-                    // }         
+                      mesure_unit: data.get('mesure_unit'),
+                      category_name: _this.category
+                    };
 
-                    // let deleted = this.$store.getters.get_deleted_products
-                    // let index = deleted.indexOf(this.id.toString())
-                    // if (index > -1){
-                    //     this.$store.commit("remove_deleted_product",index); 
-                    //     console.log(this.$store.getters.get_incart_products)
-                    // }         
                     _this.$store.dispatch("add_incart_products", product);
 
                     $(".success-alert").click();
                   }
                 });
 
-              case 5:
+              case 6:
               case "end":
                 return _context.stop();
             }
@@ -23347,22 +23332,23 @@ var _hoisted_5 = {
   novalidate: ""
 };
 var _hoisted_6 = ["value"];
-var _hoisted_7 = {
+var _hoisted_7 = ["value"];
+var _hoisted_8 = {
   "class": "card-body"
 };
-var _hoisted_8 = {
+var _hoisted_9 = {
   "class": "card-title"
 };
-var _hoisted_9 = {
+var _hoisted_10 = {
   "class": "card-text text-end"
 };
-var _hoisted_10 = {
+var _hoisted_11 = {
   "class": "nav-cart-item-quantity pe-1"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("x");
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("x");
 
-var _hoisted_12 = {
+var _hoisted_13 = {
   "class": "nav-cart-item-price ps-1"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -23380,13 +23366,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, null, 8
     /* PROPS */
     , _hoisted_3)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-      "class": "product_id",
       name: "product_id",
       type: "hidden",
       value: product.id
     }, null, 8
     /* PROPS */
-    , _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    , _hoisted_6), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      name: "category",
+      type: "hidden",
+      value: product.category_name
+    }, null, 8
+    /* PROPS */
+    , _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
       onClick: _cache[0] || (_cache[0] = function () {
         return $options.deleteProduct && $options.deleteProduct.apply($options, arguments);
       }),
@@ -23397,11 +23388,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "height": "18px"
       },
       value: ""
-    }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.name), 1
+    }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.name), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.quantity) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.mesure_unit), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.quantity) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.mesure_unit || 'Piece'), 1
     /* TEXT */
-    ), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(product.sell_price * 100) / 100).toFixed(2)) + " DH", 1
+    ), _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round((product.sell_price || product.price) * 100) / 100).toFixed(2)) + " DH ", 1
     /* TEXT */
     )])])])])])]);
   }), 128
@@ -23505,7 +23496,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , _hoisted_10)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
-    name: "product_id",
+    name: "id",
     value: this.id
   }, null, 8
   /* PROPS */
@@ -23673,26 +23664,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_0__.createStore)({
   state: function state() {
     return {
-      incart_products: [],
-      deleted_products: []
+      incart_products: []
     };
   },
   mutations: {
     set_incart_products: function set_incart_products(state, data) {
       state.incart_products = data;
     },
-    set_deleted_product: function set_deleted_product(state, id) {
-      state.deleted_products.push(id);
-    },
     add_incart_products: function add_incart_products(state, data) {
       state.incart_products.push(data);
     },
-    remove_deleted_product: function remove_deleted_product(state, index) {
-      state.deleted_products.splice(index);
-    },
-    remove_incart_product: function remove_incart_product(state, id) {
+    remove_incart_product: function remove_incart_product(state, product) {
       var index = state.incart_products.findIndex(function (p) {
-        return p.id == id;
+        return p.id == product[0] && p.category_name == product[1];
       });
 
       if (index > -1) {
@@ -23701,27 +23685,20 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {
-    set_deleted_product: function set_deleted_product(_ref, id) {
+    add_incart_products: function add_incart_products(_ref, data) {
       var commit = _ref.commit;
-      commit('set_deleted_product', id);
-    },
-    add_incart_products: function add_incart_products(_ref2, data) {
-      var commit = _ref2.commit;
       commit('add_incart_products', data);
     },
-    set_incart_products: function set_incart_products(_ref3, data) {
-      var commit = _ref3.commit;
+    set_incart_products: function set_incart_products(_ref2, data) {
+      var commit = _ref2.commit;
       commit('set_incart_products', data);
     },
-    remove_incart_product: function remove_incart_product(_ref4, id) {
-      var commit = _ref4.commit;
+    remove_incart_product: function remove_incart_product(_ref3, id) {
+      var commit = _ref3.commit;
       commit('remove_incart_product', id);
     }
   },
   getters: {
-    get_deleted_products: function get_deleted_products(state) {
-      return state.deleted_products;
-    },
     get_incart_products: function get_incart_products(state) {
       return state.incart_products;
     },

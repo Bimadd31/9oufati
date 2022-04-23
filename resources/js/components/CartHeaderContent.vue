@@ -12,7 +12,9 @@
                         <div class="col-8">
                                 <form class="header-product-form" method="POST" novalidate >
                                         
-                                <input class="product_id" name="product_id" type="hidden" :value="product.id">
+                                <input name="product_id" type="hidden" :value="product.id">
+                                <input name="category" type="hidden" :value="product.category_name">
+
                                 <div class="card-body">
 
                                 <input  @click="deleteProduct" type="submit"  class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block"
@@ -20,10 +22,12 @@
                                 <p class="card-title">{{ product.name }}</p>
                                 <p class="card-text text-end">
                                         <span class="nav-cart-item-quantity pe-1">
-                                                {{  product.quantity}} 
-                                                {{  product.mesure_unit }}
+                                                {{  product.quantity }} 
+                                                {{  product.mesure_unit || 'Piece'}}
                                         </span>x<span
-                                        class="nav-cart-item-price ps-1">{{ (Math.round(product.sell_price * 100) / 100).toFixed(2)}} DH</span>
+                                        class="nav-cart-item-price ps-1">
+                                        {{ (Math.round((product.sell_price || product.price) * 100) / 100).toFixed(2)}} DH
+                                        </span>
                                 </p>
                                 </div>
                                 </form>
@@ -39,33 +43,43 @@ export default {
       
         methods:{
 
-            set_deleted_product(id){
-                this.$store.dispatch("set_deleted_product",id)
+         
+            remove_incart_product(product){
+                this.$store.dispatch("remove_incart_product",product)
             },
-            remove_incart_product(id){
-                this.$store.dispatch("remove_incart_product",id)
-            },
-            get_deleted_products(){
-                return this.$store.getters.get_deleted_products
-            },
+          
             deleteProduct(e){
 
                 e.preventDefault()
 
                 let form = e.currentTarget.closest("form");
-                var data = new FormData(form);
-                let product_id = data.get('product_id');
-                
-                let deleted = this.get_deleted_products();
-                if(!deleted.includes(product_id)){
+                var form_data = new FormData(form);
 
-                    axios.delete('/cart/'+product_id) .then(response =>{
+                let product_id = form_data.get('product_id');
+                let category = form_data.get('category');
 
-                            this.remove_incart_product(product_id)
-                            // this.set_deleted_product(product_id);
+                let product = [product_id,category];
 
-                    });
-                }
+                axios({
+                        url : `/cart/${product_id}`,
+                        method : 'DELETE',
+                        data : {category_name : category}
+                }).then(response => {
+                        if (response.statusText == 'OK'){
+                                this.remove_incart_product(product)
+                        }
+                }).catch(err => {
+                        console.log(err)
+                })
+
+
+                //     axios.delete(`/cart/${product_id}`,{category_name : category}) .then(response =>{
+                //             console.log(response);
+                //             this.remove_incart_product(product)
+
+                //     }).catch(err =>{
+                //             console.log(err);
+                //     });
                    
             },
 
@@ -75,12 +89,9 @@ export default {
             
            
              filteredProducts(){
-                var  incart_products = this.$store.getters.get_incart_products;
-                return  incart_products.filter(product => {
-                    return (this.get_deleted_products() && this.get_deleted_products().length > 0) ? 
-                    !this.get_deleted_products().some(d => d.includes(product.id)) : incart_products
-                    
-                }) 
+                var incart_products = this.$store.getters.get_incart_products;
+
+                return  incart_products
 
             }
                 

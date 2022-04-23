@@ -5,35 +5,25 @@ export default createStore({
   state () {
     return {
       incart_products : [],
-      deleted_products : [],
     }
   },
   mutations: {
     set_incart_products(state,data){
       state.incart_products = data
     },
-    set_deleted_product(state,id){
-      state.deleted_products.push(id)
-    },
     add_incart_products(state,data){
       
         state.incart_products.push(data)
     },
-    remove_deleted_product(state,index){
-     state.deleted_products.splice(index)
-    },
-    remove_incart_product(state,id){
-      var index = state.incart_products.findIndex(p => p.id == id);
-
+    remove_incart_product(state,product){
+      var index = state.incart_products.findIndex(p => p.id == product[0] && p.category_name == product[1]);
+      
       if(index > -1){
               state.incart_products.splice(index,1)
       }
     }
   },
   actions:{
-    set_deleted_product({commit},id){
-      commit('set_deleted_product',id)
-    },
     add_incart_products({commit},data){
         commit('add_incart_products',data);
     },
@@ -47,9 +37,6 @@ export default createStore({
 
   },
   getters:{
-      get_deleted_products(state){
-        return state.deleted_products
-      },
       get_incart_products(state){
         return state.incart_products
       },

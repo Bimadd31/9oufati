@@ -36,22 +36,34 @@ class CartController extends Controller
 
         try {
 
-            $user_basket = DB::table('baskets')->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
+            $user_basket = DB::table('baskets')
+                ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
                 ->where('user_id', '=', auth()->user()->id)->get();
-
 
             $data = $request->validate([
                 'quantity' => 'required',
-                'product_id' => 'required',
+                'id' => 'required',
+                'category_name' => 'required'
             ]);
 
-            DB::table('basket_details')->insert([
-                'product_id' => $data['product_id'],
-                'basket_id' => $user_basket[0]->id,
-                'quantity' => $data['quantity'],
-                'created_at' => $currentTime->toDateTimeString()
+            $category = $data['category_name'];
 
-            ]);
+            if ($category == "PANIER") {
+                DB::table('basket_basket')->insert([
+                    'custom_basket_id' => $user_basket[0]->id,
+                    'fixed_basket_id' =>  $data['id'],
+                    'quantity' => $data['quantity'],
+                    'created_at' => $currentTime->toDateTimeString()
+                ]);
+            } else {
+                DB::table('basket_details')->insert([
+                    'product_id' => $data['id'],
+                    'basket_id' => $user_basket[0]->id,
+                    'quantity' => $data['quantity'],
+                    'created_at' => $currentTime->toDateTimeString()
+
+                ]);
+            }
         } catch (\Throwable $th) {
             return $th->getCode();
         };
@@ -72,17 +84,26 @@ class CartController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        try {
-            $user_basket = DB::table('baskets')->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
-                ->where('user_id', '=', auth()->user()->id)->get();
 
-            $user_basket_id = $user_basket[0]->id;
+        $category = $request->category_name;
 
-            $deleted = DB::table('basket_details')->whereRaw("product_id = $id AND basket_id = $user_basket_id")->delete();
-        } catch (\Throwable $th) {
-            return $th->getCode();
+        $user_basket = DB::table('baskets')
+            ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
+            ->where('user_id', '=', auth()->user()->id)->get();
+
+        $user_basket_id = $user_basket[0]->id;
+
+        if ($category == 'PANIER') {
+            DB::table('basket_basket')
+                ->whereRaw("custom_basket_id = $user_basket_id AND fixed_basket_id = $id")
+                ->delete();
+        } else {
+
+            DB::table('basket_details')
+                ->whereRaw("product_id = $id AND basket_id = $user_basket_id")
+                ->delete();
         }
     }
 }

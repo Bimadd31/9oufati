@@ -27,9 +27,9 @@ class HomeController extends Controller
     public function index(\App\Models\User $user)
     {
 
-        $product_category = DB::table('product_category')->get();
+        $Category = DB::table('Category')->get();
 
 
-        return view('home', compact('user', 'product_category'));
+        return view('home', compact('user', 'Category'));
     }
 }

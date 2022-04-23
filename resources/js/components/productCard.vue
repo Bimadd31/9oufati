@@ -21,7 +21,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <input type="hidden" name="product_id" :value="this.id">
+                        <input type="hidden" name="id" :value="this.id">
                         
                         <input @click="onSubmit" type="submit" class="submit" :value="basketStatus">
                     </div>
@@ -60,7 +60,10 @@ export default {
                     e.preventDefault()
                 let form = e.currentTarget.closest("form")
                 var data = new FormData(form);
+                data.append('category_name', this.category);
+
                  await axios.post('/cart',data) .then(response =>{
+                        console.log(response.data);
                             if(response.data == 23000){
                                $(".exist-alert").click();
                             }else{
@@ -71,17 +74,10 @@ export default {
                                     image : this.image,
                                     sell_price : this.price,
                                     quantity : data.get('quantity'),
-                                    mesure_unit : data.get('mesure_unit')
+                                    mesure_unit : data.get('mesure_unit'),
+                                    category_name : this.category
                                 }
 
-                                // let deleted = this.$store.getters.get_deleted_products
-                                // let index = deleted.indexOf(this.id.toString())
-
-                                // if (index > -1){
-                                //     this.$store.commit("remove_deleted_product",index); 
-                                //     console.log(this.$store.getters.get_incart_products)
-                                // }         
-                                
                                 this.$store.dispatch("add_incart_products",product);  
 
                                 

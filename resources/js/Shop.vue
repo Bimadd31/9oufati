@@ -100,15 +100,6 @@ export default {
         },
          methods:{
 
-                // getAll_Products(){
-                //     this.allProducts.forEach(array => {
-
-                //         array[0].forEach(p => {
-                //             return p
-                //         })
-                        
-                //     }) 
-                // },
                 setActive: function(element){
                         if(this.filtersAppied.indexOf(element) > -1){
                             this.filtersAppied.pop(element)
@@ -137,7 +128,7 @@ export default {
               filteredItems: function() {
                   
     
-                  console.log(this.allProducts)
+    
                 return this.allProducts.filter( product => {
 
                     if (this.filtersAppied.length > 0 && this.searchInput.length > 0 ){

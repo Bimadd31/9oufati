@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Basket;
 use App\Models\Basket_details;
+use App\Models\Category;
 use App\Models\Product_category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,16 +34,17 @@ class ShopController extends Controller
 
             $fixed_baskets = DB::table('baskets')
                 ->whereRaw('type = "fixed" AND active = 1')
+                ->join('Category', 'baskets.category_id', '=', 'Category.id')
+                ->selectRaw('Category.name as category_name,baskets.*')
                 ->get();
 
             $products = DB::table('products')
-                ->join('product_category', 'products.category_id', '=', 'product_category.id')
-                ->selectRaw('product_category.name as category_name,products.*')
+                ->join('Category', 'products.category_id', '=', 'Category.id')
+                ->selectRaw('Category.name as category_name,products.*')
                 // ->leftJoin('basket_details', 'products.id', '=', 'basket_details.product_id')
                 ->get();
 
-            $categories = DB::table('product_category')->get();
-
+            $categories = DB::table('Category')->get();
 
 
             $catProp = '';
@@ -52,6 +54,7 @@ class ShopController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
         }
+
         return view('shop.index', compact('products', 'categories', 'catProp', 'fixed_baskets'));
     }
 

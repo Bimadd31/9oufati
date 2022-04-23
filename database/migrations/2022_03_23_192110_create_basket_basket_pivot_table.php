@@ -19,7 +19,8 @@ class CreateBasketBasketPivotTable extends Migration
             $table->unsignedBigInteger('fixed_basket_id')->index();
             $table->foreign('fixed_basket_id')->references('id')->on('baskets')->onDelete('cascade');
             $table->primary(['custom_basket_id', 'fixed_basket_id']);
-            $table->integer('quantity')->default(1);
+            $table->integer('quantity');
+            $table->timestamps();
         });
     }
 

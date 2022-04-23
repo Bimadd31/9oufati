@@ -24,8 +24,7 @@ class CreateProductsTable extends Migration
             $table->double('sell_price');
             $table->double('buy_price');
             $table->double('buy_quantity');
-
-            $table->foreignId('category_id')->constrained('product_category', 'id');
+            $table->foreignId('category_id')->constrained('Category', 'id');
             $table->timestamps();
         });
     }

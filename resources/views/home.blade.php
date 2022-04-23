@@ -27,7 +27,7 @@
         <section class="main-categories-container container-md-custom mt-2 d-flex flex-column align-items-center">
             <div class="col-11">
                 <div class="row">
-                    @foreach ($product_category as $category)
+                    @foreach ($Category as $category)
                           
                         @if ($category->id != 5)
                             <div class="col-6 col-lg-3 d-flex justify-content-center align-items-center p-0">
