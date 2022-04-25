@@ -11839,10 +11839,6 @@ input[type=checkbox]:checked::before {
   letter-spacing: 0.01em;
   font-size: 18px;
 }
-.shop-product-container .shop-product-qte-value {
-  pointer-events: none;
-  border: 0.1px solid #dfdbdbd7;
-}
 .shop-product-container .submit {
   background: #81ab33;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
@@ -11860,6 +11856,11 @@ input[type=checkbox]:checked::before {
 }
 .shop-product-container .submit:hover, .shop-product-container .submit:focus {
   background-color: #81ab33a8;
+}
+
+.shop-product-qte-value {
+  pointer-events: none;
+  border: 0.1px solid #dfdbdbd7;
 }
 
 .alert-banner .exist-alert {

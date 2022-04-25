@@ -21,10 +21,6 @@ class CreateDiscountsTable extends Migration
             $table->boolean('active');
             $table->date('startDate');
             $table->date('endDate');
-
-            $table->foreignId('product_id')->nullable(true)->constrained('products', 'id');
-            $table->foreignId('basket_id')->nullable(true)->constrained('baskets', 'id');
-
             $table->timestamps();
         });
     }

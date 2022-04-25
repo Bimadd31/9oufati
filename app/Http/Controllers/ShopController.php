@@ -39,6 +39,7 @@ class ShopController extends Controller
                 ->get();
 
             $products = DB::table('products')
+                ->whereRaw('active = 1')
                 ->join('Category', 'products.category_id', '=', 'Category.id')
                 ->selectRaw('Category.name as category_name,products.*')
                 // ->leftJoin('basket_details', 'products.id', '=', 'basket_details.product_id')

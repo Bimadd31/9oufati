@@ -24,7 +24,9 @@ class CreateProductsTable extends Migration
             $table->double('sell_price');
             $table->double('buy_price');
             $table->double('buy_quantity');
+            $table->boolean('active');
             $table->foreignId('category_id')->constrained('Category', 'id');
+            $table->foreignId('discount_id')->nullable(true)->constrained('discounts', 'id');
             $table->timestamps();
         });
     }

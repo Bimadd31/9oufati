@@ -24,6 +24,8 @@ class CreateBasketsTable extends Migration
             $table->foreignId('order_id')->nullable(true)->constrained('orders', 'id');
             $table->foreignId('user_id')->nullable(true)->constrained('users', 'id');
             $table->foreignId('category_id')->nullable(true)->constrained('Category', 'id');
+            $table->foreignId('discount_id')->nullable(true)->constrained('discounts', 'id');
+
             $table->timestamps();
         });
     }
