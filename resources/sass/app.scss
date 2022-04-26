@@ -616,6 +616,22 @@ input[type="checkbox"] {
         pointer-events: none;
         border: 0.1px solid #dfdbdbd7;
     }
+
+    .discount-badge{
+        width: 43px;
+        height: 43px;
+        margin-top: 2rem;
+        margin-left: 2rem;
+        background: #CD4848;
+        color: white;
+        font-family: 'Calibri';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 .alert-banner{
     .exist-alert{
         display: none;

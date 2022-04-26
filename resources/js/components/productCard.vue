@@ -2,13 +2,33 @@
         
         <div class="col p-1 shop-product-container" style="border-radius:10px; ">
             <div class="card text-center border-2 " style="border-radius:10px;overflow: hidden;">
+                   
+            
+                     
+                    <img :src="this.image" class="card-img-top position-relative" :alt="this.name">
+                    
+                    <span v-if="this.discount_active" 
+                                class="position-absolute top-0 start-0 translate-middle border border-light rounded-circle discount-badge ">
+                            -{{this.discount_percent}}%
+                    </span>
 
-                    <img :src="this.image" class="card-img-top" :alt="this.name">
                     <div class="card-body">
                         <h5 class="card-title">{{ name }}</h5>
-                       
-                            
-                        <p class="card-text" >{{ (Math.round(price * 100) / 100).toFixed(2) }} DH</p>
+
+                        <p class="card-text">
+                            <span v-if="this.discount_active">
+                                <span class="pe-3" style="color:#878181;">
+                                    <s>
+                                        {{(Math.round(this.price * 100) / 100).toFixed(2)+' DH'}}
+                                    </s>
+                                </span>
+                                <span>{{ getDiscountedPrice }}</span>
+                            </span>
+                            <span v-else>
+                                <span>{{(Math.round(this.price * 100) / 100).toFixed(2)+' DH'}}</span>
+                            </span>
+                        </p>
+
                     </div>
 
                 <form  class="form-shop-add-product" method="POST" novalidate>
@@ -41,6 +61,9 @@ export default {
                 status : true,
             }
         },
+        mounted(){
+            
+        },
         name: 'productCard',
         props:{
             image: String,
@@ -48,14 +71,24 @@ export default {
             price:  Number,
             id:  Number,
             category: String,
-            mesure_unit : String
+            mesure_unit : String,
+            discount_active: Number,
+            discount_percent: Number,
         },
          computed : {
             basketStatus (){
                     return (this.status) ? 'AJOUTER AU PANIER' : 'Ajouté';
+                },
+            getDiscountedPrice(){
+                
+                if(this.discount_active){
+                    let discounted_price = this.price-(this.price*(this.discount_percent/100));
+                    return (Math.round(discounted_price * 100) / 100).toFixed(2)+' DH'
                 }
+            }
         },
         methods: {
+           
            async onSubmit(e){
                     e.preventDefault()
                 let form = e.currentTarget.closest("form")
