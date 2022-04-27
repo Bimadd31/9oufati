@@ -7,9 +7,14 @@
                      
                     <img :src="this.image" class="card-img-top position-relative" :alt="this.name">
 
-                    <span v-if="this.stock == 0" class="position-absolute top-50 start-50 badge bg-danger p-2">
+                    <!-- <span 
+                        v-if="this.stock == 0"  
+                        class="position-absolute w-100 align-middle text-danger d-flex justify-content-center align-items-center fw-bold"
+                        style="height:58%;z-index: 5;">
                         STOCK ÉPUISÉ
-                    </span>
+                    </span> -->
+
+                 
                     <span v-if="discountValid" 
                                 class="position-absolute top-0 start-0 translate-middle border border-light rounded-circle discount-badge ">
                             -{{this.discount_percent}}%
@@ -46,7 +51,9 @@
                     <div class="mb-3">
                         <input type="hidden" name="id" :value="this.id">
                         
-                        <input @click="onSubmit" type="submit" class="submit" :value="basketStatus">
+                        <input v-if="this.stock > 0" @click="onSubmit" type="submit" class="submit" :value="basketStatus">
+                         <input v-else type="button" class="submit bg-danger" value="STOCK EPUISÉ">
+
                     </div>
                 </form>
             </div>
@@ -76,14 +83,17 @@ export default {
             mesure_unit : String,
             discount_active: Number,
             discount_percent: Number,
-            discount_startDate : Date,
-            discount_endDate : Date,
+            discount_startDate : String,
+            discount_endDate : String,
             min_quantity: Number,
             stock: Number,
         },
          computed : {
             basketStatus (){
+               
                     return (this.status) ? 'AJOUTER AU PANIER' : 'Ajouté';
+                 
+               
                 },
             getDiscountedPrice(){
                 if(this.discount_active){
@@ -102,7 +112,7 @@ export default {
            
            async onSubmit(e){
                     e.preventDefault()
-            if(this.stock != 0){
+            if(this.stock > 0){
                 let form = e.currentTarget.closest("form")
                 
                 var data = new FormData(form);
@@ -131,7 +141,6 @@ export default {
 
                                 this.$store.dispatch("add_incart_products",product);  
 
-                                
                                 $(".success-alert").click();
                             }
                         });
@@ -143,7 +152,7 @@ export default {
                 if (e.currentTarget.className === "plus"){
                     let input = e.currentTarget.previousElementSibling;
                     let value = parseInt(input.value, 10);
-                    if (value < (this.stock || 5)){
+                    if (value < this.stock){
                         value++;
                         input.value = value;
                         

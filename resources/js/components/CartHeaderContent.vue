@@ -48,8 +48,8 @@ export default {
                 quantity : Number,
                 discount_active: Number,
                 discount_percent: Number,
-                discount_startDate :Date,
-                discount_endDate : Date,
+                discount_startDate :String,
+                discount_endDate : String,
         },
       
         methods:{

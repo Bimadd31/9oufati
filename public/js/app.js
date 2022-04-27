@@ -22904,8 +22904,8 @@ __webpack_require__.r(__webpack_exports__);
     quantity: Number,
     discount_active: Number,
     discount_percent: Number,
-    discount_startDate: Date,
-    discount_endDate: Date
+    discount_startDate: String,
+    discount_endDate: String
   },
   methods: {
     remove_incart_product: function remove_incart_product(product) {
@@ -22988,8 +22988,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     mesure_unit: String,
     discount_active: Number,
     discount_percent: Number,
-    discount_startDate: Date,
-    discount_endDate: Date,
+    discount_startDate: String,
+    discount_endDate: String,
     min_quantity: Number,
     stock: Number
   },
@@ -23022,7 +23022,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 e.preventDefault();
 
-                if (!(_this.stock != 0)) {
+                if (!(_this.stock > 0)) {
                   _context.next = 7;
                   break;
                 }
@@ -23071,7 +23071,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         var input = e.currentTarget.previousElementSibling;
         var value = parseInt(input.value, 10);
 
-        if (value < (this.stock || 5)) {
+        if (value < this.stock) {
           value++;
           input.value = value;
         }
@@ -23547,48 +23547,50 @@ var _hoisted_2 = {
 var _hoisted_3 = ["src", "alt"];
 var _hoisted_4 = {
   key: 0,
-  "class": "position-absolute top-50 start-50 badge bg-danger p-2"
-};
-var _hoisted_5 = {
-  key: 1,
   "class": "position-absolute top-0 start-0 translate-middle border border-light rounded-circle discount-badge"
 };
-var _hoisted_6 = {
+var _hoisted_5 = {
   "class": "card-body"
 };
-var _hoisted_7 = {
+var _hoisted_6 = {
   "class": "card-title"
 };
-var _hoisted_8 = {
+var _hoisted_7 = {
   "class": "card-text"
 };
-var _hoisted_9 = {
+var _hoisted_8 = {
   key: 0
 };
-var _hoisted_10 = {
+var _hoisted_9 = {
   "class": "pe-3",
   style: {
     "color": "#878181"
   }
 };
-var _hoisted_11 = {
+var _hoisted_10 = {
   key: 1
 };
-var _hoisted_12 = {
+var _hoisted_11 = {
   "class": "form-shop-add-product",
   method: "POST",
   novalidate: ""
 };
-var _hoisted_13 = {
+var _hoisted_12 = {
   "class": "col-6 mb-3 mx-auto d-inline-flex justify-content-center mb-2 product-qte-select"
 };
+var _hoisted_13 = ["value"];
 var _hoisted_14 = ["value"];
-var _hoisted_15 = ["value"];
-var _hoisted_16 = {
+var _hoisted_15 = {
   "class": "mb-3"
 };
+var _hoisted_16 = ["value"];
 var _hoisted_17 = ["value"];
-var _hoisted_18 = ["value"];
+var _hoisted_18 = {
+  key: 1,
+  type: "button",
+  "class": "submit bg-danger",
+  value: "STOCK EPUISÉ"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: this.image,
@@ -23596,17 +23598,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     alt: this.name
   }, null, 8
   /* PROPS */
-  , _hoisted_3), this.stock == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, " STOCK ÉPUISÉ ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, " -" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.discount_percent) + "% ", 1
+  , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span \r\n                        v-if=\"this.stock == 0\"  \r\n                        class=\"position-absolute w-100 align-middle text-danger d-flex justify-content-center align-items-center fw-bold\"\r\n                        style=\"height:58%;z-index: 5;\">\r\n                        STOCK ÉPUISÉ\r\n                    </span> "), $options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, " -" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.discount_percent) + "% ", 1
   /* TEXT */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.name), 1
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, [$options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("s", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.price * 100) / 100).toFixed(2) + ' DH'), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, [$options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("s", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.price * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getDiscountedPrice), 1
   /* TEXT */
-  )])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.price * 100) / 100).toFixed(2) + ' DH'), 1
+  )])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.price * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
-  )]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  )]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "button",
     value: "-",
     "class": "minus",
@@ -23620,7 +23622,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: this.min_quantity || 1
   }, null, 8
   /* PROPS */
-  , _hoisted_14), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "button",
     value: "+",
     "class": "plus",
@@ -23634,13 +23636,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $props.mesure_unit
   }, null, 8
   /* PROPS */
-  , _hoisted_15)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_14)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     name: "id",
     value: this.id
   }, null, 8
   /* PROPS */
-  , _hoisted_17), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_16), this.stock > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+    key: 0,
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.onSubmit && $options.onSubmit.apply($options, arguments);
     }),
@@ -23649,7 +23652,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $options.basketStatus
   }, null, 8
   /* PROPS */
-  , _hoisted_18)])])])]);
+  , _hoisted_17)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", _hoisted_18))])])])]);
 }
 
 /***/ }),
