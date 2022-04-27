@@ -37,7 +37,7 @@ class ShopController extends Controller
                 ->leftJoin('Category', 'baskets.category_id', '=', 'Category.id')
                 ->leftJoin('discounts', 'baskets.discount_id', '=', 'discounts.id')
                 ->selectRaw('Category.name as category_name,baskets.*,
-                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate,discounts.endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
+                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate as discount_startDate,discounts.endDate as discount_endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
                 ->whereRaw('type = "fixed" AND baskets.active = 1')
                 ->get();
 
@@ -45,12 +45,13 @@ class ShopController extends Controller
                 ->leftJoin('Category', 'products.category_id', '=', 'Category.id')
                 ->leftJoin('discounts', 'products.discount_id', '=', 'discounts.id')
                 ->selectRaw('Category.name as category_name,products.*,
-                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate,discounts.endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
+                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate as discount_startDate,discounts.endDate as discount_endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
                 ->whereRaw('products.active = 1')
                 ->get();
 
             $categories = DB::table('Category')->get();
 
+            $products = $products->merge($fixed_baskets);
 
             $catProp = '';
             if ($_GET['cat']) {
@@ -60,7 +61,7 @@ class ShopController extends Controller
             //throw $th;
         }
 
-        return view('shop.index', compact('products', 'categories', 'catProp', 'fixed_baskets'));
+        return view('shop.index', compact('products', 'categories', 'catProp'));
     }
 
     /**

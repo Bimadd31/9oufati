@@ -47,17 +47,21 @@ class AppServiceProvider extends ServiceProvider
             $user_cart_id = $user_cart[0]->id;
 
             $baskets = DB::table('baskets')
-                ->join('basket_basket', 'basket_basket.fixed_basket_id', '=', 'baskets.id')
-                ->join('Category', 'Category.id', '=', 'baskets.category_id')
+                ->leftJoin('basket_basket', 'basket_basket.fixed_basket_id', '=', 'baskets.id')
+                ->leftJoin('Category', 'Category.id', '=', 'baskets.category_id')
+                ->leftJoin('discounts', 'baskets.discount_id', '=', 'discounts.id')
                 ->whereRaw("custom_basket_id = $user_cart_id")
-                ->selectRaw('baskets.*,basket_basket.quantity,category.name AS category_name')
+                ->selectRaw('baskets.*,basket_basket.quantity,category.name AS category_name,
+                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate as discount_startDate,discounts.endDate as discount_endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
                 ->get();
 
             $products = DB::table('products')
-                ->join('basket_details', 'basket_details.product_id', '=', 'products.id')
-                ->join('Category', 'Category.id', '=', 'products.category_id')
+                ->leftJoin('basket_details', 'basket_details.product_id', '=', 'products.id')
+                ->leftJoin('Category', 'Category.id', '=', 'products.category_id')
+                ->leftJoin('discounts', 'products.discount_id', '=', 'discounts.id')
                 ->whereRaw("basket_id = $user_cart_id")
-                ->selectRaw('products.*,Category.name AS category_name,basket_details.*')
+                ->selectRaw('products.*,Category.name AS category_name,basket_details.*,
+                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate as discount_startDate,discounts.endDate as discount_endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
                 ->get();
 
             $incart_products = $baskets->merge($products);

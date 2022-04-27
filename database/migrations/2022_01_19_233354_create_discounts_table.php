@@ -19,8 +19,9 @@ class CreateDiscountsTable extends Migration
             $table->string('desc');
             $table->double('percent');
             $table->boolean('active');
-            $table->date('startDate');
-            $table->date('endDate');
+            $table->timestamp('startDate')->nullable();
+            $table->timestamp('endDate')->nullable();
+
             $table->timestamps();
         });
     }

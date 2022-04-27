@@ -37,7 +37,18 @@
 
                 <div class="nav-cart-items-container col-12 d-flex flex-column align-items-center justify-content-center">
 
-                        <CartHeaderContent></CartHeaderContent>  
+                        <CartHeaderContent :key="product.id" v-for="product in this.getIncartProducts"
+                            :image="product.image" 
+                            :name="product.name"
+                            :id="product.id"
+                            :price="product.sell_price || product.price"
+                            :category_name="product.category_name"
+                            :mesure_unit="product.mesure_unit || 'Piece'"
+                            :quantity="product.quantity"
+                            :discount_active="product.discount_active"
+                            :discount_percent="product.discount_percent"
+                            :discount_startDate="product.discount_startDate"
+                            :discount_endDate="product.discount_endDate"></CartHeaderContent>  
                         
                 </div>
 
@@ -72,7 +83,7 @@
 <script>
 import CartHeaderContent from './components/CartHeaderContent.vue'
 export default {
- 
+   
     props:{
         data : Object,
     },
@@ -89,7 +100,9 @@ export default {
         get_product_count(){
             return this.$store.getters.get_cart_count
         },
-        
+        getIncartProducts(){
+            return this.$store.getters.get_incart_products
+        }
     }
    
 }

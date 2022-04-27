@@ -59,12 +59,14 @@
                             :name="product.name"
                             :id="product.id"
                             :price="product.sell_price || product.price"
-                            :category="product.category_name"
+                            :category_name="product.category_name"
                             :mesure_unit="product.mesure_unit || 'Piece'"
                             :discount_active="product.discount_active"
                             :discount_percent="product.discount_percent"
                             :discount_startDate="product.discount_startDate"
-                            :discount_endDate="product.discount_endDate"></productCard>
+                            :discount_endDate="product.discount_endDate"
+                            :min_quantity="product.min_quantity"
+                            :stock="product.stock"></productCard>
                     
                 </div>
                 
@@ -81,22 +83,20 @@ export default {
         mounted(){
 
              this.onLoad();
-             console.log(this.allProducts)
+            console.log(this.products)
 
         },
         props:{
             cat : String,
             products: Object,
             categories: Object,
-            baskets: Object
         },
         data(){
             return {
                 // categories : ['fruits','legumes','epices','herbe','panier'],
                 filtersAppied: [],
                 searchInput : '',
-                // allProducts : Object.assign(this.products,this.baskets)
-                allProducts : this.products.concat(this.baskets)
+               
             }
         },
         components:{
@@ -133,7 +133,7 @@ export default {
                   
     
     
-                return this.allProducts.filter( product => {
+                return this.products.filter( product => {
 
                     if (this.filtersAppied.length > 0 && this.searchInput.length > 0 ){
                         if (this.filtersAppied.includes(product.category_name)){
@@ -158,8 +158,7 @@ export default {
 
                     
                     
-                    return this.allProducts
-                                    
+                    return this.products
                 })
                 
                 },
