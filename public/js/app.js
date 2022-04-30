@@ -23002,41 +23002,12 @@ __webpack_require__.r(__webpack_exports__);
     stock: Number
   },
   methods: {
-    onSubmit: function onSubmit(e) {
-      var _this = this;
-
-      e.preventDefault();
-
-      if (this.stock > 0) {
-        var form = e.currentTarget.closest("form");
-        var data = new FormData(form);
-        data.append('category_name', this.category_name);
-        axios.post('/cart', data).then(function (response) {
-          if (response.data == 23000) {
-            $(".exist-alert").click();
-          } else {
-            _this.status = !_this.status;
-            var product = {
-              id: _this.id,
-              name: _this.name,
-              image: _this.image,
-              sell_price: _this.sell_price,
-              category_name: _this.category_name,
-              quantity: parseInt(data.get('quantity')),
-              mesure_unit: _this.mesure_unit,
-              discount_active: _this.discount_active,
-              discount_percent: _this.discount_percent,
-              discount_startDate: _this.discount_startDate,
-              discount_endDate: _this.discount_endDate
-            };
-            _this.$store.state.subTotal = 0;
-
-            _this.$store.dispatch("add_incart_product", product);
-
-            $(".success-alert").click();
-          }
-        });
-      }
+    addProduct: function addProduct(e) {
+      var product = [this.id, this.category_name];
+      this.$store.dispatch("addProduct", {
+        e: e,
+        product: product
+      });
     },
     product_qte: function product_qte(e) {
       if (e.currentTarget.className === "plus") {
@@ -23627,7 +23598,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , _hoisted_15), this.stock > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
     key: 0,
     onClick: _cache[3] || (_cache[3] = function () {
-      return $options.onSubmit && $options.onSubmit.apply($options, arguments);
+      return $options.addProduct && $options.addProduct.apply($options, arguments);
     }),
     type: "submit",
     "class": "submit",
@@ -23828,6 +23799,43 @@ __webpack_require__.r(__webpack_exports__);
           getters = _ref4.getters;
       var index = getters.find_incart_product(product);
       commit('remove_incart_product', index);
+    },
+    addProduct: function addProduct(_ref5, payload) {
+      var state = _ref5.state,
+          getters = _ref5.getters,
+          dispatch = _ref5.dispatch;
+      payload.e.preventDefault();
+      var index = getters.find_in_allProduct(payload.product);
+      var product = state.allProducts[index];
+
+      if (product.stock > 0) {
+        var form = payload.e.currentTarget.closest("form");
+        var data = new FormData(form);
+        data.append('category_name', product.category_name);
+        axios.post('/cart', data).then(function (response) {
+          if (response.data == 23000) {
+            $(".exist-alert").trigger("click");
+          } else {
+            // this.status = !this.status
+            var item = {
+              id: product.id,
+              name: product.name,
+              image: product.image,
+              sell_price: product.sell_price,
+              category_name: product.category_name,
+              quantity: parseInt(data.get('quantity')),
+              mesure_unit: product.mesure_unit,
+              discount_active: product.discount_active,
+              discount_percent: product.discount_percent,
+              discount_startDate: product.discount_startDate,
+              discount_endDate: product.discount_endDate
+            };
+            state.subTotal = 0;
+            dispatch("add_incart_product", item);
+            $(".success-alert").trigger("click");
+          }
+        });
+      }
     }
   },
   getters: {

@@ -25,6 +25,7 @@ export default createStore({
               state.incart_products.splice(index,1)
       }
     },
+    
   
      
   },
@@ -42,6 +43,46 @@ export default createStore({
       let index = getters.find_incart_product(product)
       commit('remove_incart_product',index)
     },
+    addProduct({state,getters,dispatch},payload){
+        payload.e.preventDefault()
+        const index = getters.find_in_allProduct(payload.product);
+        const product = state.allProducts[index];
+
+            if(product.stock > 0){
+                let form = payload.e.currentTarget.closest("form")
+
+                var data = new FormData(form);
+                data.append('category_name', product.category_name);
+
+                 axios.post('/cart',data) .then(response =>{
+                      
+                            if(response.data == 23000){
+                               $(".exist-alert").trigger("click");
+                            }else{
+
+                              // this.status = !this.status
+                                let item = {
+                                    id : product.id,
+                                    name : product.name,
+                                    image : product.image,
+                                    sell_price : product.sell_price,
+                                    category_name : product.category_name,
+                                    quantity : parseInt(data.get('quantity')),
+                                    mesure_unit : product.mesure_unit,
+                                    discount_active: product.discount_active,
+                                    discount_percent: product.discount_percent,
+                                    discount_startDate : product.discount_startDate,
+                                    discount_endDate : product.discount_endDate,
+                                }
+                                  state.subTotal = 0
+                                dispatch("add_incart_product",item);
+
+                                $(".success-alert").trigger("click");
+                            }
+                        });
+                }
+
+            }
   
   },
   getters:{

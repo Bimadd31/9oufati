@@ -52,7 +52,7 @@
                     </div>
                     <div class="mb-3">
                         <input type="hidden" name="id" :value="this.id">
-                        <input v-if="this.stock > 0" @click="onSubmit" type="submit" class="submit" :value="basketStatus">
+                        <input v-if="this.stock > 0" @click="addProduct" type="submit" class="submit" :value="basketStatus">
                          <input v-else type="button" class="submit bg-danger" value="STOCK EPUISÉ">
 
                     </div>
@@ -91,43 +91,15 @@ export default {
  
         methods: {
 
-           onSubmit(e){
-                    e.preventDefault()
-            if(this.stock > 0){
-                let form = e.currentTarget.closest("form")
 
-                var data = new FormData(form);
-                data.append('category_name', this.category_name);
-
-                 axios.post('/cart',data) .then(response =>{
-                      
-                            if(response.data == 23000){
-                               $(".exist-alert").click();
-                            }else{
-
-                                this.status = !this.status
-                                let product = {
-                                    id : this.id,
-                                    name : this.name,
-                                    image : this.image,
-                                    sell_price : this.sell_price,
-                                    category_name : this.category_name,
-                                    quantity : parseInt(data.get('quantity')),
-                                    mesure_unit : this.mesure_unit,
-                                    discount_active: this.discount_active,
-                                    discount_percent: this.discount_percent,
-                                    discount_startDate : this.discount_startDate,
-                                    discount_endDate : this.discount_endDate,
-                                }
-                                this.$store.state.subTotal = 0
-                                this.$store.dispatch("add_incart_product",product);
-
-                                $(".success-alert").click();
-                            }
-                        });
-                }
-
+            addProduct(e){
+                let product = [this.id,this.category_name];
+                this.$store.dispatch("addProduct",{
+                    e : e,
+                    product : product,
+                })
             },
+
             product_qte(e) {
                     
                 if (e.currentTarget.className === "plus"){
