@@ -33,7 +33,9 @@
                                 <span>{{(Math.round(getFinalPrice * 100) / 100).toFixed(2)+' DH' }}</span>
                             </span>
                             <span v-else>
-                                <span>{{(Math.round(this.sell_price * 100) / 100).toFixed(2)+' DH'}}</span>
+                                <span>{{(Math.round(this.sell_price * 100) / 100).toFixed(2)+' DH'}} / </span>
+                                <span class="text-uppercase fw-bold my-2 text-black-50" style="font-family:Ubuntu">{{mesure_unit}}</span>
+
                             </span>
                         </p>
 
@@ -41,16 +43,15 @@
 
                 <form  class="form-shop-add-product" method="POST" novalidate>
 
-                    <div class="col-6 mb-3 mx-auto d-inline-flex justify-content-center mb-2 product-qte-select">
+                    <div class="col-6 mb-3 mx-auto d-inline-flex justify-content-center product-qte-select">
+                      
                         <input type="button" value="-" class="minus" @click="product_qte">
-                        <input type="text" name="quantity" class="shop-product-qte-value w-25 text-center" :value="this.min_quantity || 1">
+                        <input type="text" name="quantity" class="shop-product-qte-value w-25 text-center" v-model="this.quantity" >
                         <input type="button" value="+" class="plus" @click="product_qte">
-                        <input type="text" class="disabled border-0" name="mesure_unit" :value="mesure_unit">
+                       
                     </div>
-
                     <div class="mb-3">
                         <input type="hidden" name="id" :value="this.id">
-
                         <input v-if="this.stock > 0" @click="onSubmit" type="submit" class="submit" :value="basketStatus">
                          <input v-else type="button" class="submit bg-danger" value="STOCK EPUISÉ">
 
@@ -69,6 +70,7 @@ export default {
         data(){
             return{
                 status : 'true',
+                quantity : this.min_quantity || 1
             }
         },
         name: 'productCard',
@@ -127,22 +129,15 @@ export default {
 
             },
             product_qte(e) {
-
+                    
                 if (e.currentTarget.className === "plus"){
-                    let input = e.currentTarget.previousElementSibling;
-                    let value = parseInt(input.value, 10);
-                    if (value < this.stock){
-                        value++;
-                        input.value = value;
-
+                    if (this.quantity < this.stock){
+                        this.quantity++
                     }
                 }
                 if (e.currentTarget.className === "minus") {
-                    let input = e.currentTarget.nextElementSibling;
-                    let value = parseInt(input.value, 10);
-                    if(value > (this.min_quantity || 1)){
-                        value--;
-                        input.value = value;
+                    if(this.quantity > (this.min_quantity || 1)){
+                        this.quantity--
                     }
                 }
             }

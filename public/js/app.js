@@ -22982,7 +22982,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      status: 'true'
+      status: 'true',
+      quantity: this.min_quantity || 1
     };
   },
   name: 'productCard',
@@ -23039,23 +23040,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     product_qte: function product_qte(e) {
       if (e.currentTarget.className === "plus") {
-        var input = e.currentTarget.previousElementSibling;
-        var value = parseInt(input.value, 10);
-
-        if (value < this.stock) {
-          value++;
-          input.value = value;
+        if (this.quantity < this.stock) {
+          this.quantity++;
         }
       }
 
       if (e.currentTarget.className === "minus") {
-        var _input = e.currentTarget.nextElementSibling;
-
-        var _value = parseInt(_input.value, 10);
-
-        if (_value > (this.min_quantity || 1)) {
-          _value--;
-          _input.value = _value;
+        if (this.quantity > (this.min_quantity || 1)) {
+          this.quantity--;
         }
       }
     }
@@ -23234,7 +23226,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       id: product.id,
       sell_price: product.sell_price,
       category_name: product.category_name,
-      mesure_unit: product.mesure_unit || 'Piece',
+      mesure_unit: product.mesure_unit || 'Unité',
       quantity: product.quantity,
       discount_active: product.discount_active,
       discount_percent: product.discount_percent,
@@ -23393,7 +23385,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       id: product.id,
       sell_price: product.sell_price,
       category_name: product.category_name,
-      mesure_unit: product.mesure_unit || 'Piece',
+      mesure_unit: product.mesure_unit || 'Unité',
       discount_active: product.discount_active,
       discount_percent: product.discount_percent,
       discount_startDate: product.discount_startDate,
@@ -23558,27 +23550,33 @@ var _hoisted_10 = {
   key: 1
 };
 var _hoisted_11 = {
+  "class": "text-uppercase fw-bold my-2 text-black-50",
+  style: {
+    "font-family": "Ubuntu"
+  }
+};
+var _hoisted_12 = {
   "class": "form-shop-add-product",
   method: "POST",
   novalidate: ""
 };
-var _hoisted_12 = {
-  "class": "col-6 mb-3 mx-auto d-inline-flex justify-content-center mb-2 product-qte-select"
+var _hoisted_13 = {
+  "class": "col-6 mb-3 mx-auto d-inline-flex justify-content-center product-qte-select"
 };
-var _hoisted_13 = ["value"];
-var _hoisted_14 = ["value"];
-var _hoisted_15 = {
+var _hoisted_14 = {
   "class": "mb-3"
 };
+var _hoisted_15 = ["value"];
 var _hoisted_16 = ["value"];
-var _hoisted_17 = ["value"];
-var _hoisted_18 = {
+var _hoisted_17 = {
   key: 1,
   type: "button",
   "class": "submit bg-danger",
   value: "STOCK EPUISÉ"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: this.image,
     "class": "card-img-top position-relative",
@@ -23593,45 +23591,42 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round($options.getFinalPrice * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
-  )])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.sell_price * 100) / 100).toFixed(2) + ' DH'), 1
+  )])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.sell_price * 100) / 100).toFixed(2) + ' DH') + " / ", 1
   /* TEXT */
-  )]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.mesure_unit), 1
+  /* TEXT */
+  )]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "button",
     value: "-",
     "class": "minus",
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.product_qte && $options.product_qte.apply($options, arguments);
     })
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     name: "quantity",
     "class": "shop-product-qte-value w-25 text-center",
-    value: this.min_quantity || 1
-  }, null, 8
-  /* PROPS */
-  , _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return _this.quantity = $event;
+    })
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.quantity]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "button",
     value: "+",
     "class": "plus",
-    onClick: _cache[1] || (_cache[1] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return $options.product_qte && $options.product_qte.apply($options, arguments);
     })
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "text",
-    "class": "disabled border-0",
-    name: "mesure_unit",
-    value: $props.mesure_unit
-  }, null, 8
-  /* PROPS */
-  , _hoisted_14)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "hidden",
     name: "id",
     value: this.id
   }, null, 8
   /* PROPS */
-  , _hoisted_16), this.stock > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
+  , _hoisted_15), this.stock > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", {
     key: 0,
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.onSubmit && $options.onSubmit.apply($options, arguments);
     }),
     type: "submit",
@@ -23639,7 +23634,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     value: $options.basketStatus
   }, null, 8
   /* PROPS */
-  , _hoisted_17)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", _hoisted_18))])])])]);
+  , _hoisted_16)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("input", _hoisted_17))])])])]);
 }
 
 /***/ }),

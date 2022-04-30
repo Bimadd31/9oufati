@@ -43,7 +43,7 @@
                             :id="product.id"
                             :sell_price="product.sell_price"
                             :category_name="product.category_name"
-                            :mesure_unit="product.mesure_unit || 'Piece'"
+                            :mesure_unit="product.mesure_unit || 'Unité'"
                             :quantity="product.quantity"
                             :discount_active="product.discount_active"
                             :discount_percent="product.discount_percent"
