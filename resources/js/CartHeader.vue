@@ -23,7 +23,7 @@
                 <div  class="d-flex col-12 justify-content-start align-items-center">
                 
                     <div class="ms-4 px-2 py-3 cart-widget-subtotal-text">
-                        Sous-total : 
+                        Sous-total :  {{(Math.round(get_cartsubTotal * 100) / 100).toFixed(2)+' DH'}}
                         <span class="cart-widget-subtotal ms-2"></span>
                     </div>
 
@@ -41,7 +41,7 @@
                             :image="product.image" 
                             :name="product.name"
                             :id="product.id"
-                            :price="product.sell_price || product.price"
+                            :sell_price="product.sell_price"
                             :category_name="product.category_name"
                             :mesure_unit="product.mesure_unit || 'Piece'"
                             :quantity="product.quantity"
@@ -69,7 +69,6 @@
                 </div>
                    
             </div> 
-           
         
             <div v-else class="d-grid col-12 justify-content-center align-items-center text-center" style="height:150px;">
                 
@@ -93,15 +92,15 @@ export default {
     components:{
         CartHeaderContent,
     },
-    methods:{
-
-    },
     computed:{
         get_product_count(){
             return this.$store.getters.get_cart_count
         },
         getIncartProducts(){
             return this.$store.getters.get_incart_products
+        },
+        get_cartsubTotal(){
+            return this.$store.getters.get_cartsubTotal
         }
     }
    

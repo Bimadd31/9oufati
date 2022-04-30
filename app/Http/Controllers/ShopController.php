@@ -32,21 +32,21 @@ class ShopController extends Controller
                 $cart_id = $user_cart[0]->id;
             }
 
-            $fixed_baskets = DB::table('baskets')
+            $fixed_baskets = DB::table('baskets AS B')
 
-                ->leftJoin('Category', 'baskets.category_id', '=', 'Category.id')
-                ->leftJoin('discounts', 'baskets.discount_id', '=', 'discounts.id')
-                ->selectRaw('Category.name as category_name,baskets.*,
-                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate as discount_startDate,discounts.endDate as discount_endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
-                ->whereRaw('type = "fixed" AND baskets.active = 1')
+                ->leftJoin('Category AS C', 'B.category_id', '=', 'C.id')
+                ->leftJoin('discounts AS D', 'B.discount_id', '=', 'D.id')
+                ->selectRaw('C.name as category_name,B.*,
+                D.name as discount_name,D.percent as discount_percent,D.active as discount_active,D.startDate as discount_startDate,D.endDate as discount_endDate,D.created_at as discount_created_at,D.updated_at as discount_updated_at')
+                ->whereRaw('B.type = "fixed" AND B.active = 1')
                 ->get();
 
-            $products = DB::table('products')
-                ->leftJoin('Category', 'products.category_id', '=', 'Category.id')
-                ->leftJoin('discounts', 'products.discount_id', '=', 'discounts.id')
-                ->selectRaw('Category.name as category_name,products.*,
-                discounts.name as discount_name,discounts.percent as discount_percent,discounts.active as discount_active,discounts.startDate as discount_startDate,discounts.endDate as discount_endDate,discounts.created_at as discount_created_at,discounts.updated_at as discount_updated_at')
-                ->whereRaw('products.active = 1')
+            $products = DB::table('products AS P')
+                ->leftJoin('Category AS C', 'P.category_id', '=', 'C.id')
+                ->leftJoin('discounts AS D', 'P.discount_id', '=', 'D.id')
+                ->selectRaw('C.name as category_name,P.*,
+                D.name as discount_name,D.percent as discount_percent,D.active as discount_active,D.startDate as discount_startDate,D.endDate as discount_endDate,D.created_at as discount_created_at,D.updated_at as discount_updated_at')
+                ->whereRaw('P.active = 1')
                 ->get();
 
             $categories = DB::table('Category')->get();

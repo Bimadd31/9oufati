@@ -22741,9 +22741,6 @@ __webpack_require__.r(__webpack_exports__);
     return {
       incart_products: this.$store.getters.get_incart_products
     };
-  },
-  mounted: function mounted() {
-    console.log(this.incart_products);
   }
 });
 
@@ -22772,13 +22769,15 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     CartHeaderContent: _components_CartHeaderContent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: {},
   computed: {
     get_product_count: function get_product_count() {
       return this.$store.getters.get_cart_count;
     },
     getIncartProducts: function getIncartProducts() {
       return this.$store.getters.get_incart_products;
+    },
+    get_cartsubTotal: function get_cartsubTotal() {
+      return this.$store.getters.get_cartsubTotal;
     }
   }
 });
@@ -22800,24 +22799,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Shop',
-  mounted: function mounted() {
-    this.onLoad();
-    console.log(this.products);
+  components: {
+    productCard: _components_productCard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: {
     cat: String,
     products: Object,
     categories: Object
   },
+  mounted: function mounted() {
+    this.$store.dispatch('set_allProducts', this.products);
+    this.onLoad();
+  },
   data: function data() {
     return {
-      // categories : ['fruits','legumes','epices','herbe','panier'],
       filtersAppied: [],
       searchInput: ''
     };
-  },
-  components: {
-    productCard: _components_productCard_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
     setActive: function setActive(element) {
@@ -22892,12 +22890,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'CartHeaderContent',
   props: {
     image: String,
     name: String,
-    price: Number,
+    sell_price: Number,
     id: Number,
     category_name: String,
     mesure_unit: String,
@@ -22914,39 +22920,48 @@ __webpack_require__.r(__webpack_exports__);
     deleteProduct: function deleteProduct(e) {
       var _this = this;
 
-      e.preventDefault();
-      var form = e.currentTarget.closest("form");
-      var form_data = new FormData(form);
-      var product_id = form_data.get('product_id');
-      var category = form_data.get('category_name');
-      var product = [product_id, category];
-      axios({
-        url: "/cart/".concat(product_id),
-        method: 'DELETE',
-        data: {
-          category_name: category
-        }
-      }).then(function (response) {
-        if (response.statusText == 'OK') {
-          _this.remove_incart_product(product);
-        }
-      })["catch"](function (err) {
-        console.log(err);
-      });
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var form, form_data, product_id, category, product;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                e.preventDefault();
+                form = e.currentTarget.closest("form");
+                form_data = new FormData(form);
+                product_id = form_data.get('product_id');
+                category = form_data.get('category_name');
+                product = [product_id, category];
+                _context.next = 8;
+                return axios({
+                  url: "/cart/".concat(product_id),
+                  method: 'DELETE',
+                  data: {
+                    category_name: category
+                  }
+                }).then(function (response) {
+                  if (response.statusText == 'OK') {
+                    _this.remove_incart_product(product);
+
+                    _this.$store.state.subTotal = 0;
+                  }
+                })["catch"](function (err) {
+                  console.log(err);
+                });
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
   computed: {
-    discountValid: function discountValid() {
-      var Currentdate = new Date().toJSON().slice(0, 19).replace('T', ' ');
-      return this.discount_active && this.discount_startDate < Currentdate && this.discount_endDate > Currentdate ? true : false;
-    },
-    getDiscountedPrice: function getDiscountedPrice() {
-      if (this.discountValid) {
-        var discounted_price = this.price - this.price * (this.discount_percent / 100);
-        return discounted_price;
-      } else {
-        return this.price;
-      }
+    getFinalPrice: function getFinalPrice() {
+      var product = [this.id, this.category_name];
+      return this.$store.getters.getFinalPrice(product);
     }
   }
 });
@@ -22964,14 +22979,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -22982,7 +22989,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     image: String,
     name: String,
-    price: Number,
+    sell_price: Number,
     id: Number,
     category_name: String,
     mesure_unit: String,
@@ -22993,78 +23000,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     min_quantity: Number,
     stock: Number
   },
-  computed: {
-    basketStatus: function basketStatus() {
-      return this.status ? 'AJOUTER AU PANIER' : 'Ajouté';
-    },
-    getDiscountedPrice: function getDiscountedPrice() {
-      if (this.discount_active) {
-        var discounted_price = this.price - this.price * (this.discount_percent / 100);
-        return (Math.round(discounted_price * 100) / 100).toFixed(2) + ' DH';
-      } else {
-        return this.price;
-      }
-    },
-    discountValid: function discountValid() {
-      var Currentdate = new Date().toJSON().slice(0, 19).replace('T', ' ');
-      return this.discount_active && this.discount_startDate < Currentdate && this.discount_endDate > Currentdate ? true : false;
-    }
-  },
   methods: {
     onSubmit: function onSubmit(e) {
       var _this = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var form, data;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                e.preventDefault();
+      e.preventDefault();
 
-                if (!(_this.stock > 0)) {
-                  _context.next = 7;
-                  break;
-                }
+      if (this.stock > 0) {
+        var form = e.currentTarget.closest("form");
+        var data = new FormData(form);
+        data.append('category_name', this.category_name);
+        axios.post('/cart', data).then(function (response) {
+          if (response.data == 23000) {
+            $(".exist-alert").click();
+          } else {
+            _this.status = !_this.status;
+            var product = {
+              id: _this.id,
+              name: _this.name,
+              image: _this.image,
+              sell_price: _this.sell_price,
+              category_name: _this.category_name,
+              quantity: parseInt(data.get('quantity')),
+              mesure_unit: _this.mesure_unit,
+              discount_active: _this.discount_active,
+              discount_percent: _this.discount_percent,
+              discount_startDate: _this.discount_startDate,
+              discount_endDate: _this.discount_endDate
+            };
+            _this.$store.state.subTotal = 0;
 
-                form = e.currentTarget.closest("form");
-                data = new FormData(form);
-                data.append('category_name', _this.category_name);
-                _context.next = 7;
-                return axios.post('/cart', data).then(function (response) {
-                  console.log(response.data);
+            _this.$store.dispatch("add_incart_product", product);
 
-                  if (response.data == 23000) {
-                    $(".exist-alert").click();
-                  } else {
-                    _this.status = !_this.status;
-                    var product = {
-                      id: _this.id,
-                      name: _this.name,
-                      image: _this.image,
-                      price: _this.price,
-                      category_name: _this.category_name,
-                      quantity: parseInt(data.get('quantity')),
-                      mesure_unit: _this.mesure_unit,
-                      discount_active: _this.discount_active,
-                      discount_percent: _this.discount_percent,
-                      discount_startDate: _this.discount_startDate,
-                      discount_endDate: _this.discount_endDate
-                    };
-
-                    _this.$store.dispatch("add_incart_products", product);
-
-                    $(".success-alert").click();
-                  }
-                });
-
-              case 7:
-              case "end":
-                return _context.stop();
-            }
+            $(".success-alert").click();
           }
-        }, _callee);
-      }))();
+        });
+      }
     },
     product_qte: function product_qte(e) {
       if (e.currentTarget.className === "plus") {
@@ -23087,6 +23058,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _input.value = _value;
         }
       }
+    }
+  },
+  computed: {
+    basketStatus: function basketStatus() {
+      return this.status ? 'AJOUTER AU PANIER' : 'Ajouté';
+    },
+    discountValid: function discountValid() {
+      var Currentdate = new Date().toJSON().slice(0, 19).replace('T', ' ');
+      return this.discount_active && this.discount_startDate < Currentdate && this.discount_endDate > Currentdate ? true : false;
+    },
+    getFinalPrice: function getFinalPrice() {
+      return this.sell_price - this.sell_price * (this.discount_percent / 100);
     }
   }
 });
@@ -23166,18 +23149,20 @@ var _hoisted_6 = {
 var _hoisted_7 = {
   key: 0
 };
-
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_8 = {
   "class": "d-flex col-12 justify-content-start align-items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_9 = {
   "class": "ms-4 px-2 py-3 cart-widget-subtotal-text"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Sous-total : "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "cart-widget-subtotal ms-2"
-})])], -1
+}, null, -1
 /* HOISTED */
 );
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-12 mx-auto mb-3",
   style: {
     "height": "0.5px",
@@ -23189,17 +23174,17 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_12 = {
   "class": "nav-cart-items-container col-12 d-flex flex-column align-items-center justify-content-center"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-12 mx-auto my-3 nav-cart-widget-btn-container"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-12 d-flex"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-4 pt-2 nav-cart-widget-btn ms-3",
@@ -23217,7 +23202,7 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_13 = {
+var _hoisted_15 = {
   key: 1,
   "class": "d-grid col-12 justify-content-center align-items-center text-center",
   style: {
@@ -23225,7 +23210,7 @@ var _hoisted_13 = {
   }
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   style: {
     "font-family": "Ubuntu"
   }
@@ -23233,19 +23218,21 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_15 = [_hoisted_14];
+var _hoisted_17 = [_hoisted_16];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_CartHeaderContent = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CartHeaderContent");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.get_product_count), 1
   /* TEXT */
-  )])]), _hoisted_5]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" CART WIDGET DROPDOWN "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [this.get_product_count > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [_hoisted_8, _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.getIncartProducts, function (product) {
+  )])]), _hoisted_5]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" CART WIDGET DROPDOWN "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [this.get_product_count > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Sous-total : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round($options.get_cartsubTotal * 100) / 100).toFixed(2) + ' DH') + " ", 1
+  /* TEXT */
+  ), _hoisted_10])]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(this.getIncartProducts, function (product) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_CartHeaderContent, {
       key: product.id,
       image: product.image,
       name: product.name,
       id: product.id,
-      price: product.sell_price || product.price,
+      sell_price: product.sell_price,
       category_name: product.category_name,
       mesure_unit: product.mesure_unit || 'Piece',
       quantity: product.quantity,
@@ -23255,10 +23242,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       discount_endDate: product.discount_endDate
     }, null, 8
     /* PROPS */
-    , ["image", "name", "id", "price", "category_name", "mesure_unit", "quantity", "discount_active", "discount_percent", "discount_startDate", "discount_endDate"]);
+    , ["image", "name", "id", "sell_price", "category_name", "mesure_unit", "quantity", "discount_active", "discount_percent", "discount_startDate", "discount_endDate"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), _hoisted_11, _hoisted_12])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, _hoisted_15))])], 64
+  ))]), _hoisted_13, _hoisted_14])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, _hoisted_17))])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -23404,7 +23391,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       image: product.image,
       name: product.name,
       id: product.id,
-      price: product.sell_price || product.price,
+      sell_price: product.sell_price,
       category_name: product.category_name,
       mesure_unit: product.mesure_unit || 'Piece',
       discount_active: product.discount_active,
@@ -23415,7 +23402,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       stock: product.stock
     }, null, 8
     /* PROPS */
-    , ["image", "name", "id", "price", "category_name", "mesure_unit", "discount_active", "discount_percent", "discount_startDate", "discount_endDate", "min_quantity", "stock"]);
+    , ["image", "name", "id", "sell_price", "category_name", "mesure_unit", "discount_active", "discount_percent", "discount_startDate", "discount_endDate", "min_quantity", "stock"]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])])]);
@@ -23511,7 +23498,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.quantity) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.mesure_unit || 'Piece'), 1
   /* TEXT */
-  ), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round($options.getDiscountedPrice * 100) / 100).toFixed(2) + ' DH'), 1
+  ), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round($options.getFinalPrice * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
   )])])])])])]);
 }
@@ -23598,15 +23585,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     alt: this.name
   }, null, 8
   /* PROPS */
-  , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span \r\n                        v-if=\"this.stock == 0\"  \r\n                        class=\"position-absolute w-100 align-middle text-danger d-flex justify-content-center align-items-center fw-bold\"\r\n                        style=\"height:58%;z-index: 5;\">\r\n                        STOCK ÉPUISÉ\r\n                    </span> "), $options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, " -" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.discount_percent) + "% ", 1
+  , _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <span\r\n                        v-if=\"this.stock == 0\"\r\n                        class=\"position-absolute w-100 align-middle text-danger d-flex justify-content-center align-items-center fw-bold\"\r\n                        style=\"height:58%;z-index: 5;\">\r\n                        STOCK ÉPUISÉ\r\n                    </span> "), $options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, " -" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.discount_percent) + "% ", 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, [$options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("s", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.price * 100) / 100).toFixed(2) + ' DH'), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, [$options.discountValid ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("s", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.sell_price * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getDiscountedPrice), 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round($options.getFinalPrice * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
-  )])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.price * 100) / 100).toFixed(2) + ' DH'), 1
+  )])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round(this.sell_price * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
   )]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "button",
@@ -23661,10 +23648,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 /*!******************************!*\
   !*** ./resources/js/ajax.js ***!
   \******************************/
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-var _require = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js"),
-    find = _require.find;
+/***/ (() => {
 
 $(function () {
   $.ajaxSetup({
@@ -23810,46 +23794,103 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vuex__WEBPACK_IMPORTED_MODULE_0__.createStore)({
   state: function state() {
     return {
-      incart_products: []
+      incart_products: [],
+      allProducts: [],
+      subTotal: 0
     };
   },
   mutations: {
+    set_allProducts: function set_allProducts(state, data) {
+      state.allProducts = data;
+    },
     set_incart_products: function set_incart_products(state, data) {
       state.incart_products = data;
     },
-    add_incart_products: function add_incart_products(state, data) {
+    add_incart_product: function add_incart_product(state, data) {
       state.incart_products.push(data);
     },
-    remove_incart_product: function remove_incart_product(state, product) {
-      var index = state.incart_products.findIndex(function (p) {
-        return p.id == product[0] && p.category_name == product[1];
-      });
-
+    remove_incart_product: function remove_incart_product(state, index) {
       if (index > -1) {
         state.incart_products.splice(index, 1);
       }
     }
   },
   actions: {
-    add_incart_products: function add_incart_products(_ref, data) {
+    set_allProducts: function set_allProducts(_ref, data) {
       var commit = _ref.commit;
-      commit('add_incart_products', data);
+      commit('set_allProducts', data);
     },
     set_incart_products: function set_incart_products(_ref2, data) {
       var commit = _ref2.commit;
       commit('set_incart_products', data);
     },
-    remove_incart_product: function remove_incart_product(_ref3, id) {
+    add_incart_product: function add_incart_product(_ref3, data) {
       var commit = _ref3.commit;
-      commit('remove_incart_product', id);
+      commit('add_incart_product', data);
+    },
+    remove_incart_product: function remove_incart_product(_ref4, product) {
+      var commit = _ref4.commit,
+          getters = _ref4.getters;
+      var index = getters.find_incart_product(product);
+      commit('remove_incart_product', index);
     }
   },
   getters: {
+    find_incart_product: function find_incart_product(state) {
+      return function (product) {
+        return state.incart_products.findIndex(function (p) {
+          return p.id == product[0] && p.category_name == product[1];
+        });
+      };
+    },
+    find_in_allProduct: function find_in_allProduct(state) {
+      return function (product) {
+        return state.allProducts.findIndex(function (p) {
+          return p.id == product[0] && p.category_name == product[1];
+        });
+      };
+    },
     get_incart_products: function get_incart_products(state) {
       return state.incart_products;
     },
     get_cart_count: function get_cart_count(state) {
       return state.incart_products.length;
+    },
+    get_AllProducts: function get_AllProducts(state) {
+      return state.allProducts;
+    },
+    get_incartProduct_Qty: function get_incartProduct_Qty(state, getters) {
+      return function (product) {
+        var index = getters.find_incart_product(product);
+        var item = state.incart_products[index];
+        return item.quantity;
+      };
+    },
+    getFinalPrice: function getFinalPrice(state, getters) {
+      return function (product) {
+        var index = getters.find_incart_product(product);
+        var item = state.incart_products[index];
+        var Currentdate = new Date().toJSON().slice(0, 19).replace('T', ' ');
+
+        if (item.discount_active && item.discount_startDate < Currentdate && item.discount_endDate > Currentdate) {
+          var discounted_price = item.sell_price - item.sell_price * (item.discount_percent / 100);
+          return discounted_price;
+        } else {
+          return item.sell_price;
+        }
+      };
+    },
+    get_cartsubTotal: function get_cartsubTotal(state, getters) {
+      var incart_products = state.incart_products;
+
+      for (var i in incart_products) {
+        var p = [incart_products[i].id, incart_products[i].category_name];
+        var price = getters.getFinalPrice(p);
+        var quantity = getters.get_incartProduct_Qty(p);
+        state.subTotal += price * quantity;
+      }
+
+      return state.subTotal;
     }
   }
 }));

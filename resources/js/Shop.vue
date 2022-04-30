@@ -58,7 +58,7 @@
                             :image="product.image" 
                             :name="product.name"
                             :id="product.id"
-                            :price="product.sell_price || product.price"
+                            :sell_price="product.sell_price"
                             :category_name="product.category_name"
                             :mesure_unit="product.mesure_unit || 'Piece'"
                             :discount_active="product.discount_active"
@@ -80,28 +80,28 @@ import productCard from './components/productCard.vue'
 
 export default {
         name: 'Shop',
-        mounted(){
-
-             this.onLoad();
-            console.log(this.products)
-
+        components:{
+            productCard,
         },
         props:{
             cat : String,
             products: Object,
             categories: Object,
         },
+        mounted(){
+
+            this.$store.dispatch('set_allProducts', this.products);
+            this.onLoad();
+             
+        },
+    
         data(){
             return {
-                // categories : ['fruits','legumes','epices','herbe','panier'],
                 filtersAppied: [],
                 searchInput : '',
-               
             }
         },
-        components:{
-            productCard,
-        },
+       
          methods:{
 
                 setActive: function(element){
@@ -131,8 +131,6 @@ export default {
                 
               filteredItems: function() {
                   
-    
-    
                 return this.products.filter( product => {
 
                     if (this.filtersAppied.length > 0 && this.searchInput.length > 0 ){
@@ -156,12 +154,10 @@ export default {
                         return FrenchName.includes(this.searchInput.toLowerCase());
                     }
 
-                    
-                    
                     return this.products
                 })
                 
-                },
+            },
         },
 }
 </script>

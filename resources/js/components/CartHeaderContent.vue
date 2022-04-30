@@ -1,21 +1,20 @@
 <template>
                
 
-                <div  class="card nav-cart-item mb-1 d-flex justify-content-center" style="width: 300px;height: 80px;">
+                <div class="card nav-cart-item mb-1 d-flex justify-content-center" style="width: 300px;height: 80px;">
                  
                     <div class="row g-0">
                         <div class="col-4 d-flex justify-content-center align-items-center">
                                 <img :src="image" class="nav-cart-item-img">
                         </div>
 
-                        <div class="col-8">
+                        <div class="col-8"  >
                                 <form class="header-product-form" method="POST" novalidate >
                                         
                                 <input name="product_id" type="hidden" :value="id">
                                 <input name="category_name" type="hidden" :value="category_name">
 
                                 <div class="card-body">
-
                                 <input  @click="deleteProduct" type="submit"  class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block"
                                         style="width: 18px;height: 18px;" value="">
                                 <p class="card-title">{{ name }}</p>
@@ -25,7 +24,7 @@
                                                 {{  mesure_unit || 'Piece'}}
                                         </span>x<span
                                         class="nav-cart-item-price ps-1">
-                                        {{ (Math.round(getDiscountedPrice * 100) / 100).toFixed(2)+' DH' }}
+                                        {{ (Math.round(getFinalPrice * 100) / 100).toFixed(2)+' DH' }}
                                         </span>
                                 </p>
                                 </div>
@@ -38,10 +37,11 @@
 <script>
 export default {
         name: 'CartHeaderContent',
+     
         props:{
                 image: String,
                 name: String,
-                price:  Number,
+                sell_price:  Number,
                 id:  Number,
                 category_name: String,
                 mesure_unit : String,
@@ -51,14 +51,15 @@ export default {
                 discount_startDate :String,
                 discount_endDate : String,
         },
+
       
         methods:{
-
+              
             remove_incart_product(product){
                 this.$store.dispatch("remove_incart_product",product)
             },
           
-            deleteProduct(e){
+            async deleteProduct(e){
 
                 e.preventDefault()
 
@@ -70,38 +71,30 @@ export default {
 
                 let product = [product_id,category];
 
-                axios({
+                await axios({
                         url : `/cart/${product_id}`,
                         method : 'DELETE',
                         data : {category_name : category}
                 }).then(response => {
                         if (response.statusText == 'OK'){
                                 this.remove_incart_product(product)
+                                this.$store.state.subTotal = 0
                         }
                 }).catch(err => {
                         console.log(err)
                 })
-
             },
-
-    
         },
         computed:{
-                discountValid(){
-                const Currentdate = new Date().toJSON().slice(0, 19).replace('T', ' ')
-                return this.discount_active && this.discount_startDate < Currentdate && this.discount_endDate > Currentdate ? true : false
-            },
-           getDiscountedPrice(){
+             
+                getFinalPrice(){
+                        let product = [this.id,this.category_name];
+                        return this.$store.getters.getFinalPrice(product)
+                },
+                 
+        }
                 
-                if(this.discountValid){
-                    let discounted_price = this.price-(this.price*(this.discount_percent/100));
-                    return discounted_price
-                } else {
-                    return this.price
-                }
-            }
-                
-            },
+            
        
 }
 </script>

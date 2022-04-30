@@ -19,9 +19,6 @@ export default {
             incart_products : this.$store.getters.get_incart_products
         }
     },
-    mounted(){
-        console.log(this.incart_products)
-    }
 }
 </script>
 

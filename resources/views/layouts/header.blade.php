@@ -82,7 +82,7 @@
 
                                 <!-- NAVIGATION CART CONTAINER -->
 
-                        <div class="nav-cart-btn col-4 col-xxl-3 d-flex align-items-center justify-content-center btn-group">
+                        <div id="nav-cart-btn" class="nav-cart-btn col-4 col-xxl-3 d-flex align-items-center justify-content-center btn-group">
 
                               <header-cart :data="{{$incart_products}}" ></header-cart>
                                
