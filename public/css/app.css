@@ -11854,7 +11854,7 @@ input[type=checkbox]:checked::before {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
-.shop-product-container .submit:hover, .shop-product-container .submit:focus {
+.shop-product-container .submit:hover {
   background-color: #81ab33a8;
 }
 

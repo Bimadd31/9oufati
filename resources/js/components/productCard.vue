@@ -94,9 +94,17 @@ export default {
 
             addProduct(e){
                 let product = [this.id,this.category_name];
+                
                 this.$store.dispatch("addProduct",{
                     e : e,
                     product : product,
+                }).then(success=>{
+                    if(success){
+                        setTimeout(()=>{
+                            this.status = !this.status
+                        },3000)
+                            this.status = !this.status
+                    }
                 })
             },
 

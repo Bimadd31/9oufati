@@ -54,34 +54,56 @@ export default createStore({
                 var data = new FormData(form);
                 data.append('category_name', product.category_name);
 
-                 axios.post('/cart',data) .then(response =>{
-                      
-                            if(response.data == 23000){
-                               $(".exist-alert").trigger("click");
-                            }else{
+                return axios.post('/cart',data) .then(response =>{
+                    
+                    if(response.data == 23000){
+                        $(".exist-alert").trigger("click");
+                    }else{
+                        let item = {
+                            id : product.id,
+                            name : product.name,
+                            image : product.image,
+                            sell_price : product.sell_price,
+                            category_name : product.category_name,
+                            quantity : parseInt(data.get('quantity')),
+                            mesure_unit : product.mesure_unit,
+                            discount_active: product.discount_active,
+                            discount_percent: product.discount_percent,
+                            discount_startDate : product.discount_startDate,
+                            discount_endDate : product.discount_endDate,
+                        }
+                          state.subTotal = 0
+                          
+                        dispatch("add_incart_product",item);
+                        $(".success-alert").trigger("click");
+                        
+                      return true;
+                    }
+                });
+              }
+            },
+            deleteProduct({state,dispatch},e){
+                e.preventDefault()
+                let form = e.currentTarget.closest("form");
+                var form_data = new FormData(form);
 
-                              // this.status = !this.status
-                                let item = {
-                                    id : product.id,
-                                    name : product.name,
-                                    image : product.image,
-                                    sell_price : product.sell_price,
-                                    category_name : product.category_name,
-                                    quantity : parseInt(data.get('quantity')),
-                                    mesure_unit : product.mesure_unit,
-                                    discount_active: product.discount_active,
-                                    discount_percent: product.discount_percent,
-                                    discount_startDate : product.discount_startDate,
-                                    discount_endDate : product.discount_endDate,
-                                }
-                                  state.subTotal = 0
-                                dispatch("add_incart_product",item);
+                let product_id = form_data.get('product_id');
+                let category = form_data.get('category_name');
 
-                                $(".success-alert").trigger("click");
-                            }
-                        });
-                }
+                let product = [product_id,category];
 
+                return axios({
+                        url : `/cart/${product_id}`,
+                        method : 'DELETE',
+                        data : {category_name : category}
+                }).then(response => {
+                        if (response.statusText == 'OK'){
+                            dispatch("remove_incart_product",product)
+                            state.subTotal = 0
+                        }
+                }).catch(err => {
+                        console.log(err)
+                })
             }
   
   },

@@ -54,35 +54,9 @@ export default {
 
       
         methods:{
-              
-            remove_incart_product(product){
-                this.$store.dispatch("remove_incart_product",product)
-            },
           
-            async deleteProduct(e){
-
-                e.preventDefault()
-
-                let form = e.currentTarget.closest("form");
-                var form_data = new FormData(form);
-
-                let product_id = form_data.get('product_id');
-                let category = form_data.get('category_name');
-
-                let product = [product_id,category];
-
-                await axios({
-                        url : `/cart/${product_id}`,
-                        method : 'DELETE',
-                        data : {category_name : category}
-                }).then(response => {
-                        if (response.statusText == 'OK'){
-                                this.remove_incart_product(product)
-                                this.$store.state.subTotal = 0
-                        }
-                }).catch(err => {
-                        console.log(err)
-                })
+            deleteProduct(e){
+                this.$store.dispatch("deleteProduct",e)
             },
         },
         computed:{
