@@ -16,7 +16,7 @@
 
                                 <div class="card-body">
                                 <input  @click="deleteProduct" type="submit"  class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block"
-                                        style="width: 18px;height: 18px;" value="">
+                                        style="width: 18px;height: 18px;" value="&nbsp;">
                                 <p class="card-title">{{ name }}</p>
                                 <p class="card-text text-end">
                                         <span class="nav-cart-item-quantity pe-1">

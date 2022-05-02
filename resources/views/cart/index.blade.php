@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-        <div class="cart-container container-md-custom bg-white position-relative mt-5 ">
+        <div class="cart-container container-md-custom position-relative mt-4 ">
 
             <cart-content></cart-content>
             

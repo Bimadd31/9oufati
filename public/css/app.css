@@ -11678,6 +11678,7 @@ body {
   position: absolute;
   font-family: "Ubuntu", sans-serif;
   border-radius: 10px;
+  height: 80%;
 }
 
 .cart-empty-msg {
@@ -11699,13 +11700,6 @@ body {
   opacity: 0.9;
 }
 
-@media screen and (min-width: 1400px) {
-  .cart-container .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
 .cart-select {
   font-family: "lato", sans-serif;
   font-weight: normal;
@@ -11890,4 +11884,75 @@ input[type=checkbox]:checked::before {
 }
 .alert-banner .success-alert::after {
   content: "Le produit a été ajouté a votre panier !";
+}
+
+.cart-product-table {
+  width: 100%;
+  text-align: center;
+  vertical-align: middle;
+}
+.cart-product-table thead tr {
+  height: 20px;
+}
+.cart-product-table thead tr th {
+  font-family: "Roboto";
+  font-style: normal;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #656565;
+}
+.cart-product-table tbody tr {
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+.cart-product-table tbody tr .product-qte-select {
+  transform: scale(1);
+}
+.cart-product-table tbody tr .product-qte-select .minus {
+  height: 2rem;
+  width: 2rem;
+}
+.cart-product-table tbody tr .product-qte-select .plus {
+  height: 2rem;
+  width: 2rem;
+}
+.cart-product-table tbody tr .product-qte-select .shop-product-qte-value {
+  width: 2rem;
+  height: 2rem;
+}
+.cart-product-table tbody tr td {
+  background: rgba(205, 205, 205, 0.31);
+}
+.cart-product-table tbody tr td img {
+  margin: 10px;
+  filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+}
+.cart-product-table .cart-item-price {
+  font-family: "Lato";
+  color: #b80000;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+.cart-product-table .cart-item-name {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.cart-total-container {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.4em;
+}
+.cart-total-container .validate-btn {
+  background: #7EB254;
+  color: white;
+  border-radius: 35px;
+  border: none;
+  padding: 0.6rem 1.5rem;
+}
+.cart-total-container .validate-btn:hover {
+  opacity: 0.8;
 }

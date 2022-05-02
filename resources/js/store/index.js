@@ -6,7 +6,8 @@ export default createStore({
     return {
       incart_products : [],
       allProducts : [],
-      subTotal : 0
+      subTotal : 0,
+      shipping_price : 25,
     }
   },
   mutations: {
@@ -30,19 +31,24 @@ export default createStore({
      
   },
   actions:{
+
     set_allProducts({commit},data){
      commit('set_allProducts',data)
     },
+
     set_incart_products({commit},data){
       commit('set_incart_products',data)
     },
+
     add_incart_product({commit},data){
         commit('add_incart_product',data);
     },
+
     remove_incart_product({commit,getters},product){
       let index = getters.find_incart_product(product)
       commit('remove_incart_product',index)
     },
+
     addProduct({state,getters,dispatch},payload){
         payload.e.preventDefault()
         const index = getters.find_in_allProduct(payload.product);
@@ -82,29 +88,30 @@ export default createStore({
                 });
               }
             },
-            deleteProduct({state,dispatch},e){
-                e.preventDefault()
-                let form = e.currentTarget.closest("form");
-                var form_data = new FormData(form);
 
-                let product_id = form_data.get('product_id');
-                let category = form_data.get('category_name');
+    deleteProduct({state,dispatch},e){
+        e.preventDefault()
+        let form = e.currentTarget.closest("form");
+        var form_data = new FormData(form);
 
-                let product = [product_id,category];
+        let product_id = form_data.get('product_id');
+        let category = form_data.get('category_name');
 
-                return axios({
-                        url : `/cart/${product_id}`,
-                        method : 'DELETE',
-                        data : {category_name : category}
-                }).then(response => {
-                        if (response.statusText == 'OK'){
-                            dispatch("remove_incart_product",product)
-                            state.subTotal = 0
-                        }
-                }).catch(err => {
-                        console.log(err)
-                })
-            }
+        let product = [product_id,category];
+
+        return axios({
+                url : `/cart/${product_id}`,
+                method : 'DELETE',
+                data : {category_name : category}
+        }).then(response => {
+                if (response.statusText == 'OK'){
+                    dispatch("remove_incart_product",product)
+                    state.subTotal = 0
+                }
+        }).catch(err => {
+                console.log(err)
+        })
+    }
   
   },
   getters:{

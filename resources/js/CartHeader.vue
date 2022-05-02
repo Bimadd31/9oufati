@@ -82,7 +82,7 @@
 <script>
 import CartHeaderContent from './components/CartHeaderContent.vue'
 export default {
-   
+ 
     props:{
         data : Object,
     },
