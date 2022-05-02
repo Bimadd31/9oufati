@@ -54,19 +54,7 @@
                 <div id="shop-products-container" 
                 class="row bg-light mt-3 p-2 w-100 row-cols-1 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5" >
 
-                            <productCard :key="product.id" v-for="product in filteredItems"
-                            :image="product.image" 
-                            :name="product.name"
-                            :id="product.id"
-                            :sell_price="product.sell_price"
-                            :category_name="product.category_name"
-                            :mesure_unit="product.mesure_unit || 'Unité'"
-                            :discount_active="product.discount_active"
-                            :discount_percent="product.discount_percent"
-                            :discount_startDate="product.discount_startDate"
-                            :discount_endDate="product.discount_endDate"
-                            :min_quantity="product.min_quantity"
-                            :stock="product.stock"></productCard>
+                    <shopProduct :key="product.id" v-for="product in filteredItems" :product="product"></shopProduct>
                     
                 </div>
                 
@@ -76,12 +64,12 @@
 </template>
 
 <script>
-import productCard from './components/productCard.vue'
+import shopProduct from './components/shopProduct.vue'
 
 export default {
         name: 'Shop',
         components:{
-            productCard,
+            shopProduct,
         },
         props:{
             cat : String,

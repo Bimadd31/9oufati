@@ -5,7 +5,7 @@
 
 
 
-                    <img :src="this.image" class="card-img-top position-relative" :alt="this.name">
+                    <img :src="this.product.image" class="card-img-top position-relative" :alt="this.product.name">
 
                     <!-- <span
                         v-if="this.stock == 0"
@@ -17,24 +17,24 @@
 
                     <span v-if="discountValid"
                                 class="position-absolute top-0 start-0 translate-middle border border-light rounded-circle discount-badge ">
-                            -{{this.discount_percent}}%
+                            -{{this.product.discount_percent}}%
                     </span>
 
                     <div class="card-body">
-                        <h5 class="card-title">{{ name }}</h5>
+                        <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">
 
                             <span v-if="discountValid">
                                 <span class="pe-3" style="color:#878181;">
                                     <s>
-                                        {{(Math.round(this.sell_price * 100) / 100).toFixed(2)+' DH'}}
+                                        {{(Math.round(this.product.sell_price * 100) / 100).toFixed(2)+' DH'}}
                                     </s>
                                 </span>
                                 <span>{{(Math.round(getFinalPrice * 100) / 100).toFixed(2)+' DH' }}</span>
                             </span>
                             <span v-else>
-                                <span>{{(Math.round(this.sell_price * 100) / 100).toFixed(2)+' DH'}} / </span>
-                                <span class="text-uppercase fw-bold my-2 text-black-50" style="font-family:Ubuntu">{{mesure_unit}}</span>
+                                <span>{{(Math.round(this.product.sell_price * 100) / 100).toFixed(2)+' DH'}} / </span>
+                                <span class="text-uppercase fw-bold my-2 text-black-50" style="font-family:Ubuntu">{{product.mesure_unit || 'Unité'}}</span>
 
                             </span>
                         </p>
@@ -51,8 +51,8 @@
                        
                     </div>
                     <div class="mb-3">
-                        <input type="hidden" name="id" :value="this.id">
-                        <input v-if="this.stock > 0" @click="addProduct" type="submit" class="submit" :value="basketStatus">
+                        <input type="hidden" name="id" :value="this.product.id">
+                        <input v-if="this.product.stock > 0" @click="addProduct" type="submit" class="submit" :value="basketStatus">
                          <input v-else type="button" class="submit bg-danger" value="STOCK EPUISÉ">
 
                     </div>
@@ -70,30 +70,20 @@ export default {
         data(){
             return{
                 status : 'true',
-                quantity : this.min_quantity || 1
+                quantity : this.product.min_quantity || 1
             }
         },
         name: 'productCard',
         props:{
-            image: String,
-            name: String,
-            sell_price:  Number,
-            id:  Number,
-            category_name: String,
-            mesure_unit : String,
-            discount_active: Number,
-            discount_percent: Number,
-            discount_startDate : String,
-            discount_endDate : String,
-            min_quantity: Number,
-            stock: Number,
+            product: Object,
         },
- 
+                       
+
         methods: {
 
 
             addProduct(e){
-                let product = [this.id,this.category_name];
+                let product = [this.product.id,this.product.category_name];
                 
                 this.$store.dispatch("addProduct",{
                     e : e,
@@ -111,28 +101,29 @@ export default {
             product_qte(e) {
                     
                 if (e.currentTarget.className === "plus"){
-                    if (this.quantity < this.stock){
+                    if (this.quantity < this.product.stock){
                         this.quantity++
                     }
                 }
                 if (e.currentTarget.className === "minus") {
-                    if(this.quantity > (this.min_quantity || 1)){
+                    if(this.quantity > (this.product.min_quantity || 1)){
                         this.quantity--
                     }
                 }
             }
 
         },
+        
                 computed : {
             basketStatus (){
                     return (this.status) ? 'AJOUTER AU PANIER' : 'Ajouté';
                 },
             discountValid(){
                     const Currentdate = new Date().toJSON().slice(0, 19).replace('T', ' ');
-                    return this.discount_active && this.discount_startDate < Currentdate && this.discount_endDate > Currentdate ? true : false
+                    return this.product.discount_active && this.product.discount_startDate < Currentdate && this.product.discount_endDate > Currentdate ? true : false
                 },
             getFinalPrice(){
-                    return this.sell_price-(this.sell_price*(this.discount_percent/100));
+                    return this.product.sell_price-(this.product.sell_price*(this.product.discount_percent/100));
             }
 
         },
