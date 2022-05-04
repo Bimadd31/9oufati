@@ -22960,6 +22960,33 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
+  watch: {
+    quantity: function quantity(newValue, oldValue) {
+      var _this = this;
+
+      if (newValue != oldValue) {
+        return axios({
+          url: "/cart/".concat(this.product.id),
+          method: 'PATCH',
+          data: {
+            category_name: this.product.category_name,
+            quantity: newValue
+          }
+        }).then(function (response) {
+          if (response.statusText == 'OK') {
+            var product = [_this.product.id, _this.product.category_name, newValue];
+
+            _this.$store.dispatch("setProductQuantity", product);
+
+            _this.$store.state.subTotal = 0;
+          }
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
+    } // immediate: true
+
+  },
   computed: {
     getFinalPrice: function getFinalPrice() {
       var product = [this.product.id, this.product.category_name];
@@ -24109,6 +24136,13 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    setProductQuantity: function setProductQuantity(_ref7, payload) {
+      var state = _ref7.state,
+          getters = _ref7.getters;
+      var index = getters.find_incart_product(payload);
+      var product = state.incart_products[index];
+      return state.incart_products[index].quantity = payload[2];
     }
   },
   getters: {

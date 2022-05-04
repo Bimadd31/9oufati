@@ -58,7 +58,30 @@ export default {
             },
 
         },
-        
+        watch:{
+                    quantity(newValue,oldValue){
+                        if(newValue != oldValue){
+                            return axios({
+                                    url : `/cart/${this.product.id}`,
+                                    method : 'PATCH',
+                                    data : {
+                                            category_name : this.product.category_name,
+                                            quantity : newValue
+                                    }
+                            }).then(response => {
+                                    if (response.statusText == 'OK'){
+                                        let product = [this.product.id,this.product.category_name,newValue]
+                                        this.$store.dispatch("setProductQuantity",product)
+                                        this.$store.state.subTotal = 0
+                                    }
+                            }).catch(err => {
+                                    console.log(err)
+                            })
+                            }
+                         },
+                        // immediate: true
+                    
+                },
   
     computed:{
         

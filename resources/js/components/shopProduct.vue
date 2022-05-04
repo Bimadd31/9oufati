@@ -112,7 +112,8 @@ export default {
                 }
             }
 
-        },
+        },  
+              
         
                 computed : {
             basketStatus (){

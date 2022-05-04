@@ -111,8 +111,13 @@ export default createStore({
         }).catch(err => {
                 console.log(err)
         })
+    },
+    setProductQuantity({state,getters},payload){
+      
+      const index = getters.find_incart_product(payload);
+      const product = state.incart_products[index]
+      return state.incart_products[index].quantity = payload[2]
     }
-  
   },
   getters:{
       find_incart_product: (state) => (product) => {

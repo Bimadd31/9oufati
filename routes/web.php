@@ -23,9 +23,8 @@ Route::get('/cart', [App\Http\Controllers\CartController::class, 'index'])->name
 Route::get('/shop', [App\Http\Controllers\ShopController::class, 'index'])->name('shop');
 
 Route::post('/cart', [App\Http\Controllers\CartController::class, 'store'])->name('cart.store')->middleware('auth');
-
-
-Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');
+Route::patch('/cart/{id}', [App\Http\Controllers\CartController::class, 'update'])->name('cart.update')->middleware('auth');
+Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy')->middleware('auth');
 
 // Route::get('/account/{id}', [App\Http\Controllers\AccountController::class, 'index'])->name('account.index')->middleware('auth');
 

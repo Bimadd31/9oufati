@@ -13,15 +13,15 @@ use function Ramsey\Uuid\v1;
 class AccountController extends Controller
 {
 
-    function index(\App\Models\User $user, $id, \App\Models\User_address $address)
+    function index(\App\Models\User $user, $id)
     {
-        if (auth()->user()->id == $id) {
-            $user = $user->find($id);
-            $address = $address::where('user_id', $id)->get();
-            return view("./account/index", compact('user', 'address'));
-        } else {
-            return response('', '403');
-        }
+        // if (auth()->user()->id == $id) {
+        //     $user = $user->find($id);
+        //     $address = $address::where('user_id', $id)->get();
+        //     return view("./account/index", compact('user', 'address'));
+        // } else {
+        //     return response('', '403');
+        // }
     }
 
     function update(\App\Models\User $user, $id)
