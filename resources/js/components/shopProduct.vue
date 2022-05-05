@@ -30,7 +30,7 @@
                                         {{(Math.round(this.product.sell_price * 100) / 100).toFixed(2)+' DH'}}
                                     </s>
                                 </span>
-                                <span>{{(Math.round(getFinalPrice * 100) / 100).toFixed(2)+' DH' }}</span>
+                                <span>{{(Math.round(getFinalPrice * 100) / 100).toFixed(2)+' DH'}}</span>
                             </span>
                             <span v-else>
                                 <span>{{(Math.round(this.product.sell_price * 100) / 100).toFixed(2)+' DH'}} / </span>

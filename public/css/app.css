@@ -11311,9 +11311,14 @@ textarea.form-control-lg {
   margin-right: auto;
   margin-left: auto;
 }
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .container-md-custom {
     width: 90%;
+  }
+}
+@media (min-width: 1400px) {
+  .container-md-custom {
+    width: 80%;
   }
 }
 
@@ -11369,7 +11374,7 @@ body {
 }
 
 .search-bar {
-  width: 70%;
+  width: 90%;
 }
 
 .search-btn {
@@ -11433,11 +11438,10 @@ body {
 .btn-help {
   color: white;
   padding: 10px 20px;
-  margin-right: 4.3rem;
   background: #f06f6f;
   font-family: "Ubuntu", sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 1rem;
   text-align: center;
   transition: all 0.3ms ease-in;
 }
@@ -11478,20 +11482,20 @@ body {
 }
 .nav-link {
   font-family: "Ubuntu", sans-serif;
-  font-size: 1.1rem;
-  padding-right: 1rem !important;
-  padding-left: 1rem !important;
+  font-size: 1rem;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
 }
 
-@media screen and (max-width: 1762px) {
+@media screen and (min-width: 1500px) {
   .nav-link {
-    font-size: 1rem;
-    padding-left: 0.5rem !important;
-    padding-right: 0.5rem !important;
+    font-size: 1.1rem;
+    padding-right: 0.8rem !important;
+    padding-left: 0.8em !important;
   }
 
   .search-bar {
-    width: 90%;
+    width: 60%;
   }
 }
 .nav-account-user-welcome {
@@ -11944,7 +11948,7 @@ input[type=checkbox]:checked::before {
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
-  font-size: 1.4em;
+  font-size: 1.2em;
 }
 .cart-total-container .validate-btn {
   background: #7EB254;

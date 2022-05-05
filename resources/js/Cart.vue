@@ -48,8 +48,8 @@
 
 
                 <div class="col-3 col-md-4 offset-1 offset-md-0  ">
-                    <div class="row justify-content-end">
-                        <div class="col-11 bg-white ">
+                    <div class="row justify-content-end ">
+                        <div class="col-10 bg-white rounded-2">
                             <div class="col-8 mx-auto mt-5 cart-total-container">
                                 <h4>TOTAL PANIER</h4>
                                 <div class="mt-5">
@@ -62,11 +62,11 @@
                                 </div>
                                 <div class="vr-custom w-75 mt-5"></div>
                                 <div class="mt-4 fw-bolder">
-                                    <span>Total :</span>
+                                    <span>Total TTC :</span>
                                     <span class="float-end">{{(Math.round((this.total+this.shipping_price) * 100) / 100).toFixed(2)+' DH'}}</span>
                                 </div>
                                 <div class="text-center mt-4 mb-5">
-                                    <button class="validate-btn ">
+                                    <button class="validate-btn" @click="checkout">
                                         Valider la commande
                                     </button>
                                 </div>
@@ -78,15 +78,17 @@
     </div>
     
     <div v-else class="row m-0 bg-white">
-            <div class="col-5 col-xxl-4  d-flex justify-content-start align-items-center ">
+        <div class="col-12 d-flex ">
+            <div class="col-3 offset-2 d-flex justify-content-start align-items-center ">
                 <img src="/img/cart-vector.png" alt="" >
             </div>
-            <div class="col-6 col-xxl-4 d-flex flex-column justify-content-center align-items-center text-center pt-5 pe-xxl-3 " style="gap: 4rem;">
+            <div class="col-6 d-flex flex-column justify-content-center align-items-center text-center pt-5 pe-xxl-3 " style="gap: 4rem;">
                 <div class="cart-empty-msg">Votre panier est actuellement vide.</div>
                 <a href="shop">
                 <input class="cart-empty-return-btn" type="button" value="RETOUR A LA BOUTIQUE">
-            </a>
+                </a>
             </div>
+        </div>
     </div>
          
 </template>
@@ -105,7 +107,13 @@ export default {
     },
 
     methods:{
-    
+        checkout(){
+            if(this.total < 100) {
+                console.log("no commande for u ")
+            } else {
+                console.log("ok u buy")
+            }
+        }
     },
     watch:{
        "$store.state.subTotal": {

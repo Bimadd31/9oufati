@@ -22737,7 +22737,15 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     cartProduct: _components_cartProduct_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: {},
+  methods: {
+    checkout: function checkout() {
+      if (this.total < 100) {
+        console.log("no commande for u ");
+      } else {
+        console.log("ok u buy");
+      }
+    }
+  },
   watch: {
     "$store.state.subTotal": {
       handler: function handler(nv) {
@@ -23167,7 +23175,7 @@ var _hoisted_13 = {
   "class": "row justify-content-end"
 };
 var _hoisted_14 = {
-  "class": "col-11 bg-white"
+  "class": "col-10 bg-white rounded-2"
 };
 var _hoisted_15 = {
   "class": "col-8 mx-auto mt-5 cart-total-container"
@@ -23210,30 +23218,24 @@ var _hoisted_24 = {
   "class": "mt-4 fw-bolder"
 };
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Total :", -1
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Total TTC :", -1
 /* HOISTED */
 );
 
 var _hoisted_26 = {
   "class": "float-end"
 };
-
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_27 = {
   "class": "text-center mt-4 mb-5"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  "class": "validate-btn"
-}, " Valider la commande ")], -1
-/* HOISTED */
-);
-
+};
 var _hoisted_28 = {
   key: 1,
   "class": "row m-0 bg-white"
 };
 
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-5 col-xxl-4 d-flex justify-content-start align-items-center\"><img src=\"/img/cart-vector.png\" alt=\"\"></div><div class=\"col-6 col-xxl-4 d-flex flex-column justify-content-center align-items-center text-center pt-5 pe-xxl-3\" style=\"gap:4rem;\"><div class=\"cart-empty-msg\">Votre panier est actuellement vide.</div><a href=\"shop\"><input class=\"cart-empty-return-btn\" type=\"button\" value=\"RETOUR A LA BOUTIQUE\"></a></div>", 2);
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-12 d-flex\"><div class=\"col-3 offset-2 d-flex justify-content-start align-items-center\"><img src=\"/img/cart-vector.png\" alt=\"\"></div><div class=\"col-6 d-flex flex-column justify-content-center align-items-center text-center pt-5 pe-xxl-3\" style=\"gap:4rem;\"><div class=\"cart-empty-msg\">Votre panier est actuellement vide.</div><a href=\"shop\"><input class=\"cart-empty-return-btn\" type=\"button\" value=\"RETOUR A LA BOUTIQUE\"></a></div></div>", 1);
 
-var _hoisted_31 = [_hoisted_29];
+var _hoisted_30 = [_hoisted_29];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_cartProduct = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("cartProduct");
 
@@ -23254,7 +23256,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )]), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((Math.round((this.total + this.shipping_price) * 100) / 100).toFixed(2) + ' DH'), 1
   /* TEXT */
-  )]), _hoisted_27])])])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, _hoisted_31));
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "validate-btn",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.checkout && $options.checkout.apply($options, arguments);
+    })
+  }, " Valider la commande ")])])])])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, _hoisted_30));
 }
 
 /***/ }),
@@ -23480,7 +23487,7 @@ var _hoisted_15 = {
 var _hoisted_16 = ["onClick"];
 var _hoisted_17 = {
   id: "shop-products-container",
-  "class": "row bg-light mt-3 p-2 w-100 row-cols-1 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5"
+  "class": "row bg-light mt-3 p-2 w-100 row-cols-1 row-cols-md-3 row-cols-xl-4 row-cols-xxl-4"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_shopProduct = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("shopProduct");
@@ -23954,22 +23961,6 @@ __webpack_require__(/*! ./ajax */ "./resources/js/ajax.js");
 var shop = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({}).component('shop-content', _Shop_vue__WEBPACK_IMPORTED_MODULE_2__["default"]).use(_store_index__WEBPACK_IMPORTED_MODULE_1__["default"]).mount('#shop-page');
 var cartHeader = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({}).component('header-cart', _CartHeader_vue__WEBPACK_IMPORTED_MODULE_3__["default"]).use(_store_index__WEBPACK_IMPORTED_MODULE_1__["default"]).mount('.nav-cart-btn');
 var cart = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({}).component('cart-content', _Cart_vue__WEBPACK_IMPORTED_MODULE_4__["default"]).use(_store_index__WEBPACK_IMPORTED_MODULE_1__["default"]).mount('.cart-container');
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// app.component('add-product', addProduct);
-// /**
-//  * Next, we will create a fresh Vue application instance and attach it to
-//  * the page. Then, you may begin adding components to this application
-//  * or customize the JavaScript scaffolding to fit your unique needs.
-//  */
-// app.mount("#app");
 
 /***/ }),
 

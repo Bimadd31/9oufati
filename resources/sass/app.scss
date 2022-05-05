@@ -27,8 +27,12 @@ $xxl: 1320px;
     width: 100%;
     margin-right: auto;
     margin-left: auto;
-    @include media-breakpoint-up(md) {
+
+    @include media-breakpoint-up(lg) {
         width: 90%;
+    }
+    @include media-breakpoint-up(xxl) {
+        width: 80%;
     }
 }
 // Usage
@@ -42,6 +46,7 @@ $xxl: 1320px;
 
 body {
     background-color: $bg-color;
+
 }
 
 //////// TOP NAV ////////
@@ -92,7 +97,7 @@ body {
 }
 
 .search-bar {
-    width: 70%;
+    width: 90%;
 }
 .search-btn {
     padding-left: 1.5rem;
@@ -160,12 +165,10 @@ body {
 .btn-help {
     color: white;
     padding: 10px 20px;
-    margin-right: 4.3rem;
     background: #f06f6f;
-
     font-family: "Ubuntu", sans-serif;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 1rem;
     text-align: center;
     transition: all 0.3ms ease-in;
     &:hover {
@@ -211,21 +214,21 @@ body {
 }
 .nav-link {
     font-family: "Ubuntu", sans-serif;
-    font-size: 1.1rem;
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
+    font-size: 1rem;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
 }
-
-@media screen and (max-width: 1762px) {
+@media screen and (min-width:1500px) {
     .nav-link {
-        font-size: 1rem;
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
+        font-size: 1.1rem;
+        padding-right: 0.8rem !important;
+        padding-left: 0.8em !important;
     }
     .search-bar {
-        width: 90%;
+        width: 60%;
     }
 }
+
 // @media screen and (max-width: $xl) {
 //     .nav-link {
 //         font-size: 0.9rem;
@@ -727,7 +730,7 @@ input[type="checkbox"] {
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
-    font-size: 1.4em;
+    font-size: 1.2em;
 
     .validate-btn {
         background: #7EB254;
