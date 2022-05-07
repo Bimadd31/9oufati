@@ -24,7 +24,7 @@
                                                 {{  product.mesure_unit || 'Piece'}}
                                         </span>x<span
                                         class="nav-cart-item-price ps-1">
-                                        {{ (Math.round(getFinalPrice * 100) / 100).toFixed(2)+' DH' }}
+                                        {{ (getFinalPrice).toFixed(2)+' DH' }}
                                         </span>
                                 </p>
                                 </div>

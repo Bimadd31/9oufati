@@ -11960,3 +11960,10 @@ input[type=checkbox]:checked::before {
 .cart-total-container .validate-btn:hover {
   opacity: 0.8;
 }
+
+.checkout-container {
+  position: absolute;
+  font-family: "Ubuntu", sans-serif;
+  border-radius: 10px;
+  height: 80%;
+}

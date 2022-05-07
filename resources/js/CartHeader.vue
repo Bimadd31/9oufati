@@ -23,7 +23,7 @@
                 <div  class="d-flex col-12 justify-content-start align-items-center">
                 
                     <div class="ms-4 px-2 py-3 cart-widget-subtotal-text">
-                        Sous-total :  {{(Math.round(get_cartsubTotal * 100) / 100).toFixed(2)+' DH'}}
+                        Sous-total :  {{ (get_cartsubTotal).toFixed(2)+' DH'}}
                         <span class="cart-widget-subtotal ms-2"></span>
                     </div>
 

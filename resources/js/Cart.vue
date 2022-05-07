@@ -54,16 +54,16 @@
                                 <h4>TOTAL PANIER</h4>
                                 <div class="mt-5">
                                     <span>Sous-total :</span>
-                                    <span class="float-end">{{(Math.round((this.total) * 100) / 100).toFixed(2)+' DH'}}</span>
+                                    <span class="float-end">{{ (this.total).toFixed(2)+' DH' }}</span>
                                 </div>
                                 <div class="mt-4">
                                     <span>Livraison :</span>
-                                    <span class="float-end">{{(Math.round((this.shipping_price) * 100) / 100).toFixed(2)+' DH'}}</span>
+                                    <span class="float-end">{{ (this.shipping_price).toFixed(2)+' DH'}}</span>
                                 </div>
                                 <div class="vr-custom w-75 mt-5"></div>
                                 <div class="mt-4 fw-bolder">
                                     <span>Total TTC :</span>
-                                    <span class="float-end">{{(Math.round((this.total+this.shipping_price) * 100) / 100).toFixed(2)+' DH'}}</span>
+                                    <span class="float-end">{{ (this.total+this.shipping_price).toFixed(2)+' DH'}}</span>
                                 </div>
                                 <div class="text-center mt-4 mb-5">
                                     <button class="validate-btn" @click="checkout">

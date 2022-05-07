@@ -27,13 +27,13 @@
                             <span v-if="discountValid">
                                 <span class="pe-3" style="color:#878181;">
                                     <s>
-                                        {{(Math.round(this.product.sell_price * 100) / 100).toFixed(2)+' DH'}}
+                                        {{ (this.product.sell_price).toFixed(2)+' DH'}}
                                     </s>
                                 </span>
-                                <span>{{(Math.round(getFinalPrice * 100) / 100).toFixed(2)+' DH'}}</span>
+                                <span>{{ (getFinalPrice).toFixed(2)+' DH'}}</span>
                             </span>
                             <span v-else>
-                                <span>{{(Math.round(this.product.sell_price * 100) / 100).toFixed(2)+' DH'}} / </span>
+                                <span>{{ (this.product.sell_price).toFixed(2)+' DH'}} / </span>
                                 <span class="text-uppercase fw-bold my-2 text-black-50" style="font-family:Ubuntu">{{product.mesure_unit || 'Unité'}}</span>
 
                             </span>
