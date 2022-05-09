@@ -85,8 +85,8 @@
                             <div class="col-md-4 register-form-btn-container">
                                 <button type="submit" class="btn btn-success w-100 p-2">Créer votre compte</button>
                                 <div class="my-2">OU</div> 
-                                  <a class="btn btn-primary fb-login-btn mb-2 rounded" href="#" >SE CONNECTER AVEC FACEBOOK</a>
-                                <a class="btn btn-light gmail-login-btn  rounded btn-outline-secondary" href="#">SE CONNECTER AVEC GOOGLE</a>
+                                  <a class="btn btn-primary fb-login-btn mb-2 rounded" href="{{ route('login.facebook') }}" >SE CONNECTER AVEC FACEBOOK</a>
+                                <a class="btn btn-light gmail-login-btn  rounded btn-outline-secondary" href="{{ route('login.google') }}">SE CONNECTER AVEC GOOGLE</a>
                             </div>
                         </div>
                     </form>

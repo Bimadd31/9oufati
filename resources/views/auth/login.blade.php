@@ -47,8 +47,8 @@
                                 <div class="mb-2">OU</div>        
                                 <a class="" href="{{ route('register')}}">Pas de compte ? S'inscrire</a>
                                 
-                                <a class="btn btn-primary fb-login-btn mt-2 mb-2 rounded" href="#" >SE CONNECTER AVEC FACEBOOK</a>
-                                <a class="btn btn-light gmail-login-btn  rounded btn-outline-secondary" href="#">SE CONNECTER AVEC GOOGLE</a>
+                                <a class="btn btn-primary fb-login-btn mt-2 mb-2 rounded" href="{{ route('login.facebook') }}" >SE CONNECTER AVEC FACEBOOK</a>
+                                <a class="btn btn-light gmail-login-btn  rounded btn-outline-secondary" href="{{ route('login.google') }}">SE CONNECTER AVEC GOOGLE</a>
                                 
                             </div>
                         </form>
