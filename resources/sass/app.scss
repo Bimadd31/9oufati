@@ -745,9 +745,123 @@ input[type="checkbox"] {
     }
 }
 
-.checkout-container{
-            position: absolute;
-            font-family: "Ubuntu", sans-serif;
-            border-radius: 10px;
-            height: 80%;
+.checkout-container {
+    position: absolute;
+    font-family: "Ubuntu", sans-serif;
+    height: 80%;
+
+    .checkout-form-container {
+        border-radius: 10px;
+    }
+
+    .edit-address-btn {
+        border: none;
+        color: #435DB8;
+        font-weight: 500;
+        background-color: transparent;
+
+    }
+
+    .address-accordion-header {
+        align-items: center;
+
+        .shipping-contact-name {
+            font-weight: 500;
+        }
+    }
+
+    .address-accordion-edit-body {
+        input[type='text'] {
+            outline: none;
+            border: none;
+        }
+
+        h6 {
+            font-weight: 400;
+        }
+    }
+
+}
+
+.address-accordion-item,
+.checkout-payement-cod-container,
+.checkout-note-container {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    background-color: #e5e5e598;
+    border-radius: 10px;
+}
+
+.checkout-note-container {
+
+    textarea {
+        border: none;
+        border-radius: 7px;
+    }
+}
+
+.checkout-submit {
+    background: #6D9E46;
+    border-radius: 10px;
+    font-family: 'Ubuntu';
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: white;
+
+}
+
+.checkout-card-item {
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    background-color: #e5e5e598;
+    border-radius: 2px;
+
+    &-img {
+        filter: drop-shadow(0px 1px 4px rgba(0, 0, 0, 0.25));
+    }
+}
+
+.checkout-items-container {
+    font-family: 'Roboto';
+    font-style: normal;
+
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .checkout-card-item-quantity {
+        font-family: "Lato", sans-serif;
+    }
+
+    .checkout-card-item-price {
+        font-family: "Lato", sans-serif;
+        font-weight: 400;
+    }
+}
+
+.checkout-subtotal,
+.checkout-shipping,
+.checkout-total {
+
+    span:first-child {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.2rem;
+    }
+
+    span:nth-child(2) {
+        font-family: "Lato", sans-serif;
+        font-style: normal;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+    }
+}
+
+.terms {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
 }

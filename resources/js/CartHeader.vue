@@ -51,7 +51,7 @@
                             <span>Allez au panier</span>
                     </div>
 
-                    <div class="col-4 pt-2 nav-cart-widget-btn ms-2" onclick="window.location.href='#'"
+                    <div class="col-4 pt-2 nav-cart-widget-btn ms-2" onclick="window.location.href='/checkout'"
                             style="background-color: #cd4848;">
                             <span>Commander</span>
                     </div>

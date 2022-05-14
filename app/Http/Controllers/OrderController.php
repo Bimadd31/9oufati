@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
 
 class OrderController extends Controller
 {
@@ -15,6 +18,19 @@ class OrderController extends Controller
     public function index()
     {
         //
+
+        // if (Auth::user()) {
+
+        //     $user_cart = DB::table('baskets')
+        //         ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
+        //         ->where('user_id', '=', auth()->user()->id)
+        //         ->get();
+
+        //     $cart_id = $user_cart[0]->id;
+        // }
+
+
+
         return view('checkout.index');
     }
 

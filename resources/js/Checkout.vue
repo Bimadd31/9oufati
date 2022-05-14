@@ -1,10 +1,138 @@
 <template>
-    hello
+         <div class="row m-0 ">
+            <div class="col-8 bg-white checkout-form-container">
+
+                                <!-- ACCOUNT ADDRESS -->
+
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-11">
+                            <h5 class="ms-3">Adresse de livraison</h5>
+                        </div>
+                    </div>
+                                <checkoutAddress></checkoutAddress>
+
+
+                                <!-- PAYEMENT METHODS -->
+                   
+                                <checkoutPayement></checkoutPayement>
+
+                            <!-- ADD NOTE -->
+                    <div class="row mt-5 justify-content-center">
+                        <div class="col-11">
+                            <h5 class="ms-3">Informations complémentaires :</h5>
+                        </div>
+                    </div>
+                    <div class="row m-0 mt-4 justify-content-center ">
+                        <div class="col-11">
+                            <div class="row p-3 checkout-note-container">
+                                <span>Notes de commandes (facultatif) :</span>
+                                <textarea class="form-control mt-3" name="" id="" rows="5" maxlength="300"
+                                placeholder="Commentaires concernant votre commande, ex. : consignes de livraison."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+            </div>
+
+            <div class="col-4">
+
+                <div class="row justify-content-center">
+                    <div class="col-11 bg-white p-2" style="border-radius: 10px;">
+
+                        <div class="row justify-content-center text-center">
+
+                            <div class="col-10 mt-4">
+
+                                <div class="text-start mt-3 mb-4">
+                                    <h5>Votre commande</h5>
+                                </div>
+                                <div class="row overflow-auto checkout-items-container border border-2 border-light rounded-2 p-1" style="max-height: 200px;">
+                                  
+                                    <checkoutProduct :key="product.id" v-for="product in this.products" 
+                                    :product="product"></checkoutProduct>
+                                   
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-7 offset-5 text-start">
+
+                                        <div class="checkout-subtotal ">
+                                            <span>Sous-total :</span>
+                                            <span class="float-end ">44.00 DH</span>
+                                        </div>
+                                        
+                                        <div class="checkout-shipping">
+                                            <span>Livraison :</span>
+                                            <span class="float-end">25.00 DH</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                     <div class="vr-custom w-75 "></div>
+                                </div>
+                                <div class="row mt-4 mb-3">
+                                    <div class="col-7 text-start ">
+                                        <div class="checkout-total">
+                                            <span>Total :</span>
+                                            <span class="float-end">70.00 DH TTC</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="vr-custom" style="width: 95%;"></div>
+                                </div>
+
+                                                    <!-- DELIVERY DATE -->
+                                                    
+                                <div class="text-start mt-4 mb-4">
+                                    <h5>Date de livraison</h5>
+                                </div>
+                                <div class="row justify-content-center mt-2">
+                                    <div class="col-9 ">
+                                        <input class="form-control bg-light" type="date" value="2022-05-08"  min="2022-05-07"  max="2022-06-07" name="" id="">
+                                    </div>
+                                </div>
+                            
+
+                                <div class="terms text-start mt-5">
+                                    <input class="me-1" type="checkbox" name="" id="address-option">
+                                    <span class="">J’ai lu et j’accepte les conditions générales et
+                                        notre politique de confidentialité.</span>
+                                </div>
+                                <input class="mt-4 mb-4 checkout-submit btn btn-success w-75" type="submit" value="Passer la commande">
+                            
+                            </div>
+                        
+                    </div>
+                </div>
+                   
+                    
+            </div>
+            </div>
+         </div>
+
 </template>
 
 <script>
+import checkoutAddress from './components/checkoutAddress.vue'
+import checkoutPayement from './components/checkoutPayement.vue'
+import checkoutProduct from './components/checkoutProduct.vue'
+
 export default {
     name: 'Checkout_page',
+    data(){
+        return{
+            products: this.$store.getters.get_incart_products,
+        }
+    },
+    components:{
+        checkoutAddress,
+        checkoutProduct,
+        checkoutPayement
+    },
+    mounted(){
+    }
 }
 </script>
 
