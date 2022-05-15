@@ -22823,9 +22823,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'Checkout_page',
+  props: {
+    user: Object
+  },
   data: function data() {
     return {
-      products: this.$store.getters.get_incart_products
+      products: this.$store.getters.get_incart_products,
+      subTotal: '',
+      shipping_price: this.$store.state.shipping_price
     };
   },
   components: {
@@ -22833,7 +22838,17 @@ __webpack_require__.r(__webpack_exports__);
     checkoutProduct: _components_checkoutProduct_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     checkoutPayement: _components_checkoutPayement_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  mounted: function mounted() {}
+  created: function created() {
+    this.$store.dispatch('set_user_info', this.user);
+  },
+  watch: {
+    '$store.state.subTotal': {
+      handler: function handler(nv) {
+        this.subTotal = nv;
+      },
+      immediate: true
+    }
+  }
 });
 
 /***/ }),
@@ -23051,7 +23066,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'checkoutAddress'
+  name: 'checkoutAddress',
+  data: function data() {
+    return {
+      user_info: this.$store.getters.get_user_info,
+      primary_first_name: ''
+    };
+  },
+  methods: {
+    cancelAddress: function cancelAddress(e) {
+      if (e.currentTarget.id == 'cancel-primary') {
+        $('.edit-primary-address-btn').click();
+      }
+    }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -23568,10 +23597,73 @@ var _hoisted_12 = {
     "max-height": "200px"
   }
 };
+var _hoisted_13 = {
+  "class": "row mt-4"
+};
+var _hoisted_14 = {
+  "class": "col-7 offset-5 text-start"
+};
+var _hoisted_15 = {
+  "class": "checkout-subtotal"
+};
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row mt-4\"><div class=\"col-7 offset-5 text-start\"><div class=\"checkout-subtotal\"><span>Sous-total :</span><span class=\"float-end\">44.00 DH</span></div><div class=\"checkout-shipping\"><span>Livraison :</span><span class=\"float-end\">25.00 DH</span></div></div></div><div class=\"row mt-3\"><div class=\"vr-custom w-75\"></div></div><div class=\"row mt-4 mb-3\"><div class=\"col-7 text-start\"><div class=\"checkout-total\"><span>Total :</span><span class=\"float-end\">70.00 DH TTC</span></div></div></div><div class=\"row mt-4\"><div class=\"vr-custom\" style=\"width:95%;\"></div></div>", 4);
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Sous-total :", -1
+/* HOISTED */
+);
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"text-start mt-4 mb-4\"><h5>Date de livraison</h5></div><div class=\"row justify-content-center mt-2\"><div class=\"col-9\"><input class=\"form-control bg-light\" type=\"date\" value=\"2022-05-08\" min=\"2022-05-07\" max=\"2022-06-07\" name=\"\" id=\"\"></div></div><div class=\"terms text-start mt-5\"><input class=\"me-1\" type=\"checkbox\" name=\"\" id=\"address-option\"><span class=\"\">J’ai lu et j’accepte les conditions générales et notre politique de confidentialité.</span></div><input class=\"mt-4 mb-4 checkout-submit btn btn-success w-75\" type=\"submit\" value=\"Passer la commande\">", 4);
+var _hoisted_17 = {
+  "class": "float-end"
+};
+var _hoisted_18 = {
+  "class": "checkout-shipping"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Livraison :", -1
+/* HOISTED */
+);
+
+var _hoisted_20 = {
+  "class": "float-end"
+};
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row mt-3"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "vr-custom w-75"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_22 = {
+  "class": "row mt-4 mb-3"
+};
+var _hoisted_23 = {
+  "class": "col-7 text-start"
+};
+var _hoisted_24 = {
+  "class": "checkout-total"
+};
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Total :", -1
+/* HOISTED */
+);
+
+var _hoisted_26 = {
+  "class": "float-end"
+};
+
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row mt-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "vr-custom",
+  style: {
+    "width": "95%"
+  }
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"text-start mt-4 mb-4\"><h5>Date de livraison</h5></div><div class=\"row justify-content-center mt-2\"><div class=\"col-9\"><input class=\"form-control bg-light\" type=\"date\" value=\"2022-05-08\" min=\"2022-05-07\" max=\"2022-06-07\" name=\"\" id=\"\"></div></div><div class=\"terms text-start mt-5\"><input class=\"me-1\" type=\"checkbox\" name=\"\" id=\"address-option\"><span class=\"\">J’ai lu et j’accepte les conditions générales et notre politique de confidentialité.</span></div><input class=\"mt-4 mb-4 checkout-submit btn btn-success w-75\" type=\"submit\" value=\"Passer la commande\">", 4);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_checkoutAddress = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("checkoutAddress");
@@ -23589,7 +23681,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     , ["product"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" DELIVERY DATE "), _hoisted_17])])])])])]);
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.subTotal.toFixed(2) + " DH"), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.shipping_price.toFixed(2) + " DH"), 1
+  /* TEXT */
+  )])])]), _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($data.subTotal + $data.shipping_price).toFixed(2) + " DH TTC"), 1
+  /* TEXT */
+  )])])]), _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" DELIVERY DATE "), _hoisted_28])])])])])]);
 }
 
 /***/ }),
@@ -23951,13 +24049,207 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = {
+  "class": "row mt-4 justify-content-center"
+};
+var _hoisted_2 = {
+  "class": "col-11"
+};
+var _hoisted_3 = {
+  "class": "address-accordion",
+  id: ""
+};
+var _hoisted_4 = {
+  "class": "address-accordion-item p-3"
+};
+var _hoisted_5 = {
+  "class": "row address-accordion-header",
+  id: "main-address"
+};
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row mt-4 justify-content-center\"><div class=\"col-11\"><div class=\"address-accordion\" id=\"\"><div class=\"address-accordion-item p-3\"><!-- row-cols-sm-1 row-cols-md-6 --><div class=\"row address-accordion-header\" id=\"main-address\"><div class=\"col-1 text-center\"><input type=\"radio\" name=\"address-option\" id=\"\"></div><div class=\"col-3 shipping-contact-name\">El Hassnaoui Imad</div><div class=\"col-3 shipping-contact-address\">HAY NAKHIL N1987</div><div class=\"col-2 shipping-contact-address-additional\">HAY RIAD, RABAT</div><div class=\"col-1 shipping-contact-postal\">12020</div><button class=\"col-2 edit-address-btn\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapseOne\" aria-expanded=\"true\" aria-controls=\"collapseOne\"> Modifier </button></div><div id=\"collapseOne\" class=\"accordion-collapse collapse hide\" aria-labelledby=\"main-address\"><div class=\"accordion-body address-accordion-edit-body\"><div class=\"row mt-4\"><div class=\"col-5 offset-1\"><h6 class=\"\">Informations personnelles</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Nom complet\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Telephone\"></div></div><div class=\"row mt-5\"><div class=\"col-5 offset-1\"><h6 class=\"mt-3\">Adresse</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Rue, Avenue..\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control mx-auto\" type=\"text\" name=\"\" id=\"\" placeholder=\"Appartement, bâtiment, etc (optionnel)\"></div></div><div class=\"row input-group mt-5\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Ville\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Code postal\"></div></div><div class=\"row mt-5 justify-content-end\"><div class=\"col-2 text-end\"><input class=\"btn btn-light w-75\" type=\"submit\" value=\"Annuler\"></div><div class=\"col-2 text-center\"><input class=\"btn btn-danger w-75\" type=\"submit\" value=\"Confirmer\"></div></div></div></div></div></div></div></div>", 1);
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-1 text-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  type: "radio",
+  name: "address-option",
+  id: ""
+})], -1
+/* HOISTED */
+);
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row mt-4 justify-content-center\"><div class=\"col-11\"><div class=\"address-accordion\" id=\"\"><div class=\"address-accordion-item p-3\"><!-- row-cols-sm-1 row-cols-md-6 --><div class=\"row address-accordion-header\" id=\"extra-address\"><div class=\"col-1 text-center\"><input type=\"radio\" name=\"address-option\" id=\"\"></div><!-- &lt;div class=&quot;col-3 shipping-contact-name&quot;&gt;El Hassnaoui Imad&lt;/div&gt;\r\n                        &lt;div class=&quot;col-3 shipping-contact-address&quot;&gt;HAY NAKHIL N1987&lt;/div&gt;\r\n                        &lt;div class=&quot;col-2 shipping-contact-address-additional&quot;&gt;HAY RIAD, RABAT&lt;/div&gt;\r\n                        &lt;div class=&quot;col-1 shipping-contact-postal&quot;&gt;12020&lt;/div&gt; --><div class=\"col-3 fw-bold\">Utiliser une autre adresse</div><button class=\"col-2 ms-auto edit-address-btn\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapseTwo\" aria-expanded=\"true\" aria-controls=\"collapseTwo\"> Modifier </button></div><div id=\"collapseTwo\" class=\"accordion-collapse collapse show\" aria-labelledby=\"extra-address\"><div class=\"accordion-body address-accordion-edit-body\"><div class=\"row mt-4\"><div class=\"col-5 offset-1\"><h6 class=\"\">Informations personnelles</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Nom complet\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Telephone\"></div></div><div class=\"row mt-5\"><div class=\"col-5 offset-1\"><h6 class=\"mt-3\">Adresse</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Rue, Avenue..\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control mx-auto\" type=\"text\" name=\"\" id=\"\" placeholder=\"Appartement, bâtiment, etc (optionnel)\"></div></div><div class=\"row input-group mt-5\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Ville\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Code postal\"></div></div><div class=\"row mt-5 justify-content-end\"><div class=\"col-2 text-end\"><input class=\"btn btn-light w-75\" type=\"submit\" value=\"Annuler\"></div><div class=\"col-2 text-center\"><input class=\"btn btn-danger w-75\" type=\"submit\" value=\"Confirmer\"></div></div></div></div></div></div></div></div>", 1);
+var _hoisted_7 = {
+  "class": "col-3 shipping-contact-name"
+};
+var _hoisted_8 = {
+  "class": "col-3 shipping-contact-address"
+};
+var _hoisted_9 = {
+  "class": "col-2 shipping-contact-address-additional"
+};
+var _hoisted_10 = {
+  "class": "col-1 shipping-contact-city"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "col-2 edit-primary-address-btn edit-address-btn",
+  type: "button",
+  "data-bs-toggle": "collapse",
+  "data-bs-target": "#collapseOne",
+  "aria-expanded": "true",
+  "aria-controls": "collapseOne"
+}, " Modifier ", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  id: "collapseOne",
+  "class": "accordion-collapse collapse hide",
+  "aria-labelledby": "main-address"
+};
+var _hoisted_13 = {
+  "class": "accordion-body address-accordion-edit-body"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row mt-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-5 offset-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
+  "class": ""
+}, "Informations personnelles")])], -1
+/* HOISTED */
+);
+
+var _hoisted_15 = {
+  "class": "row input-group mt-3"
+};
+var _hoisted_16 = {
+  "class": "col-5 text-center offset-md-1"
+};
+var _hoisted_17 = ["value"];
+var _hoisted_18 = {
+  "class": "col-5 ms-auto justify-content-center"
+};
+var _hoisted_19 = ["value"];
+var _hoisted_20 = {
+  "class": "row input-group mt-4"
+};
+var _hoisted_21 = {
+  "class": "col-5 offset-md-1"
+};
+var _hoisted_22 = ["value"];
+
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row mt-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-5 offset-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
+  "class": "mt-3"
+}, "Adresse")])], -1
+/* HOISTED */
+);
+
+var _hoisted_24 = {
+  "class": "row input-group mt-3"
+};
+var _hoisted_25 = {
+  "class": "col-5 text-center offset-md-1"
+};
+var _hoisted_26 = ["value"];
+var _hoisted_27 = {
+  "class": "col-5 ms-auto justify-content-center"
+};
+var _hoisted_28 = ["value"];
+var _hoisted_29 = {
+  "class": "row input-group mt-4"
+};
+var _hoisted_30 = {
+  "class": "col-5 text-center offset-md-1"
+};
+var _hoisted_31 = ["value"];
+var _hoisted_32 = {
+  "class": "row mt-5 justify-content-end"
+};
+var _hoisted_33 = {
+  "class": "col-2 text-end"
+};
+
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-2 text-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  "class": "btn btn-danger w-75",
+  type: "submit",
+  value: "Confirmer"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row mt-4 justify-content-center\"><div class=\"col-11\"><div class=\"address-accordion\" id=\"\"><div class=\"address-accordion-item p-3\"><!-- row-cols-sm-1 row-cols-md-6 --><div class=\"row address-accordion-header\" id=\"extra-address\"><div class=\"col-1 text-center\"><input type=\"radio\" name=\"address-option\" id=\"\"></div><!-- &lt;div class=&quot;col-3 shipping-contact-name&quot;&gt;El Hassnaoui Imad&lt;/div&gt;\r\n                        &lt;div class=&quot;col-3 shipping-contact-address&quot;&gt;HAY NAKHIL N1987&lt;/div&gt;\r\n                        &lt;div class=&quot;col-2 shipping-contact-address-additional&quot;&gt;HAY RIAD, RABAT&lt;/div&gt;\r\n                        &lt;div class=&quot;col-1 shipping-contact-postal&quot;&gt;12020&lt;/div&gt; --><div class=\"col-3 fw-bold\">Utiliser une autre adresse</div><button class=\"col-2 ms-auto edit-address-btn\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapseTwo\" aria-expanded=\"true\" aria-controls=\"collapseTwo\"> Modifier </button></div><div id=\"collapseTwo\" class=\"accordion-collapse collapse show\" aria-labelledby=\"extra-address\"><div class=\"accordion-body address-accordion-edit-body\"><div class=\"row mt-4\"><div class=\"col-5 offset-1\"><h6 class=\"\">Informations personnelles</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Nom complet\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Telephone\"></div></div><div class=\"row mt-5\"><div class=\"col-5 offset-1\"><h6 class=\"mt-3\">Adresse</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Rue, Avenue..\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control mx-auto\" type=\"text\" name=\"\" id=\"\" placeholder=\"Appartement, bâtiment, etc (optionnel)\"></div></div><div class=\"row input-group mt-5\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Ville\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Code postal\"></div></div><div class=\"row mt-5 justify-content-end\"><div class=\"col-2 text-end\"><input class=\"btn btn-light w-75\" type=\"submit\" value=\"Annuler\"></div><div class=\"col-2 text-center\"><input class=\"btn btn-danger w-75\" type=\"submit\" value=\"Confirmer\"></div></div></div></div></div></div></div></div>", 1);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" PRIMARY ACCOUNT ADDRESS "), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" USE ANOTHER ADDRESS "), _hoisted_2], 64
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" PRIMARY ACCOUNT ADDRESS "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" row-cols-sm-1 row-cols-md-6 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.last_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.first_name), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.address_line1 || '---------'), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.address_line2 || '---------'), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.city || '---------'), 1
+  /* TEXT */
+  ), _hoisted_11]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "text",
+    placeholder: "Nom",
+    value: this.user_info.last_name
+  }, null, 8
+  /* PROPS */
+  , _hoisted_17)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "text",
+    placeholder: "Prenom",
+    value: this.user_info.first_name
+  }, null, 8
+  /* PROPS */
+  , _hoisted_19)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "tel",
+    name: "",
+    id: "",
+    placeholder: "Telephone",
+    value: this.user_info.phone
+  }, null, 8
+  /* PROPS */
+  , _hoisted_22)])]), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "text",
+    placeholder: "Rue, Avenue..",
+    value: this.user_info.address_line1
+  }, null, 8
+  /* PROPS */
+  , _hoisted_26)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control mx-auto",
+    type: "text",
+    name: "",
+    id: "",
+    placeholder: "Appartement, bâtiment, etc (optionnel)",
+    value: this.user_info.address_line2
+  }, null, 8
+  /* PROPS */
+  , _hoisted_28)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "text",
+    placeholder: "Ville",
+    value: this.user_info.city
+  }, null, 8
+  /* PROPS */
+  , _hoisted_31)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-5 ms-auto justify-content-center\">\r\n                            \r\n                                    <input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Code postal\">\r\n                            \r\n                                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    id: "cancel-primary",
+    "class": "btn btn-light w-75",
+    type: "button",
+    value: "Annuler",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.cancelAddress && $options.cancelAddress.apply($options, arguments);
+    })
+  })]), _hoisted_34])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" USE ANOTHER ADDRESS "), _hoisted_35], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -24316,10 +24608,14 @@ __webpack_require__.r(__webpack_exports__);
       incart_products: [],
       allProducts: [],
       subTotal: 0,
-      shipping_price: 25
+      shipping_price: 25,
+      user_info: []
     };
   },
   mutations: {
+    set_user_info: function set_user_info(state, data) {
+      state.user_info = data;
+    },
     set_allProducts: function set_allProducts(state, data) {
       state.allProducts = data;
     },
@@ -24336,28 +24632,32 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   actions: {
-    set_allProducts: function set_allProducts(_ref, data) {
+    set_user_info: function set_user_info(_ref, data) {
       var commit = _ref.commit;
+      commit('set_user_info', data);
+    },
+    set_allProducts: function set_allProducts(_ref2, data) {
+      var commit = _ref2.commit;
       commit('set_allProducts', data);
     },
-    set_incart_products: function set_incart_products(_ref2, data) {
-      var commit = _ref2.commit;
+    set_incart_products: function set_incart_products(_ref3, data) {
+      var commit = _ref3.commit;
       commit('set_incart_products', data);
     },
-    add_incart_product: function add_incart_product(_ref3, data) {
-      var commit = _ref3.commit;
+    add_incart_product: function add_incart_product(_ref4, data) {
+      var commit = _ref4.commit;
       commit('add_incart_product', data);
     },
-    remove_incart_product: function remove_incart_product(_ref4, product) {
-      var commit = _ref4.commit,
-          getters = _ref4.getters;
+    remove_incart_product: function remove_incart_product(_ref5, product) {
+      var commit = _ref5.commit,
+          getters = _ref5.getters;
       var index = getters.find_incart_product(product);
       commit('remove_incart_product', index);
     },
-    addProduct: function addProduct(_ref5, payload) {
-      var state = _ref5.state,
-          getters = _ref5.getters,
-          dispatch = _ref5.dispatch;
+    addProduct: function addProduct(_ref6, payload) {
+      var state = _ref6.state,
+          getters = _ref6.getters,
+          dispatch = _ref6.dispatch;
       payload.e.preventDefault();
       var index = getters.find_in_allProduct(payload.product);
       var product = state.allProducts[index];
@@ -24391,9 +24691,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    deleteProduct: function deleteProduct(_ref6, e) {
-      var state = _ref6.state,
-          dispatch = _ref6.dispatch;
+    deleteProduct: function deleteProduct(_ref7, e) {
+      var state = _ref7.state,
+          dispatch = _ref7.dispatch;
       e.preventDefault();
       var form = e.currentTarget.closest("form");
       var form_data = new FormData(form);
@@ -24415,15 +24715,18 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    setProductQuantity: function setProductQuantity(_ref7, payload) {
-      var state = _ref7.state,
-          getters = _ref7.getters;
+    setProductQuantity: function setProductQuantity(_ref8, payload) {
+      var state = _ref8.state,
+          getters = _ref8.getters;
       var index = getters.find_incart_product(payload);
       var product = state.incart_products[index];
       return state.incart_products[index].quantity = payload[2];
     }
   },
   getters: {
+    get_user_info: function get_user_info(state) {
+      return state.user_info;
+    },
     find_incart_product: function find_incart_product(state) {
       return function (product) {
         return state.incart_products.findIndex(function (p) {

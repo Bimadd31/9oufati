@@ -58,12 +58,12 @@
 
                                         <div class="checkout-subtotal ">
                                             <span>Sous-total :</span>
-                                            <span class="float-end ">44.00 DH</span>
+                                            <span class="float-end ">{{(this.subTotal).toFixed(2)+" DH"}}</span>
                                         </div>
                                         
                                         <div class="checkout-shipping">
                                             <span>Livraison :</span>
-                                            <span class="float-end">25.00 DH</span>
+                                            <span class="float-end">{{ (shipping_price).toFixed(2)+" DH"}}</span>
                                         </div>
                                         
                                     </div>
@@ -75,7 +75,7 @@
                                     <div class="col-7 text-start ">
                                         <div class="checkout-total">
                                             <span>Total :</span>
-                                            <span class="float-end">70.00 DH TTC</span>
+                                            <span class="float-end">{{(subTotal + shipping_price).toFixed(2)+" DH TTC"}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -121,9 +121,14 @@ import checkoutProduct from './components/checkoutProduct.vue'
 
 export default {
     name: 'Checkout_page',
+    props:{
+        user: Object,
+    },
     data(){
         return{
             products: this.$store.getters.get_incart_products,
+            subTotal: '',
+            shipping_price : this.$store.state.shipping_price,
         }
     },
     components:{
@@ -131,7 +136,17 @@ export default {
         checkoutProduct,
         checkoutPayement
     },
-    mounted(){
+    created(){
+        this.$store.dispatch('set_user_info',this.user)
+    },
+  
+    watch:{
+        '$store.state.subTotal': {
+            handler: function(nv) {
+                this.subTotal = nv;
+            },
+            immediate: true
+        }
     }
 }
 </script>

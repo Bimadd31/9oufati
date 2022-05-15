@@ -11981,7 +11981,7 @@ input[type=checkbox]:checked::before {
 .checkout-container .address-accordion-header .shipping-contact-name {
   font-weight: 500;
 }
-.checkout-container .address-accordion-edit-body input[type=text] {
+.checkout-container .address-accordion-edit-body input[type=text], .checkout-container .address-accordion-edit-body input[type=tel] {
   outline: none;
   border: none;
 }

@@ -771,9 +771,10 @@ input[type="checkbox"] {
     }
 
     .address-accordion-edit-body {
-        input[type='text'] {
+        input[type='text'],input[type='tel'] {
             outline: none;
             border: none;
+          
         }
 
         h6 {

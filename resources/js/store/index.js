@@ -8,9 +8,13 @@ export default createStore({
       allProducts : [],
       subTotal : 0,
       shipping_price : 25,
+      user_info: [],
     }
   },
   mutations: {
+      set_user_info(state,data){
+        state.user_info = data
+      },
      set_allProducts(state,data){
       state.allProducts = data
     },
@@ -31,7 +35,9 @@ export default createStore({
      
   },
   actions:{
-
+     set_user_info({commit},data){
+      commit('set_user_info',data)
+     },
     set_allProducts({commit},data){
      commit('set_allProducts',data)
     },
@@ -120,6 +126,9 @@ export default createStore({
     }
   },
   getters:{
+      get_user_info(state){
+        return state.user_info
+      },
       find_incart_product: (state) => (product) => {
         return state.incart_products.findIndex(p => p.id == product[0] && p.category_name == product[1]);
       },
