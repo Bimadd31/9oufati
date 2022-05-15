@@ -37,7 +37,8 @@
                         class=" accordion-collapse collapse hide"
                         aria-labelledby="main-address">
 
-                        <div class="accordion-body address-accordion-edit-body">
+                        <form @submit="editPrimaryAddress" method="POST" class="accordion-body address-accordion-edit-body">
+                           
                             <div class="row mt-4">
                                 <div class="col-5 offset-1">
                                         <h6 class="">Informations personnelles</h6>
@@ -48,20 +49,20 @@
 
                                 <div class="col-5 text-center offset-md-1">
                                     
-                                    <input class="form-control" type="text" placeholder="Nom" :value="this.user_info.last_name">
+                                    <input class="form-control" type="text" name="last_name" placeholder="Nom"  :defaultValue="this.user_info.last_name" required>
                                     
                                 </div>
                                 
                                 <div class="col-5 ms-auto justify-content-center">
 
-                                    <input class="form-control" type="text" placeholder="Prenom" :value="this.user_info.first_name">
+                                    <input class="form-control" type="text" name="first_name" placeholder="Prenom" :defaultValue="this.user_info.first_name" required>
                             
                                 </div>
                                 
                             </div>
                             <div class="row input-group mt-4">
                                 <div class="col-5 offset-md-1">
-                                    <input class="form-control" type="tel" name="" id="" placeholder="Telephone" :value="this.user_info.phone">
+                                    <input class="form-control" type="tel" name="phone" placeholder="Telephone" :defaultValue="this.user_info.phone" required>
                                 </div>
                             </div>
 
@@ -75,14 +76,14 @@
                             
                                 <div class="col-5 text-center offset-md-1">
                             
-                                    <input class="form-control" type="text" placeholder="Rue, Avenue.." :value="this.user_info.address_line1">
+                                    <input class="form-control" type="text" name="address_line1" placeholder="Rue, Avenue.." :defaultValue="this.user_info.address_line1" required>
                             
                                 </div>
                             
                                 <div class="col-5 ms-auto justify-content-center">
                             
-                                    <input class="form-control mx-auto" type="text" name="" id="" placeholder="Appartement, bâtiment, etc (optionnel)"
-                                    :value="this.user_info.address_line2">
+                                    <input class="form-control mx-auto" type="text" name="address_line2" placeholder="Appartement, bâtiment, etc (optionnel)"
+                                   :defaultValue="this.user_info.address_line2">
                             
                                 </div>
                             </div>
@@ -90,7 +91,7 @@
                             
                                 <div class="col-5 text-center offset-md-1">
                             
-                                    <input class="form-control" type="text" placeholder="Ville" :value="this.user_info.city">
+                                    <input class="form-control" type="text" name="city" placeholder="Ville" :defaultValue="this.user_info.city" required>
                             
                                 </div>
                             
@@ -102,14 +103,16 @@
                             </div>
                             <div class="row mt-5 justify-content-end">
                                 <div class="col-2 text-end">
-                                    <input id="cancel-primary" class="btn btn-light w-75" type="button" value="Annuler" @click="cancelAddress">
+                                      <input id="cancel-primary" class="btn btn-light w-75" type="reset" value="Annuler" @click="cancelAddress">
                                 </div>
+                              
                                 <div class="col-2 text-center">
                                     <input class="btn btn-danger w-75" type="submit" value="Confirmer">
                                 </div>
                                 
+                                
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -140,7 +143,7 @@
                         </button>
                     </div>
     
-                    <div id="collapseTwo" class=" accordion-collapse collapse show" aria-labelledby="extra-address">
+                    <div id="collapseTwo" class=" accordion-collapse collapse hide" aria-labelledby="extra-address">
     
                         <div class="accordion-body address-accordion-edit-body">
                             <div class="row mt-4">
@@ -194,12 +197,12 @@
     
                                 </div>
     
-                                <div class="col-5 ms-auto justify-content-center">
+                                <!-- <div class="col-5 ms-auto justify-content-center">
     
                                     <input class="form-control w-75 float-start" type="text" name="" id=""
                                         placeholder="Code postal">
     
-                                </div>
+                                </div> -->
                             </div>
                             <div class="row mt-5 justify-content-end">
                                 <div class="col-2 text-end">
@@ -224,7 +227,7 @@ export default {
     data(){
         return{
             user_info: this.$store.getters.get_user_info,
-            primary_first_name : '',
+            additional_shipping_address: []
 
             
         }
@@ -236,12 +239,33 @@ export default {
                 $('.edit-primary-address-btn').click();
             }
             
-        
+        },
+        async editPrimaryAddress(e){
+            e.preventDefault();
+            let form = e.currentTarget.closest("form");
+            var form_data = new FormData(form);
+            const formDataObject = {
+                'first_name' : form_data.get('first_name'),
+                        'last_name' : form_data.get('last_name'),
+                        'address_line1' : form_data.get('address_line1'),
+                        'address_line2' : form_data.get('address_line2'),
+                        'phone' : form_data.get('phone'),
+                        'city' : form_data.get('city')
+            }
+            return axios({
+                    url : `/account/${this.user_info.id}`,
+                    method : "PATCH",
+                    data : formDataObject,
+            }).then(response => {
+                    if (response.statusText == 'OK'){
+                        $('.edit-primary-address-btn').click();
+                        this.$store.dispatch('update_user_info',formDataObject)
+                    }
+            }).catch(err => {
+                    console.log(err)
+            })
         }
     },
-    computed:{
-
-    }
 }
 </script>
 

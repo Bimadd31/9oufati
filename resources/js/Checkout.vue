@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="row justify-content-center mt-2">
                                     <div class="col-9 ">
-                                        <input class="form-control bg-light" type="date" value="2022-05-08"  min="2022-05-07"  max="2022-06-07" name="" id="">
+                                        <input class="form-control bg-light" type="date" value="2022-05-08"  min="2022-05-07" max="2022-06-07" name="" id="">
                                     </div>
                                 </div>
                             

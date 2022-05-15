@@ -12,6 +12,9 @@ export default createStore({
     }
   },
   mutations: {
+      update_user_info(state,data){
+          Object.assign(state.user_info,data)
+      },
       set_user_info(state,data){
         state.user_info = data
       },
@@ -35,6 +38,10 @@ export default createStore({
      
   },
   actions:{
+      update_user_info({commit},data){
+        commit('update_user_info',data)
+
+      },
      set_user_info({commit},data){
       commit('set_user_info',data)
      },
