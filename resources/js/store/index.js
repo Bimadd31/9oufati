@@ -9,9 +9,13 @@ export default createStore({
       subTotal : 0,
       shipping_price : 25,
       user_info: [],
+      checkout_address: []
     }
   },
   mutations: {
+    set_checkout_address(state,data){
+      state.checkout_address = data
+    },
       update_user_info(state,data){
           Object.assign(state.user_info,data)
       },
@@ -41,6 +45,9 @@ export default createStore({
       update_user_info({commit},data){
         commit('update_user_info',data)
 
+      },
+      set_checkout_address({commit},data){
+        commit('set_checkout_address',data)
       },
      set_user_info({commit},data){
       commit('set_user_info',data)
@@ -133,6 +140,9 @@ export default createStore({
     }
   },
   getters:{
+      get_checkout_address(state){
+        return state.checkout_address
+      },
       get_user_info(state){
         return state.user_info
       },

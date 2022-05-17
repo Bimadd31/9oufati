@@ -23089,14 +23089,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       user_info: this.$store.getters.get_user_info,
-      additional_shipping_address: []
+      additional_address: {
+        name: '',
+        phone: '',
+        address_line1: '',
+        address_line2: '',
+        city: ''
+      },
+      selected_address: ''
     };
+  },
+  watch: {
+    selected_address: {
+      handler: function handler(newValue) {
+        if (newValue == 'primary-address') {
+          this.$store.dispatch('set_checkout_address', this.user_info);
+        } else if (newValue == 'additional-address') {
+          this.$store.dispatch('set_checkout_address', this.additional_address);
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     cancelAddress: function cancelAddress(e) {
-      if (e.currentTarget.id == 'cancel-primary') {
-        $('.edit-primary-address-btn').click();
+      switch (e.currentTarget.id) {
+        case 'cancel-primary':
+          $('.edit-primary-address-btn').click();
+          break;
+
+        case 'cancel-additional':
+          $('.edit-additional-address-btn').click();
+          break;
       }
+    },
+    editAdditionalAddress: function editAdditionalAddress(e) {
+      e.preventDefault();
+      var form = e.currentTarget.closest("form");
+      var form_data = new FormData(form);
+      this.additional_address.name = form_data.get('full_name');
+      this.additional_address.address_line1 = form_data.get('address_line1');
+      this.additional_address.address_line2 = form_data.get('address_line2');
+      this.additional_address.phone = form_data.get('phone');
+      this.additional_address.city = form_data.get('city');
+      this.$store.dispatch('set_checkout_address', this.additional_address);
+      this.selected_address = 'additional-address';
+      $('.edit-additional-address-btn').click();
     },
     editPrimaryAddress: function editPrimaryAddress(e) {
       var _this = this;
@@ -23124,9 +23162,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   data: formDataObject
                 }).then(function (response) {
                   if (response.statusText == 'OK') {
-                    $('.edit-primary-address-btn').click();
-
                     _this.$store.dispatch('update_user_info', formDataObject);
+
+                    _this.$store.dispatch('set_checkout_address', _this.user_info);
+
+                    _this.selected_address = 'primary-address';
+                    $('.edit-primary-address-btn').click();
                   }
                 })["catch"](function (err) {
                   console.log(err);
@@ -24126,31 +24167,24 @@ var _hoisted_5 = {
   "class": "row address-accordion-header",
   id: "main-address"
 };
-
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = {
   "class": "col-1 text-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-  type: "radio",
-  name: "address-option",
-  id: ""
-})], -1
-/* HOISTED */
-);
-
-var _hoisted_7 = {
+};
+var _hoisted_7 = ["selected"];
+var _hoisted_8 = {
   "class": "col-3 shipping-contact-name"
 };
-var _hoisted_8 = {
+var _hoisted_9 = {
   "class": "col-3 shipping-contact-address"
 };
-var _hoisted_9 = {
+var _hoisted_10 = {
   "class": "col-2 shipping-contact-address-additional"
 };
-var _hoisted_10 = {
+var _hoisted_11 = {
   "class": "col-1 shipping-contact-city"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "col-2 edit-primary-address-btn edit-address-btn",
   type: "button",
   "data-bs-toggle": "collapse",
@@ -24161,13 +24195,13 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_12 = {
+var _hoisted_13 = {
   id: "collapseOne",
   "class": "accordion-collapse collapse hide",
   "aria-labelledby": "main-address"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "row mt-4"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-5 offset-1"
@@ -24177,26 +24211,26 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_15 = {
   "class": "row input-group mt-3"
 };
-var _hoisted_15 = {
+var _hoisted_16 = {
   "class": "col-5 text-center offset-md-1"
 };
-var _hoisted_16 = ["defaultValue"];
-var _hoisted_17 = {
+var _hoisted_17 = ["defaultValue"];
+var _hoisted_18 = {
   "class": "col-5 ms-auto justify-content-center"
 };
-var _hoisted_18 = ["defaultValue"];
-var _hoisted_19 = {
+var _hoisted_19 = ["defaultValue"];
+var _hoisted_20 = {
   "class": "row input-group mt-4"
 };
-var _hoisted_20 = {
+var _hoisted_21 = {
   "class": "col-5 offset-md-1"
 };
-var _hoisted_21 = ["defaultValue"];
+var _hoisted_22 = ["defaultValue"];
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "row mt-4"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-5 offset-1"
@@ -24206,32 +24240,46 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_23 = {
+var _hoisted_24 = {
   "class": "row input-group mt-3"
 };
-var _hoisted_24 = {
+var _hoisted_25 = {
   "class": "col-5 text-center offset-md-1"
 };
-var _hoisted_25 = ["defaultValue"];
-var _hoisted_26 = {
+var _hoisted_26 = ["defaultValue"];
+var _hoisted_27 = {
   "class": "col-5 ms-auto justify-content-center"
 };
-var _hoisted_27 = ["defaultValue"];
-var _hoisted_28 = {
+var _hoisted_28 = ["defaultValue"];
+var _hoisted_29 = {
   "class": "row input-group mt-4"
 };
-var _hoisted_29 = {
+var _hoisted_30 = {
   "class": "col-5 text-center offset-md-1"
 };
-var _hoisted_30 = ["defaultValue"];
 var _hoisted_31 = {
+  "class": "form-control",
+  name: "city",
+  required: ""
+};
+
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  value: "",
+  disabled: ""
+}, "Ville", -1
+/* HOISTED */
+);
+
+var _hoisted_33 = ["selected"];
+var _hoisted_34 = ["selected"];
+var _hoisted_35 = {
   "class": "row mt-5 justify-content-end"
 };
-var _hoisted_32 = {
+var _hoisted_36 = {
   "class": "col-2 text-end"
 };
 
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "col-2 text-center"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
   "class": "btn btn-danger w-75",
@@ -24241,24 +24289,185 @@ var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"row mt-4 justify-content-center\"><div class=\"col-11\"><div class=\"address-accordion\" id=\"\"><div class=\"address-accordion-item p-3\"><!-- row-cols-sm-1 row-cols-md-6 --><div class=\"row address-accordion-header\" id=\"extra-address\"><div class=\"col-1 text-center\"><input type=\"radio\" name=\"address-option\" id=\"\"></div><!-- &lt;div class=&quot;col-3 shipping-contact-name&quot;&gt;El Hassnaoui Imad&lt;/div&gt;\r\n                        &lt;div class=&quot;col-3 shipping-contact-address&quot;&gt;HAY NAKHIL N1987&lt;/div&gt;\r\n                        &lt;div class=&quot;col-2 shipping-contact-address-additional&quot;&gt;HAY RIAD, RABAT&lt;/div&gt;\r\n                        &lt;div class=&quot;col-1 shipping-contact-postal&quot;&gt;12020&lt;/div&gt; --><div class=\"col-3 fw-bold\">Utiliser une autre adresse</div><button class=\"col-2 ms-auto edit-address-btn\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#collapseTwo\" aria-expanded=\"true\" aria-controls=\"collapseTwo\"> Modifier </button></div><div id=\"collapseTwo\" class=\"accordion-collapse collapse hide\" aria-labelledby=\"extra-address\"><div class=\"accordion-body address-accordion-edit-body\"><div class=\"row mt-4\"><div class=\"col-5 offset-1\"><h6 class=\"\">Informations personnelles</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Nom complet\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Telephone\"></div></div><div class=\"row mt-5\"><div class=\"col-5 offset-1\"><h6 class=\"mt-3\">Adresse</h6></div></div><div class=\"row input-group mt-3\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Rue, Avenue..\"></div><div class=\"col-5 ms-auto justify-content-center\"><input class=\"form-control mx-auto\" type=\"text\" name=\"\" id=\"\" placeholder=\"Appartement, bâtiment, etc (optionnel)\"></div></div><div class=\"row input-group mt-5\"><div class=\"col-5 text-center offset-md-1\"><input class=\"form-control\" type=\"text\" placeholder=\"Ville\"></div><!-- &lt;div class=&quot;col-5 ms-auto justify-content-center&quot;&gt;\r\n    \r\n                                    &lt;input class=&quot;form-control w-75 float-start&quot; type=&quot;text&quot; name=&quot;&quot; id=&quot;&quot;\r\n                                        placeholder=&quot;Code postal&quot;&gt;\r\n    \r\n                                &lt;/div&gt; --></div><div class=\"row mt-5 justify-content-end\"><div class=\"col-2 text-end\"><input class=\"btn btn-light w-75\" type=\"submit\" value=\"Annuler\"></div><div class=\"col-2 text-center\"><input class=\"btn btn-danger w-75\" type=\"submit\" value=\"Confirmer\"></div></div></div></div></div></div></div></div>", 1);
+var _hoisted_38 = {
+  "class": "row mt-4 justify-content-center"
+};
+var _hoisted_39 = {
+  "class": "col-11"
+};
+var _hoisted_40 = {
+  "class": "address-accordion",
+  id: ""
+};
+var _hoisted_41 = {
+  "class": "address-accordion-item p-3"
+};
+var _hoisted_42 = {
+  key: 0,
+  "class": "row address-accordion-header",
+  id: "additional-address"
+};
+var _hoisted_43 = {
+  "class": "col-1 text-center"
+};
+var _hoisted_44 = ["selected"];
+var _hoisted_45 = {
+  "class": "col-3 shipping-contact-name"
+};
+var _hoisted_46 = {
+  "class": "col-3 shipping-contact-address"
+};
+var _hoisted_47 = {
+  "class": "col-2 shipping-contact-address-additional"
+};
+var _hoisted_48 = {
+  "class": "col-1 shipping-contact-city"
+};
+
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "col-2 ms-auto edit-address-btn edit-additional-address-btn",
+  type: "button",
+  "data-bs-toggle": "collapse",
+  "data-bs-target": "#collapseTwo",
+  "aria-expanded": "true",
+  "aria-controls": "collapseTwo"
+}, " Modifier ", -1
+/* HOISTED */
+);
+
+var _hoisted_50 = {
+  key: 1,
+  "class": "row address-accordion-header",
+  id: "additional-address"
+};
+var _hoisted_51 = {
+  "class": "col-1 text-center"
+};
+var _hoisted_52 = ["selected"];
+
+var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-3 fw-bold"
+}, "Utiliser une autre adresse", -1
+/* HOISTED */
+);
+
+var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "col-2 ms-auto edit-address-btn edit-additional-address-btn",
+  type: "button",
+  "data-bs-toggle": "collapse",
+  "data-bs-target": "#collapseTwo",
+  "aria-expanded": "true",
+  "aria-controls": "collapseTwo"
+}, " Modifier ", -1
+/* HOISTED */
+);
+
+var _hoisted_55 = {
+  id: "collapseTwo",
+  "class": "accordion-collapse collapse hide",
+  "aria-labelledby": "extra-address"
+};
+
+var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row mt-4"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-5 offset-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
+  "class": ""
+}, "Informations personnelles")])], -1
+/* HOISTED */
+);
+
+var _hoisted_57 = {
+  "class": "row input-group mt-3"
+};
+var _hoisted_58 = {
+  "class": "col-5 text-center offset-md-1"
+};
+var _hoisted_59 = {
+  "class": "col-5 ms-auto justify-content-center"
+};
+
+var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "row mt-5"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-5 offset-1"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", {
+  "class": "mt-3"
+}, "Adresse")])], -1
+/* HOISTED */
+);
+
+var _hoisted_61 = {
+  "class": "row input-group mt-3"
+};
+var _hoisted_62 = {
+  "class": "col-5 text-center offset-md-1"
+};
+var _hoisted_63 = {
+  "class": "col-5 ms-auto justify-content-center"
+};
+var _hoisted_64 = {
+  "class": "row input-group mt-5"
+};
+var _hoisted_65 = {
+  "class": "col-5 text-center offset-md-1"
+};
+
+var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: ""
+}, "Ville", -1
+/* HOISTED */
+);
+
+var _hoisted_67 = ["selected"];
+var _hoisted_68 = ["selected"];
+var _hoisted_69 = {
+  "class": "row mt-5 justify-content-end"
+};
+var _hoisted_70 = {
+  "class": "col-2 text-end"
+};
+
+var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-2 text-center"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  "class": "btn btn-danger w-75",
+  type: "submit",
+  value: "Confirmer"
+})], -1
+/* HOISTED */
+);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" PRIMARY ACCOUNT ADDRESS "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" row-cols-sm-1 row-cols-md-6 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.last_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.first_name), 1
+  var _this = this;
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" PRIMARY ACCOUNT ADDRESS "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" row-cols-sm-1 row-cols-md-6 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    name: "address-option",
+    value: "primary-address",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return _this.selected_address = $event;
+    }),
+    selected: this.selected_address
+  }, null, 8
+  /* PROPS */
+  , _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, this.selected_address]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.last_name) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.first_name), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.address_line1 || '---------'), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.address_line1 || '---------'), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.address_line2 || '---------'), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.address_line2 || '---------'), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.city || '---------'), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.user_info.city || '---------'), 1
   /* TEXT */
-  ), _hoisted_11]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-    onSubmit: _cache[1] || (_cache[1] = function () {
+  ), _hoisted_12]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: _cache[2] || (_cache[2] = function () {
       return $options.editPrimaryAddress && $options.editPrimaryAddress.apply($options, arguments);
     }),
     method: "POST",
     "class": "accordion-body address-accordion-edit-body"
-  }, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-control",
     type: "text",
     name: "last_name",
@@ -24267,7 +24476,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     required: ""
   }, null, 8
   /* PROPS */
-  , _hoisted_16)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_17)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-control",
     type: "text",
     name: "first_name",
@@ -24276,7 +24485,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     required: ""
   }, null, 8
   /* PROPS */
-  , _hoisted_18)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_19)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-control",
     type: "tel",
     name: "phone",
@@ -24285,7 +24494,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     required: ""
   }, null, 8
   /* PROPS */
-  , _hoisted_21)])]), _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_22)])]), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-control",
     type: "text",
     name: "address_line1",
@@ -24294,7 +24503,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     required: ""
   }, null, 8
   /* PROPS */
-  , _hoisted_25)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_26)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     "class": "form-control mx-auto",
     type: "text",
     name: "address_line2",
@@ -24302,26 +24511,133 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     defaultValue: this.user_info.address_line2
   }, null, 8
   /* PROPS */
-  , _hoisted_27)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "class": "form-control",
-    type: "text",
-    name: "city",
-    placeholder: "Ville",
-    defaultValue: this.user_info.city,
-    required: ""
-  }, null, 8
+  , _hoisted_28)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "Rabat",
+    selected: this.user_info.city
+  }, "Rabat", 8
   /* PROPS */
-  , _hoisted_30)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-5 ms-auto justify-content-center\">\r\n                            \r\n                                    <input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Code postal\">\r\n                            \r\n                                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , _hoisted_33), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "Temara",
+    selected: this.user_info.city
+  }, "Temara", 8
+  /* PROPS */
+  , _hoisted_34)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-5 ms-auto justify-content-center\">\r\n                            \r\n                                    <input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\" placeholder=\"Code postal\">\r\n                            \r\n                                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     id: "cancel-primary",
     "class": "btn btn-light w-75",
     type: "reset",
     value: "Annuler",
-    onClick: _cache[0] || (_cache[0] = function () {
+    onClick: _cache[1] || (_cache[1] = function () {
       return $options.cancelAddress && $options.cancelAddress.apply($options, arguments);
     })
-  })]), _hoisted_33])], 32
+  })]), _hoisted_37])], 32
   /* HYDRATE_EVENTS */
-  )])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" USE ANOTHER ADDRESS "), _hoisted_34], 64
+  )])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" USE ANOTHER ADDRESS "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" row-cols-sm-1 row-cols-md-6 "), this.additional_address.name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    name: "address-option",
+    value: "additional-address",
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return _this.selected_address = $event;
+    }),
+    selected: this.selected_address
+  }, null, 8
+  /* PROPS */
+  , _hoisted_44), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, this.selected_address]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.additional_address.name), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.additional_address.address_line1), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.additional_address.address_line2), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(this.additional_address.city), 1
+  /* TEXT */
+  ), _hoisted_49])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "radio",
+    name: "address-option",
+    value: "additional-address",
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+      return _this.selected_address = $event;
+    }),
+    selected: this.selected_address
+  }, null, 8
+  /* PROPS */
+  , _hoisted_52), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, this.selected_address]])]), _hoisted_53, _hoisted_54])), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+    onSubmit: _cache[11] || (_cache[11] = function () {
+      return $options.editAdditionalAddress && $options.editAdditionalAddress.apply($options, arguments);
+    }),
+    method: "POST",
+    "class": "accordion-body address-accordion-edit-body"
+  }, [_hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "text",
+    placeholder: "Nom complet",
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+      return _this.additional_address.name = $event;
+    }),
+    name: "full_name",
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.additional_address.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control w-75 float-start",
+    type: "tel",
+    name: "phone",
+    placeholder: "Telephone",
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+      return _this.additional_address.phone = $event;
+    }),
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.additional_address.phone]])])]), _hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control",
+    type: "text",
+    placeholder: "Rue, Avenue..",
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+      return _this.additional_address.address_line1 = $event;
+    }),
+    name: "address_line1",
+    required: ""
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.additional_address.address_line1]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "form-control mx-auto",
+    type: "text",
+    name: "address_line2",
+    placeholder: "Appartement, bâtiment, etc (optionnel)",
+    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+      return _this.additional_address.address_line2 = $event;
+    })
+  }, null, 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.additional_address.address_line2]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "class": "form-control",
+    name: "city",
+    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+      return _this.additional_address.city = $event;
+    }),
+    required: ""
+  }, [_hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "Rabat",
+    selected: this.additional_address.city
+  }, "Rabat", 8
+  /* PROPS */
+  , _hoisted_67), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+    value: "Temara",
+    selected: this.additional_address.city
+  }, "Temara", 8
+  /* PROPS */
+  , _hoisted_68)], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, this.additional_address.city]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"col-5 ms-auto justify-content-center\">\r\n    \r\n                                    <input class=\"form-control w-75 float-start\" type=\"text\" name=\"\" id=\"\"\r\n                                        placeholder=\"Code postal\">\r\n    \r\n                                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onClick: _cache[10] || (_cache[10] = function () {
+      return $options.cancelAddress && $options.cancelAddress.apply($options, arguments);
+    }),
+    id: "cancel-additional",
+    "class": "btn btn-light w-75",
+    type: "reset",
+    value: "Annuler"
+  })]), _hoisted_71])], 32
+  /* HYDRATE_EVENTS */
+  )])])])])])], 64
   /* STABLE_FRAGMENT */
   );
 }
@@ -24681,10 +24997,14 @@ __webpack_require__.r(__webpack_exports__);
       allProducts: [],
       subTotal: 0,
       shipping_price: 25,
-      user_info: []
+      user_info: [],
+      checkout_address: []
     };
   },
   mutations: {
+    set_checkout_address: function set_checkout_address(state, data) {
+      state.checkout_address = data;
+    },
     update_user_info: function update_user_info(state, data) {
       Object.assign(state.user_info, data);
     },
@@ -24711,32 +25031,36 @@ __webpack_require__.r(__webpack_exports__);
       var commit = _ref.commit;
       commit('update_user_info', data);
     },
-    set_user_info: function set_user_info(_ref2, data) {
+    set_checkout_address: function set_checkout_address(_ref2, data) {
       var commit = _ref2.commit;
+      commit('set_checkout_address', data);
+    },
+    set_user_info: function set_user_info(_ref3, data) {
+      var commit = _ref3.commit;
       commit('set_user_info', data);
     },
-    set_allProducts: function set_allProducts(_ref3, data) {
-      var commit = _ref3.commit;
+    set_allProducts: function set_allProducts(_ref4, data) {
+      var commit = _ref4.commit;
       commit('set_allProducts', data);
     },
-    set_incart_products: function set_incart_products(_ref4, data) {
-      var commit = _ref4.commit;
+    set_incart_products: function set_incart_products(_ref5, data) {
+      var commit = _ref5.commit;
       commit('set_incart_products', data);
     },
-    add_incart_product: function add_incart_product(_ref5, data) {
-      var commit = _ref5.commit;
+    add_incart_product: function add_incart_product(_ref6, data) {
+      var commit = _ref6.commit;
       commit('add_incart_product', data);
     },
-    remove_incart_product: function remove_incart_product(_ref6, product) {
-      var commit = _ref6.commit,
-          getters = _ref6.getters;
+    remove_incart_product: function remove_incart_product(_ref7, product) {
+      var commit = _ref7.commit,
+          getters = _ref7.getters;
       var index = getters.find_incart_product(product);
       commit('remove_incart_product', index);
     },
-    addProduct: function addProduct(_ref7, payload) {
-      var state = _ref7.state,
-          getters = _ref7.getters,
-          dispatch = _ref7.dispatch;
+    addProduct: function addProduct(_ref8, payload) {
+      var state = _ref8.state,
+          getters = _ref8.getters,
+          dispatch = _ref8.dispatch;
       payload.e.preventDefault();
       var index = getters.find_in_allProduct(payload.product);
       var product = state.allProducts[index];
@@ -24770,9 +25094,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    deleteProduct: function deleteProduct(_ref8, e) {
-      var state = _ref8.state,
-          dispatch = _ref8.dispatch;
+    deleteProduct: function deleteProduct(_ref9, e) {
+      var state = _ref9.state,
+          dispatch = _ref9.dispatch;
       e.preventDefault();
       var form = e.currentTarget.closest("form");
       var form_data = new FormData(form);
@@ -24794,15 +25118,18 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err);
       });
     },
-    setProductQuantity: function setProductQuantity(_ref9, payload) {
-      var state = _ref9.state,
-          getters = _ref9.getters;
+    setProductQuantity: function setProductQuantity(_ref10, payload) {
+      var state = _ref10.state,
+          getters = _ref10.getters;
       var index = getters.find_incart_product(payload);
       var product = state.incart_products[index];
       return state.incart_products[index].quantity = payload[2];
     }
   },
   getters: {
+    get_checkout_address: function get_checkout_address(state) {
+      return state.checkout_address;
+    },
     get_user_info: function get_user_info(state) {
       return state.user_info;
     },
