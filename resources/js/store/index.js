@@ -8,7 +8,7 @@ export default createStore({
       allProducts : [],
       subTotal : 0,
       shipping_price : 25,
-      user_info: [],
+      primary_address: [],
       checkout_address: []
     }
   },
@@ -16,11 +16,11 @@ export default createStore({
     set_checkout_address(state,data){
       state.checkout_address = data
     },
-      update_user_info(state,data){
-          Object.assign(state.user_info,data)
+      update_primary_address(state,data){
+          Object.assign(state.primary_address,data)
       },
-      set_user_info(state,data){
-        state.user_info = data
+      set_primary_address(state,data){
+        state.primary_address = data
       },
      set_allProducts(state,data){
       state.allProducts = data
@@ -42,15 +42,15 @@ export default createStore({
      
   },
   actions:{
-      update_user_info({commit},data){
-        commit('update_user_info',data)
+      update_primary_address({commit},data){
+        commit('update_primary_address',data)
 
       },
       set_checkout_address({commit},data){
         commit('set_checkout_address',data)
       },
-     set_user_info({commit},data){
-      commit('set_user_info',data)
+     set_primary_address({commit},data){
+      commit('set_primary_address',data)
      },
     set_allProducts({commit},data){
      commit('set_allProducts',data)
@@ -143,8 +143,8 @@ export default createStore({
       get_checkout_address(state){
         return state.checkout_address
       },
-      get_user_info(state){
-        return state.user_info
+      get_primary_address(state){
+        return state.primary_address
       },
       find_incart_product: (state) => (product) => {
         return state.incart_products.findIndex(p => p.id == product[0] && p.category_name == product[1]);

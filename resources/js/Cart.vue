@@ -108,10 +108,10 @@ export default {
 
     methods:{
         checkout(){
-            if(this.total < 100) {
-                console.log("no commande for u ")
+            if(this.total > 100) {
+                location.href = "/checkout"
             } else {
-                console.log("ok u buy")
+                console.log("u can't")
             }
         }
     },

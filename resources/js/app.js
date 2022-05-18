@@ -4,8 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+require('jquery-datetimepicker/build/jquery.datetimepicker.full.js')
 require('./bootstrap');
 require('./ajax');
+
 
 import { createApp } from 'vue'
 import store from './store/index'

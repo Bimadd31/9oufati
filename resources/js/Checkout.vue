@@ -1,4 +1,5 @@
 <template>
+<form method="POST" @submit="checkout">
          <div class="row m-0 ">
             <div class="col-8 bg-white checkout-form-container">
 
@@ -26,7 +27,7 @@
                         <div class="col-11">
                             <div class="row p-3 checkout-note-container">
                                 <span>Notes de commandes (facultatif) :</span>
-                                <textarea class="form-control mt-3" name="" id="" rows="5" maxlength="300"
+                                <textarea class="form-control mt-3" name="checkout-note" id="" rows="5" maxlength="300"
                                 placeholder="Commentaires concernant votre commande, ex. : consignes de livraison."></textarea>
                             </div>
                         </div>
@@ -90,13 +91,13 @@
                                 </div>
                                 <div class="row justify-content-center mt-2">
                                     <div class="col-9 ">
-                                        <input class="form-control bg-light" type="date" value="2022-05-08"  min="2022-05-07" max="2022-06-07" name="" id="">
+                                        <input class="form-control bg-light checkout-delivery" type="text" id="datetimepicker" required>
                                     </div>
                                 </div>
                             
 
                                 <div class="terms text-start mt-5">
-                                    <input class="me-1" type="checkbox" name="" id="address-option">
+                                    <input class="me-1" type="checkbox" name="" required>
                                     <span class="">J’ai lu et j’accepte les conditions générales et
                                         notre politique de confidentialité.</span>
                                 </div>
@@ -111,7 +112,7 @@
             </div>
             </div>
          </div>
-
+</form>
 </template>
 
 <script>
@@ -137,9 +138,28 @@ export default {
         checkoutPayement
     },
     created(){
-        this.$store.dispatch('set_user_info',this.user)
+      
+        const primary_address = (({ id,first_name,last_name,address_line1, address_line2,phone,city }) => ({ id,first_name,last_name,address_line1, address_line2,phone,city }))(this.user);
+
+         this.$store.dispatch('set_primary_address',primary_address)
     },
-  
+    methods:{
+        checkout(e){
+            e.preventDefault();
+            var checkoutAddress = this.$store.getters.get_checkout_address
+            let missing = false
+            for (const keys in checkoutAddress){
+                if(checkoutAddress[keys] == null){
+                    missing = true
+                }
+            }
+            if (missing){
+                 
+                //  missing_field_alert("missing field");
+               
+            }
+        }
+    },
     watch:{
         '$store.state.subTotal': {
             handler: function(nv) {

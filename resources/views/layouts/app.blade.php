@@ -9,19 +9,15 @@
         
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     
-    
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
-     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+     <link rel="stylesheet" href="{{ asset('css/jquery.datetimepicker.css') }}" />
 
 
     {{-- <script src="node_modules/@popperjs/core/dist/umd/popper.js"></script> --}}
@@ -37,6 +33,8 @@
                   <div class="w-100 alert-banner position-fixed " style="z-index: 50">
                         <div class='success-alert text-center alert alert-success' role='alert'></div>
                         <div class='exist-alert text-center alert alert-danger' role='alert'></div>
+                        <div class='missing-field-alert text-center alert alert-danger' role='alert'></div>
+
 
                   </div>
                

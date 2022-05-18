@@ -11889,6 +11889,9 @@ input[type=checkbox]:checked::before {
 .alert-banner .success-alert::after {
   content: "Le produit a été ajouté a votre panier !";
 }
+.alert-banner .missing-field-alert {
+  display: none;
+}
 
 .cart-product-table {
   width: 100%;

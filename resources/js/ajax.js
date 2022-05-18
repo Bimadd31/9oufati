@@ -1,6 +1,20 @@
 
 
 $(function(){
+    let startDate = new Date();
+    let endDate = new Date();
+    endDate.setMonth(endDate.getMonth()+1)
+    jQuery('#datetimepicker').datetimepicker({
+            timepicker: true,
+            format: 'd.m.Y H:i',
+            disabledWeekDays: [5,6],
+            minDate: startDate,
+            maxDate: endDate,
+            minTime: '8:00',
+            maxTime: '18:00',
+          
+    });
+    $.datetimepicker.setLocale('fr');
 
     
         $.ajaxSetup({
@@ -22,6 +36,14 @@ $(function(){
                 $(".success-alert").hide()
             }, 3000);
         })
+        function missing_field_alert(message){
+            $(".missing_field_alert").on("click",function(){
+            $(".missing_field_alert").show()
+            setTimeout(() => {
+                $(".missing_field_alert").hide()
+            }, 3000);
+        })
+        }
          
          
 

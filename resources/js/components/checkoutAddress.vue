@@ -11,16 +11,16 @@
 
                         <div class="col-1 text-center"><input type="radio" name="address-option" value="primary-address" v-model="this.selected_address" :selected="this.selected_address"></div>
                         <div class="col-3 shipping-contact-name">
-                            {{ this.user_info.last_name }} {{ this.user_info.first_name }}
+                            {{ this.primary_address.last_name }} {{ this.primary_address.first_name }}
                         </div>
                         <div class="col-3 shipping-contact-address">
-                            {{ this.user_info.address_line1 ||'---------' }}
+                            {{ this.primary_address.address_line1 ||'---------' }}
                         </div>
                         <div class="col-2 shipping-contact-address-additional">
-                             {{ this.user_info.address_line2 ||'---------' }}
+                             {{ this.primary_address.address_line2 ||'---------' }}
                         </div>
                         <div class="col-1 shipping-contact-city">
-                           {{ this.user_info.city ||'---------' }}
+                           {{ this.primary_address.city ||'---------' }}
                         </div>
                         
                         <button class="col-2 edit-primary-address-btn edit-address-btn"
@@ -49,20 +49,20 @@
 
                                 <div class="col-5 text-center offset-md-1">
                                     
-                                    <input class="form-control" type="text" name="last_name" placeholder="Nom"  :defaultValue="this.user_info.last_name" required>
+                                    <input class="form-control" type="text" name="last_name" placeholder="Nom"  :defaultValue="this.primary_address.last_name" required>
                                     
                                 </div>
                                 
                                 <div class="col-5 ms-auto justify-content-center">
 
-                                    <input class="form-control" type="text" name="first_name" placeholder="Prenom" :defaultValue="this.user_info.first_name" required>
+                                    <input class="form-control" type="text" name="first_name" placeholder="Prenom" :defaultValue="this.primary_address.first_name" required>
                             
                                 </div>
                                 
                             </div>
                             <div class="row input-group mt-4">
                                 <div class="col-5 offset-md-1">
-                                    <input class="form-control" type="tel" name="phone" placeholder="Telephone" :defaultValue="this.user_info.phone" required>
+                                    <input class="form-control" type="tel" name="phone" placeholder="Telephone" :defaultValue="this.primary_address.phone" required>
                                 </div>
                             </div>
 
@@ -76,14 +76,14 @@
                             
                                 <div class="col-5 text-center offset-md-1">
                             
-                                    <input class="form-control" type="text" name="address_line1" placeholder="Rue, Avenue.." :defaultValue="this.user_info.address_line1" required>
+                                    <input class="form-control" type="text" name="address_line1" placeholder="Rue, Avenue.." :defaultValue="this.primary_address.address_line1" required>
                             
                                 </div>
                             
                                 <div class="col-5 ms-auto justify-content-center">
                             
                                     <input class="form-control mx-auto" type="text" name="address_line2" placeholder="Appartement, bâtiment, etc (optionnel)"
-                                   :defaultValue="this.user_info.address_line2">
+                                   :defaultValue="this.primary_address.address_line2">
                             
                                 </div>
                             </div>
@@ -93,8 +93,8 @@
 
                                     <select class="form-control" name="city" required>
                                         <option value="" disabled>Ville</option>
-                                        <option value="Rabat" :selected="this.user_info.city">Rabat</option>
-                                        <option value="Temara" :selected="this.user_info.city">Temara</option>
+                                        <option value="Rabat" :selected="this.primary_address.city">Rabat</option>
+                                        <option value="Temara" :selected="this.primary_address.city">Temara</option>
                                     </select>
                             
                                 </div>
@@ -258,7 +258,7 @@ export default {
     name: 'checkoutAddress',
     data(){
         return{
-            user_info: this.$store.getters.get_user_info,
+            primary_address: this.$store.getters.get_primary_address,
             additional_address: {
                 name: '',
                 phone: '',
@@ -266,7 +266,7 @@ export default {
                 address_line2: '',
                 city: '',
             },
-            selected_address : ''
+            selected_address : 'primary-address'
 
         }
     },
@@ -276,7 +276,7 @@ export default {
 
                 if (newValue == 'primary-address'){
 
-                    this.$store.dispatch('set_checkout_address',this.user_info)
+                    this.$store.dispatch('set_checkout_address',this.primary_address)
 
                 } else if (newValue == 'additional-address'){
 
@@ -330,13 +330,13 @@ export default {
             }
 
             return axios({
-                    url : `/account/${this.user_info.id}`,
+                    url : `/account/${this.primary_address.id}`,
                     method : "PATCH",
                     data : formDataObject,
             }).then(response => {
                     if (response.statusText == 'OK'){
-                        this.$store.dispatch('update_user_info',formDataObject)
-                        this.$store.dispatch('set_checkout_address',this.user_info)
+                        this.$store.dispatch('update_primary_address',formDataObject)
+                        this.$store.dispatch('set_checkout_address',this.primary_address)
                         this.selected_address = 'primary-address'
                         $('.edit-primary-address-btn').click();
                     }
