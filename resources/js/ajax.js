@@ -36,14 +36,14 @@ $(function(){
                 $(".success-alert").hide()
             }, 3000);
         })
-        function missing_field_alert(message){
-            $(".missing_field_alert").on("click",function(){
-            $(".missing_field_alert").show()
+   
+            $(".missing-address-alert").on("click",function(){
+            $(".missing-address-alert").show()
             setTimeout(() => {
-                $(".missing_field_alert").hide()
+                $(".missing-address-alert").hide()
             }, 3000);
         })
-        }
+    
          
          
 

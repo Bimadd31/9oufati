@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Discount extends Model
 {
+    public $table = "discounts";
+
     public function products()
     {
         return $this->belongsToMany(Product::class);

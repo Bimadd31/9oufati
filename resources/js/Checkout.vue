@@ -27,7 +27,7 @@
                         <div class="col-11">
                             <div class="row p-3 checkout-note-container">
                                 <span>Notes de commandes (facultatif) :</span>
-                                <textarea class="form-control mt-3" name="checkout-note" id="" rows="5" maxlength="300"
+                                <textarea v-model="this.checkoutNote" class="form-control mt-3" name="checkout-note" id="" rows="5" maxlength="300"
                                 placeholder="Commentaires concernant votre commande, ex. : consignes de livraison."></textarea>
                             </div>
                         </div>
@@ -91,7 +91,8 @@
                                 </div>
                                 <div class="row justify-content-center mt-2">
                                     <div class="col-9 ">
-                                        <input class="form-control bg-light checkout-delivery" type="text" id="datetimepicker" required>
+                                        <!-- <input class="form-control bg-light checkout-delivery" type="text" id="datetimepicker" @change="setDeliveryDate" required > -->
+                                         <input class="form-control bg-light checkout-delivery" type="datetime-local" v-model="this.DeliveryDate" required >
                                     </div>
                                 </div>
                             
@@ -130,6 +131,8 @@ export default {
             products: this.$store.getters.get_incart_products,
             subTotal: '',
             shipping_price : this.$store.state.shipping_price,
+            checkoutNote: '',
+            DeliveryDate : '',
         }
     },
     components:{
@@ -144,19 +147,50 @@ export default {
          this.$store.dispatch('set_primary_address',primary_address)
     },
     methods:{
+        deliveryPlan(deliveryDate){
+            const today = new Date();
+            return deliveryDate == today ? 'aujourd\'hui' : 'planifier'
+        },
         checkout(e){
             e.preventDefault();
             var checkoutAddress = this.$store.getters.get_checkout_address
+            var checkout_payement = this.$store.getters.get_checkout_payement;
             let missing = false
-            for (const keys in checkoutAddress){
-                if(checkoutAddress[keys] == null){
-                    missing = true
+            for (const property in checkoutAddress){
+             
+                if(property == 'first_name' ||
+                    property=='last_name' ||
+                    property=='full_name' ||
+                    property =='address_line1' ||
+                    property=='city' ||
+                    property=='phone'){
+                
+                    if(checkoutAddress[property] == null || checkoutAddress[property] == ''){
+                        missing = true
+                    }
                 }
             }
-            if (missing){
-                 
-                //  missing_field_alert("missing field");
-               
+            if (missing == true){
+                  $(".missing-address-alert").click();
+            } else {
+                
+                return axios({
+                    url : `/checkout`,
+                    method : 'POST',
+                    data : {
+                            checkoutAddress: checkoutAddress,
+                            total : this.subTotal + this.shipping_price,
+                            note : this.checkoutNote,
+                            checkoutDeliveryDate: this.DeliveryDate,
+                            checkoutPayement : checkout_payement,
+                            }
+                    }).then(response => {
+                            if (response.statusText == 'OK'){
+                                console.log(response);
+                            }
+                    }).catch(err => {
+                            console.log(err)
+                    })
             }
         }
     },

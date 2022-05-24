@@ -5,10 +5,10 @@
                     
                     <div class="row bg-white p-3">
                         <span style="font-weight: 500;font-size: 25px;">Panier ({{this.get_product_count}} Articles)</span>
-                        <div class="d-inline-block cart-select ps-3 pt-1">
+                        <!-- <div class="d-inline-block cart-select ps-3 pt-1">
                             <input type="checkbox" name="" id="select-product">
                             <label class="ps-1" for="select-product">Tout sélectionner</label>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="row bg-white mt-3 p-3">
@@ -25,7 +25,7 @@
                                 <table class="cart-product-table mb-4  ">
                                     <thead>
                                         <tr>
-                                            <th width="8%"></th>
+                                            <!-- <th width="8%"></th> -->
                                             <th width="8%"></th>
                                             <th width="20%" >Produit</th>
                                             <th width="15%">Prix</th>

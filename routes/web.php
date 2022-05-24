@@ -37,5 +37,6 @@ Route::delete('/cart/{id}', [App\Http\Controllers\CartController::class, 'destro
 
 // Route::get('/account/{id}', [App\Http\Controllers\AccountController::class, 'index'])->name('account.index')->middleware('auth');
 
+Route::post('/checkout', [App\Http\Controllers\OrderController::class, 'store'])->name('checkout.store')->middleware('auth');
 
 Route::patch('/account/{id}', [App\Http\Controllers\AccountController::class, 'update'])->name('account.update')->middleware('auth');

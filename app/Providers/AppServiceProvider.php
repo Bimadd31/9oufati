@@ -41,8 +41,11 @@ class AppServiceProvider extends ServiceProvider
     {
         if (Auth::check()) {
 
-            $user_cart = DB::table('baskets')->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
-                ->where('user_id', '=', auth()->user()->id)->get();
+            $user_cart = DB::table('baskets AS B')
+                ->leftJoin('orders AS O', 'O.basket_id', '=', 'B.id')
+                ->whereRaw('B.active =  1 AND B.type = "custom" AND O.basket_id IS NULL')
+                ->select('B.id')
+                ->where('B.user_id', '=', auth()->user()->id)->get();
 
             $user_cart_id = $user_cart[0]->id;
 

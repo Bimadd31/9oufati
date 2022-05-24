@@ -33,13 +33,14 @@
                   <div class="w-100 alert-banner position-fixed " style="z-index: 50">
                         <div class='success-alert text-center alert alert-success' role='alert'></div>
                         <div class='exist-alert text-center alert alert-danger' role='alert'></div>
-                        <div class='missing-field-alert text-center alert alert-danger' role='alert'></div>
+                        <div class='missing-address-alert text-center alert alert-danger' role='alert'></div>
 
 
                   </div>
                
                         @include('layouts.header')
                         @yield('content')
+                   
                
         
       <script src="{{ mix('js/app.js') }}" ></script>

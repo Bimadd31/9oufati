@@ -2,7 +2,8 @@
    <tr>
        
         
-        <td><input type="checkbox"></td>
+        <!-- <td><input type="checkbox"></td> -->
+       
         <td><img :src="this.product.image" style="width:80px"></td>
         <td class="cart-item-name">{{this.product.name}}</td>
         <td class="cart-item-price">{{ (getFinalPrice).toFixed(2)+' DH' }}</td>

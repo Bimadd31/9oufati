@@ -22,7 +22,6 @@ class CreateBasketsTable extends Migration
             $table->double('sell_price')->nullable();
             $table->boolean('active')->default(true);
             $table->double('stock')->nullable();
-            $table->foreignId('order_id')->nullable(true)->constrained('orders', 'id');
             $table->foreignId('user_id')->nullable(true)->constrained('users', 'id');
             $table->foreignId('category_id')->nullable(true)->constrained('Category', 'id');
             $table->foreignId('discount_id')->nullable(true)->constrained('discounts', 'id');

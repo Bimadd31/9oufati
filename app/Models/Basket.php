@@ -8,14 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Basket extends Model
 {
     protected $guarded = [];
+    public $table = "baskets";
+
 
     public function user()
     {
         $this->belongsToMany(User::class);
     }
-    public function orders()
+    public function order()
     {
-        $this->belongsToMany(Order::class);
+        $this->belongsTo(Order::class);
     }
     public function discount()
     {

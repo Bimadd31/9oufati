@@ -4,7 +4,7 @@
                 <span>{{ product.name }}</span>
             </div>
             <div class="col-5 p-0 text-center">
-                <span class="checkout-card-item-quantity fw-bold">{{product.quantity}} {{product.mesure_unit}} x </span>
+                <span class="checkout-card-item-quantity fw-bold">{{product.quantity}} {{product.mesure_unit || 'unité'}} x </span>
                 <span class="checkout-card-item-price"> {{ (getFinalPrice).toFixed(2)+' DH' }}</span>
             </div>
             <div class="col-3 p-0 border-1 border-start border-dark text-center checkout-card-item-price">

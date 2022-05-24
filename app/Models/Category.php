@@ -9,6 +9,8 @@ class Category
 extends Model
 {
     protected $guarded = [];
+    public $table = "category";
+
     public function products()
     {
         return $this->belongsToMany(Product::class);

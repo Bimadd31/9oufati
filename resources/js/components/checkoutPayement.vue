@@ -24,7 +24,21 @@
 
 <script>
 export default {
-    name: 'checkoutPayement'
+    name: 'checkoutPayement',
+    data(){
+        return{
+            checkoutPayement : 'cash'
+        }
+    },
+
+    watch:{
+        checkoutPayement:{
+            handler(newValue){
+                this.$store.commit('set_checkout_payement',newValue);
+            },
+            immediate: true,
+        }
+    }
 }
 </script>
 

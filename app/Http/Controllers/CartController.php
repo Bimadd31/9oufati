@@ -37,9 +37,12 @@ class CartController extends Controller
 
         try {
 
-            $user_basket = DB::table('baskets')
-                ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
-                ->where('user_id', '=', auth()->user()->id)->get();
+            $user_basket =
+                DB::table('baskets AS B')
+                ->leftJoin('orders AS O', 'O.basket_id', '=', 'B.id')
+                ->whereRaw('B.active =  1 AND B.type = "custom" AND O.basket_id IS NULL')
+                ->select('B.id')
+                ->where('B.user_id', '=', auth()->user()->id)->get();
 
             $data = $request->validate([
                 'quantity' => 'required',
@@ -81,9 +84,13 @@ class CartController extends Controller
         $category = $request->category_name;
         $quantity = $request->quantity;
 
-        $user_basket = DB::table('baskets')
-            ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
-            ->where('user_id', '=', auth()->user()->id)->get();
+        $user_basket =
+            DB::table('baskets AS B')
+            ->leftJoin('orders AS O', 'O.basket_id', '=', 'B.id')
+            ->whereRaw('B.active =  1 AND B.type = "custom" AND O.basket_id IS NULL')
+            ->select('B.id')
+            ->where('B.user_id', '=', auth()->user()->id)->get();
+
         $user_basket_id = $user_basket[0]->id;
 
 
@@ -104,9 +111,13 @@ class CartController extends Controller
 
         $category = $request->category_name;
 
-        $user_basket = DB::table('baskets')
-            ->whereRaw('active =  1 AND type = "custom" AND order_id IS NULL')
-            ->where('user_id', '=', auth()->user()->id)->get();
+        $user_basket =
+            DB::table('baskets AS B')
+            ->leftJoin('orders AS O', 'O.basket_id', '=', 'B.id')
+            ->whereRaw('B.active =  1 AND B.type = "custom" AND O.basket_id IS NULL')
+            ->select('B.id')
+            ->where('B.user_id', '=', auth()->user()->id)->get();
+
 
         $user_basket_id = $user_basket[0]->id;
 

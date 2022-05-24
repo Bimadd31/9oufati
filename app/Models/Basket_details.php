@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Basket_details extends Model
 {
+    public $table = "basket_details";
+
     public function products()
     {
         $this->hasOne(Product::class);

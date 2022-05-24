@@ -16,12 +16,13 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id('id')->unsigned();
             $table->double('total');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->boolean('onsite')->default(true);
             $table->string('status');
             $table->boolean('active')->default(true);
-            $table->float('discount');
-            $table->string('discount_code');
+            $table->float('discount')->nullable();
+            $table->string('discount_code')->nullable();
+            $table->foreignId('basket_id')->constrained('baskets', 'id');
             $table->foreignId('user_id')->constrained('users', 'id');
             $table->foreignId('preparer_worker_id')->nullable(true)->constrained('users', 'id');
             $table->foreignId('payement_details_id')->constrained('payement_details', 'id');

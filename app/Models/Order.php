@@ -7,6 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    public $table = "orders";
+
+    protected $fillable = [
+        'total',
+        'note',
+        'status',
+        'user_id',
+        'delivery_id',
+        'payement_details_id',
+        'basket_id'
+    ];
     public function user()
     {
         $this->belongsTo(User::class);
@@ -17,7 +28,7 @@ class Order extends Model
     }
     public function baskets()
     {
-        $this->hasMany(Basket::class);
+        $this->hasOne(Basket::class);
     }
     public function order_deliveries()
     {

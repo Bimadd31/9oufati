@@ -17,12 +17,12 @@ class CreateOrderDeliveryTable extends Migration
             $table->id()->unsigned();
             $table->string('full_name')->nullable(false);
             $table->string('phone')->nullable(false);
-            $table->string('delivery_plan')->nullable(false);
-            $table->date('delivery_date')->nullable(false);
+            $table->string('delivery_plan')->nullable();
+            $table->timestamp('delivery_date')->nullable(false);
             $table->string('address_line1')->nullable(false);
-            $table->string('address_line2')->nullable(false);
+            $table->string('address_line2')->nullable();
             $table->string('city')->nullable(false);
-            $table->string('postal_code')->nullable(false);
+            $table->string('postal_code')->nullable();
             $table->string('status');
             $table->foreignId('delivery_worker_id')->nullable(true)->constrained('users', 'id');
             $table->timestamps();

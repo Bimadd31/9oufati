@@ -9,10 +9,14 @@ export default createStore({
       subTotal : 0,
       shipping_price : 25,
       primary_address: [],
-      checkout_address: []
+      checkout_address: [],
+      checkout_payement : '',
     }
   },
   mutations: {
+    set_checkout_payement(state,data){
+      state.checkout_payement = data
+    },
     set_checkout_address(state,data){
       state.checkout_address = data
     },
@@ -191,8 +195,11 @@ export default createStore({
             }
 
             return state.subTotal
+      },
+      get_checkout_payement(state){
+          return state.checkout_payement
       }
-  
+    
    
 
   }

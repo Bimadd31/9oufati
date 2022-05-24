@@ -15,7 +15,7 @@
                                 <input name="category_name" type="hidden" :value="product.category_name">
 
                                 <div class="card-body">
-                                <input  @click="deleteProduct" type="submit"  class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block"
+                                <input  @click="deleteProduct" type="submit"  class="submit rounded-circle nav-cart-item-del-btn position-absolute d-block border-0"
                                         style="width: 18px;height: 18px;" value="&nbsp;">
                                 <p class="card-title">{{ product.name }}</p>
                                 <p class="card-text text-end">
