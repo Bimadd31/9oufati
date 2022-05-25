@@ -37,10 +37,11 @@
 
 
                   </div>
-               
+                  <div class="content">
                         @include('layouts.header')
                         @yield('content')
-                   
+                  </div>
+                        @include('layouts.footer')
                
         
       <script src="{{ mix('js/app.js') }}" ></script>

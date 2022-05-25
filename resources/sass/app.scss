@@ -1,6 +1,7 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700&family=Red+Hat+Mono:wght@700&family=Roboto:wght@400;500;700&family=Source+Sans+Pro:wght@300;400;600&family=Ubuntu:wght@300;400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 @font-face {
     font-family: "Axis";
@@ -47,6 +48,10 @@ $xxl: 1320px;
 body {
     background-color: $bg-color;
 
+}
+
+.content{
+    min-height: 100vh;
 }
 
 //////// TOP NAV ////////
@@ -871,4 +876,46 @@ input[type="checkbox"] {
 .terms {
     font-family: "Ubuntu", sans-serif;
     font-weight: 500;
+}
+
+footer {
+    
+    .footer-title {
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    .footer-text {
+        font-family: 'Inter', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 15px;
+        margin-top: 1.5rem;
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+    }
+
+    img {
+        width: 40px;
+    }
+
+    .footer-2 {
+
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        background-color: #6D9E46;
+
+        span {
+            padding: 5px
+        }
+
+    }
 }
