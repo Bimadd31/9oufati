@@ -101,6 +101,7 @@ class OrderController extends Controller
             'category_id' => $category_panier->id,
             'user_id' => auth()->user()->id
         ]);
+        return $order->id;
     }
 
     /**

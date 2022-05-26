@@ -78,16 +78,35 @@ export default {
     },
     mounted(){
         this.$store.dispatch('set_incart_products', this.data);
+        
+            var URL = window.location.href;
+            var checkoutPAGE = URL.includes("checkout");
+            if(this.data.length == 0 && checkoutPAGE){
+                 window.location.href = "/cart"
+            }
     },
     components:{
         CartHeaderProduct,
     },
+
+    watch:{
+        get_product_count(count){
+            var URL = window.location.href;
+            var checkoutPAGE = URL.includes("checkout");
+            if(checkoutPAGE && count == 0){
+                window.location.href = "/cart"
+            }
+        }
+    },
     computed:{
         get_product_count(){
+           
             return this.$store.getters.get_cart_count
         },
-        getIncartProducts(){
-            return this.$store.getters.get_incart_products
+        getIncartProducts(){    
+           
+                return this.$store.getters.get_incart_products
+            
         },
         get_cartsubTotal(){
             return this.$store.getters.get_cartsubTotal

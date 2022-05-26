@@ -23,7 +23,7 @@
                             <h5 class="ms-3">Informations complémentaires :</h5>
                         </div>
                     </div>
-                    <div class="row m-0 mt-4 justify-content-center ">
+                    <div class="row m-0 mt-4 mb-5 justify-content-center ">
                         <div class="col-11">
                             <div class="row p-3 checkout-note-container">
                                 <span>Notes de commandes (facultatif) :</span>
@@ -114,6 +114,29 @@
             </div>
          </div>
 </form>
+
+                                               <!-- SUCCESS MODAL -->
+    <button class="d-none success-order-modal-btn"  data-bs-toggle="modal" data-bs-target="#success">modal</button>
+   <div class="modal fade" id="success" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-body bg-light">
+                <div class="success-order-container container-fluid ">
+                    <div class="row m-0 d-flex flex-column justify-content-center align-items-center text-center  my-5">
+                        <img  src="/img/success-check.png" alt="" style="width:140px">
+                        <div class="fs-4 mt-5">Votre commande a été traitée</div>
+                        <div class="fs-6 mt-4">Numero de commande: #{{ orderID }}</div>
+                        <a href="/shop" class="btn btn-success my-5 w-50" >
+                            Voir detail
+                        </a>
+                    </div>
+                
+                </div>
+                
+            </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -133,6 +156,7 @@ export default {
             shipping_price : this.$store.state.shipping_price,
             checkoutNote: '',
             DeliveryDate : '',
+            orderID: '',
         }
     },
     components:{
@@ -145,7 +169,9 @@ export default {
         const primary_address = (({ id,first_name,last_name,address_line1, address_line2,phone,city }) => ({ id,first_name,last_name,address_line1, address_line2,phone,city }))(this.user);
 
          this.$store.dispatch('set_primary_address',primary_address)
+
     },
+  
     methods:{
         deliveryPlan(deliveryDate){
             const today = new Date();
@@ -186,7 +212,8 @@ export default {
                             }
                     }).then(response => {
                             if (response.statusText == 'OK'){
-                                console.log(response);
+                                this.orderID=response.data
+                                $(".success-order-modal-btn").click();
                             }
                     }).catch(err => {
                             console.log(err)
@@ -197,7 +224,9 @@ export default {
     watch:{
         '$store.state.subTotal': {
             handler: function(nv) {
+                
                 this.subTotal = nv;
+               
             },
             immediate: true
         }

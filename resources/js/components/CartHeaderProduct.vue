@@ -42,10 +42,11 @@ export default {
                 product:Object,
         },
 
-      
+    
         methods:{
-          
+        
             deleteProduct(e){
+              
                 this.$store.dispatch("deleteProduct",e)
             },
         },

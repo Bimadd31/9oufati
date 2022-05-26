@@ -22796,9 +22796,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.$store.dispatch('set_incart_products', this.data);
+    var URL = window.location.href;
+    var checkoutPAGE = URL.includes("checkout");
+
+    if (this.data.length == 0 && checkoutPAGE) {
+      window.location.href = "/cart";
+    }
   },
   components: {
     CartHeaderProduct: _components_CartHeaderProduct_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  watch: {
+    get_product_count: function get_product_count(count) {
+      var URL = window.location.href;
+      var checkoutPAGE = URL.includes("checkout");
+
+      if (checkoutPAGE && count == 0) {
+        window.location.href = "/cart";
+      }
+    }
   },
   computed: {
     get_product_count: function get_product_count() {
@@ -22843,7 +22859,8 @@ __webpack_require__.r(__webpack_exports__);
       subTotal: '',
       shipping_price: this.$store.state.shipping_price,
       checkoutNote: '',
-      DeliveryDate: ''
+      DeliveryDate: '',
+      orderID: ''
     };
   },
   components: {
@@ -22879,6 +22896,8 @@ __webpack_require__.r(__webpack_exports__);
       return deliveryDate == today ? 'aujourd\'hui' : 'planifier';
     },
     checkout: function checkout(e) {
+      var _this = this;
+
       e.preventDefault();
       var checkoutAddress = this.$store.getters.get_checkout_address;
       var checkout_payement = this.$store.getters.get_checkout_payement;
@@ -22907,7 +22926,8 @@ __webpack_require__.r(__webpack_exports__);
           }
         }).then(function (response) {
           if (response.statusText == 'OK') {
-            console.log(response);
+            _this.orderID = response.data;
+            $(".success-order-modal-btn").click();
           }
         })["catch"](function (err) {
           console.log(err);
@@ -23737,7 +23757,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_5 = {
-  "class": "row m-0 mt-4 justify-content-center"
+  "class": "row m-0 mt-4 mb-5 justify-content-center"
 };
 var _hoisted_6 = {
   "class": "col-11"
@@ -23881,6 +23901,66 @@ var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  "class": "d-none success-order-modal-btn",
+  "data-bs-toggle": "modal",
+  "data-bs-target": "#success"
+}, "modal", -1
+/* HOISTED */
+);
+
+var _hoisted_37 = {
+  "class": "modal fade",
+  id: "success",
+  "data-bs-backdrop": "static",
+  "data-bs-keyboard": "false",
+  tabindex: "-1",
+  "aria-labelledby": "staticBackdropLabel",
+  "aria-hidden": "true"
+};
+var _hoisted_38 = {
+  "class": "modal-dialog modal-dialog-centered"
+};
+var _hoisted_39 = {
+  "class": "modal-content"
+};
+var _hoisted_40 = {
+  "class": "modal-body bg-light"
+};
+var _hoisted_41 = {
+  "class": "success-order-container container-fluid"
+};
+var _hoisted_42 = {
+  "class": "row m-0 d-flex flex-column justify-content-center align-items-center text-center my-5"
+};
+
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "/img/success-check.png",
+  alt: "",
+  style: {
+    "width": "140px"
+  }
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "fs-4 mt-5"
+}, "Votre commande a été traitée", -1
+/* HOISTED */
+);
+
+var _hoisted_45 = {
+  "class": "fs-6 mt-4"
+};
+
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "/shop",
+  "class": "btn btn-success my-5 w-50"
+}, " Voir detail ", -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _this = this;
 
@@ -23890,7 +23970,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_checkoutProduct = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("checkoutProduct");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
     method: "POST",
     onSubmit: _cache[2] || (_cache[2] = function () {
       return $options.checkout && $options.checkout.apply($options, arguments);
@@ -23933,6 +24013,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, this.DeliveryDate]])])]), _hoisted_34, _hoisted_35])])])])])])], 32
   /* HYDRATE_EVENTS */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" SUCCESS MODAL "), _hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [_hoisted_43, _hoisted_44, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, "Numero de commande: #" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.orderID), 1
+  /* TEXT */
+  ), _hoisted_46])])])])])])], 64
+  /* STABLE_FRAGMENT */
   );
 }
 
